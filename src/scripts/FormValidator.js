@@ -1,5 +1,5 @@
 'use strict';
-class FormValidator {
+export class FormValidator {
 
     constructor(popup) {
         this._form = popup.querySelector('.popup__form');

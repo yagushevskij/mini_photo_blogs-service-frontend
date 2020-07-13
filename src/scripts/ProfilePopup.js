@@ -1,5 +1,6 @@
 'use strict';
-class ProfilePopup extends FormPopup {
+import {FormPopup} from './FormPopup.js';
+export class ProfilePopup extends FormPopup {
 
     constructor(markup, container, userInfo, api) {
         super(container, markup);

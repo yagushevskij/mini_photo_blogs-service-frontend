@@ -1,5 +1,6 @@
 'use strict';
-class CardPopup extends FormPopup {
+import {FormPopup} from './FormPopup.js';
+export class CardPopup extends FormPopup {
 
     constructor(markup, container, addCard, api) {
         super(container, markup);

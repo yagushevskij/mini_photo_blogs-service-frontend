@@ -1,5 +1,5 @@
 'use strict';
-class Api {
+export class Api {
     constructor(config) {
         this._headers = config.headers;
         this.cohort = config.cohort;

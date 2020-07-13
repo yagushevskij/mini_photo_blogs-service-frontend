@@ -1,3 +1,20 @@
+import "../pages/index.css";
+
+import {config} from './data.js';
+import {Api} from './Api.js';
+import {Loader} from './Loader.js';
+import {UserInfo} from './UserInfo.js';
+import {Card} from './Card.js';
+import {CardList} from './CardList.js';
+// import {Popup} from './Popup.js';
+// import {FormPopup} from './FormPopup.js';
+import {AvatarPopup} from './AvatarPopup.js';
+import {CardPopup} from './CardPopup.js';
+import {ProfilePopup} from './ProfilePopup.js';
+import {ImagePopup} from './ImagePopup.js';
+import {FormValidator} from './FormValidator.js';
+
+
 (function () {
     'use strict';
     const cardsContainer = document.querySelector('.places-list');
@@ -11,9 +28,6 @@
     const api = new Api(config);
     const loader = new Loader();
 
-    /*
-        Большое спасибо за хорошее ревью.
-    */
     const createCard = (obj) => {
         return new Card(imagePopup, templateCard, api).create(obj);
     };
@@ -61,7 +75,6 @@
             console.log(err);
         });
 })();
-
 
 /*
   Резюме по работе:
