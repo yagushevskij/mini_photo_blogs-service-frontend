@@ -1,9 +1,9 @@
 {
   "name": "sprint-11",
   "homepage": "https://yagushevskij.github.io/sprint-11/",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Project work",
-  "main": "main.js",
+  "main": "./src/scripts/main.js",
   "scripts": {
     "build": "rimraf dist && cross-env NODE_ENV=production webpack --mode production",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --mode development --open --watch",
