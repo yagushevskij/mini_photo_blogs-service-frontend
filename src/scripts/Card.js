@@ -1,5 +1,5 @@
 'use strict';
-class Card {
+export class Card {
 
   constructor(imagePopup, templateCard, api) {
     this._imagePopup = imagePopup;

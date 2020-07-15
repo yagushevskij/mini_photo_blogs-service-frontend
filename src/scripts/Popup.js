@@ -1,5 +1,5 @@
 'use strict';
-class Popup {
+export class Popup {
 
   constructor(container, markup) {
     this._container = container;

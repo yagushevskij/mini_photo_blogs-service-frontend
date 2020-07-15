@@ -1,5 +1,5 @@
 'use strict';
-class UserInfo {
+export class UserInfo {
 
     constructor(container, textParams, picParam) {
         this._container = container;

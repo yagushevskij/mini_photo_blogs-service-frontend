@@ -1,5 +1,6 @@
 'use strict';
-class AvatarPopup extends FormPopup {
+import {FormPopup} from './FormPopup.js';
+export class AvatarPopup extends FormPopup {
 
     constructor(markup, container, userInfo, api) {
         super(container, markup);

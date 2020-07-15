@@ -1,5 +1,5 @@
 'use strict';
-class Loader {
+export class Loader {
     constructor() {
     }
 
