@@ -22,9 +22,10 @@ export class Api {
     }
     createData = (obj) => {
         const { url, data, method } = obj
+        console.log(url, data, method)
         return fetch(url, {
             method: method,
-            headers: headers,
+            headers: this._headers,
             body: JSON.stringify(data)
         })
             .then(this._checkResponse)
@@ -35,7 +36,7 @@ export class Api {
         const method = obj.method;
         return fetch(url + '/' + id, {
             method: method,
-            headers: headers,
+            headers: this._headers,
         })
             .then(this._checkResponse)
     }

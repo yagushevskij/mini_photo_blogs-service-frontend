@@ -17,6 +17,7 @@ import {FormValidator} from './FormValidator.js';
 
 (function () {
     'use strict';
+    console.log(window.location.port, window.location.search);
     const cardsContainer = document.querySelector('.places-list');
     const popupContainer = document.querySelector('.popup');
     const templateCard = document.querySelector('#card').content;
