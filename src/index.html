@@ -13,6 +13,10 @@
   <div class="root">
     <header class="header root__section">
       <img src="<%=require('./images/logo.svg')%>" alt="mesto logo" class="logo">
+      <div class="header__user-container">
+        <button class="button header__button header__button_type_signin">Вход</button>
+        <button class="button header__button header__button_type_signup">Регистрация</button>
+      </div>
     </header>
     <div class="profile root__section">
       <div class="user-info">
@@ -93,6 +97,22 @@
       <div class="popup__image">
         <img src="<%=require('./images/close.svg')%>" alt="" class="popup__close">
         <img class="popup__image-content">
+      </div>
+    </template>
+
+    <template id="signup-popup">
+      <div class="popup__content">
+        <img src="<%=require('./images/close.svg')%>" alt="" class="popup__close">
+        <h3 class="popup__title">Регистрация</h3>
+        <form class="popup__form" name="edit">
+          <input type="text" name="name" class="popup__input popup__input_type_name" placeholder="Имя" minlength="2"
+            maxlength="30" required>
+          <span class="error-message"></span>
+          <input type="text" name="about" class="popup__input popup__input_type_name" placeholder="О себе" minlength="2"
+            maxlength="30" required>
+          <span class="error-message"></span>
+          <button type="submit" class="button popup__button popup__button_function_save">Сохранить</button>
+        </form>
       </div>
     </template>
 

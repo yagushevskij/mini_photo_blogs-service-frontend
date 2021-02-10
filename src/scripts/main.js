@@ -1,4 +1,8 @@
 import '../pages/index.css';
+import {
+  signinButton, signupButton, signupPopupTemplate,
+}
+  from './constants/selectors';
 
 import { config } from './data.js';
 import { Api } from './Api.js';
@@ -12,6 +16,7 @@ import { AvatarPopup } from './AvatarPopup.js';
 import { CardPopup } from './CardPopup.js';
 import { ProfilePopup } from './ProfilePopup.js';
 import { ImagePopup } from './ImagePopup.js';
+import { SignupPopup } from './SignupPopup';
 import { FormValidator } from './FormValidator.js';
 
 (function () {
@@ -37,7 +42,7 @@ import { FormValidator } from './FormValidator.js';
   const profilePopup = new ProfilePopup(document.querySelector('#profile-popup'), popupContainer, userInfo, api);
   const cardPopup = new CardPopup(document.querySelector('#place-popup'), popupContainer, addCard, api);
   const avatarPopup = new AvatarPopup(document.querySelector('#avatar-popup'), popupContainer, userInfo, api);
-
+  const signupPopup = new SignupPopup(signupPopupTemplate, popupContainer);
   document.querySelector('.user-info__button').addEventListener('click', () => {
     cardPopup.create(createFormValidator);
     cardPopup.open();
@@ -50,6 +55,10 @@ import { FormValidator } from './FormValidator.js';
   document.querySelector('.user-info__avatar').addEventListener('click', () => {
     avatarPopup.create(createFormValidator);
     avatarPopup.open();
+  });
+  signupButton.addEventListener('click', () => {
+    signupPopup.create(createFormValidator);
+    signupPopup.open();
   });
 
   const urlParams = window.location.search;
