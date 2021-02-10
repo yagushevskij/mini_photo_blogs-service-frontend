@@ -15,7 +15,6 @@ export class Api {
         }
         return Promise.reject(`Ошибка: ${res.status}`);
     }
-
     getData = (url) => {
         return fetch(url, { headers: this._headers })
             .then(this._checkResponse)

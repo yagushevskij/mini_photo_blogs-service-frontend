@@ -12,6 +12,8 @@ module.exports = {
   },
   rules: {
     'no-console': 'off',
-    'no-underscore-dangle': ['error', { allow: ['_id'] }],
+    'no-underscore-dangle': 'off',
+    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+    'linebreak-style': ['error', 'windows'],
   },
 };

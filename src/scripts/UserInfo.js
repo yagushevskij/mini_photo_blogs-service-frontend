@@ -10,10 +10,6 @@ export class UserInfo {
     setUserInfo = (obj) => {
         this.obj = obj;
         Object.keys(this.obj).forEach((elem) => {
-            /*
-                Можно лучше: Для чего идёт запись в this, если потом эти данные не используются?
-                В updateUserInfo берутся из this.obj.
-             */
             this[elem] = this.obj[elem];
         });
     };

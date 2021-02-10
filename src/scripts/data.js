@@ -2,15 +2,20 @@
 const API_URL = NODE_ENV === 'production' ? 'https://mesto-api.turbomegapro.ru' : 'http://localhost:3001';
 export const config = {
   userPath: 'user',
-  cardsApiUrl: `${API_URL}/cards`,
-  userApiUrl: `${API_URL}/users/me`,
+  cardsApiUrl: `${API_URL}/cards/`,
+  userCardsApiUrl: `${API_URL}/cards/user/`,
+  usersApiUrl: `${API_URL}/users/`,
   headers: {
     'Content-Type': 'application/json',
-    'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDIyOGJjMTQwZTRmMDM5YTA2NmExM2UiLCJpYXQiOjE2MTI4NzY3ODcsImV4cCI6MTY0NDQxMjc4N30.RfnRACg3gTklYBGggKxmn3DFS3F2r_wdDpecrk7aaiU'
+    'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDIzYWQ4NjMyMDU2NzIwMTBmOThjMDciLCJpYXQiOjE2MTI5NTA5MjEsImV4cCI6MTY0NDQ4NjkyMX0.oheXxhMe55Acnhyegt37Z--DMosZ-8R-dqhFwI19TCo'
   },
   userId: 'cd3621b6a6461b94618c14ae',
   paths: {
     avatar: 'avatar',
-    like: 'like'
+    like: 'like',
+    
+  },
+  text: {
+    userNotFound: 'Пользователь не найден',
   }
 };
