@@ -17,7 +17,6 @@ import {FormValidator} from './FormValidator.js';
 
 (function () {
     'use strict';
-    console.log(window.location.search, window.location.pathname);
     const cardsContainer = document.querySelector('.places-list');
     const popupContainer = document.querySelector('.popup');
     const templateCard = document.querySelector('#card').content;
@@ -57,24 +56,33 @@ import {FormValidator} from './FormValidator.js';
         avatarPopup.open();
     });
 
-    loader.changeStatus(cardsLoader, true);
-    api.getData(config.cardsApiUrl)
-        .then(res => {
-            cardList.render(res);
-        })
-        .catch((err) => {
-            console.log(err);
-        })
-        .finally(() => loader.changeStatus(cardsLoader, false));
+    const urlParams = window.location.search;
+    const regExp = new RegExp("\\?" + config.userPath + "\\=[a-zA-Z0-9]+");
+    if (regExp.test(urlParams)) {
+        const username = urlParams.replace('?' + config.userPath + '=', '');
 
-    api.getData(config.userApiUrl)
-        .then(res => {
-            userInfo.setUserInfo(res);
-            userInfo.updateUserInfo()
-        })
-        .catch((err) => {
-            console.log(err);
-        });
+        loader.changeStatus(cardsLoader, true);
+        api.getData(config.cardsApiUrl)
+            .then(res => {
+                cardList.render(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+            .finally(() => loader.changeStatus(cardsLoader, false));
+    
+        api.getData(config.userApiUrl)
+            .then(res => {
+                userInfo.setUserInfo(res);
+                userInfo.updateUserInfo()
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+            
+    } else {
+        console.log('Главная')
+    };
 })();
 
 /*
