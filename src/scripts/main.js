@@ -26,11 +26,17 @@ import { FormValidator } from './FormValidator.js';
   const cardsLoader = document.querySelector('#cards-loader');
   const profileContainer = document.querySelector('.user-info');
 
-  const createFormValidator = (...arg) => new FormValidator(...arg, config.text);
+  const createFormValidator = (...args) => new FormValidator(...args, config.text);
 
   const api = new Api(config);
   const loader = new Loader();
 
+  const sendCardToApi = (...args) => api.createData(config.reqApiParams.addCard, ...args);
+  const sendRegDataToApi = (...args) => api.createData(config.reqApiParams.signup, ...args);
+  const sendAvatarDataToApi = (...args) => api.createData(config.reqApiParams.changeAvatar,
+    ...args);
+  const sendUserDataToApi = (...args) => api.createData(config.reqApiParams.changeUserInfo,
+    ...args);
   const createCard = (obj) => new Card(imagePopup, templateCard, api).create(obj);
 
   const cardList = new CardList(cardsContainer, createCard);
@@ -39,10 +45,10 @@ import { FormValidator } from './FormValidator.js';
   const userInfo = new UserInfo(profileContainer, ['name', 'about'], ['avatar']);
 
   const imagePopup = new ImagePopup(document.querySelector('#image-popup'), popupContainer);
-  const profilePopup = new ProfilePopup(document.querySelector('#profile-popup'), popupContainer, userInfo, api);
-  const cardPopup = new CardPopup(document.querySelector('#place-popup'), popupContainer, addCard, api);
-  const avatarPopup = new AvatarPopup(document.querySelector('#avatar-popup'), popupContainer, userInfo, api);
-  const signupPopup = new SignupPopup(signupPopupTemplate, popupContainer);
+  const profilePopup = new ProfilePopup(document.querySelector('#profile-popup'), popupContainer, userInfo, sendUserDataToApi);
+  const cardPopup = new CardPopup(document.querySelector('#place-popup'), popupContainer, addCard, sendCardToApi);
+  const avatarPopup = new AvatarPopup(document.querySelector('#avatar-popup'), popupContainer, userInfo, sendAvatarDataToApi);
+  const signupPopup = new SignupPopup(signupPopupTemplate, popupContainer, sendRegDataToApi);
   document.querySelector('.user-info__button').addEventListener('click', () => {
     cardPopup.create(createFormValidator);
     cardPopup.open();

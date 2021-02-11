@@ -21,24 +21,15 @@ export class FormPopup extends Popup {
         return this._obj;
     };
 
-    _apiParamsUpdate = () => {
-        this._apiParams.data = this._getDataObj(this._view);
-        return this._apiParams;
-    };
-
     _changeButtonText = (elem) => {
-        elem.querySelector('.button').textContent = 'Загрузка...';
+        elem.querySelector('button').textContent = 'Загрузка...';
     };
 
     _submit = () => {
-        /*
-        Можно лучше: event не передан в функцию.
-        Использование window.event считается нежелательным, так как может привести к трудноотлавливаемым багам.
-        https://developer.mozilla.org/en-US/docs/Web/API/Window/event
-       */
         event.preventDefault();
         this._changeButtonText(this._view);
-        this._api.createData(this._apiParamsUpdate())
+        // console.log(this._getDataObj(this._view))
+        this._sendDataToApi(this._getDataObj(this._view))
             .then((obj) => {
                 this._submitAction(obj);
             })

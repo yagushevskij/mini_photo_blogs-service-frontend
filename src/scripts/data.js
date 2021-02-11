@@ -1,7 +1,24 @@
-'use strict';
 const API_URL = NODE_ENV === 'production' ? 'https://mesto-api.turbomegapro.ru' : 'http://localhost:3001';
 export const config = {
   userPath: 'user',
+  reqApiParams: {
+    signup: {
+      url: `${API_URL}/signup/`,
+      method: 'POST',
+    },
+    addCard: {
+      url: `${API_URL}/cards/`,
+      method: 'POST',
+    },
+    changeUserInfo: {
+      url: `${API_URL}/users/me/`,
+      method: 'PATCH',
+    },
+    changeAvatar: {
+      url: `${API_URL}/users/me/avatar/`,
+      method: 'PATCH',
+    },
+  },
   cardsApiUrl: `${API_URL}/cards/`,
   userCardsApiUrl: `${API_URL}/cards/user/`,
   usersApiUrl: `${API_URL}/users/`,
