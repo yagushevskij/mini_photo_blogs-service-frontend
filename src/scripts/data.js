@@ -24,7 +24,7 @@ export const config = {
   usersApiUrl: `${API_URL}/users/`,
   headers: {
     'Content-Type': 'application/json',
-    'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDIzYWQ4NjMyMDU2NzIwMTBmOThjMDciLCJpYXQiOjE2MTI5NTA5MjEsImV4cCI6MTY0NDQ4NjkyMX0.oheXxhMe55Acnhyegt37Z--DMosZ-8R-dqhFwI19TCo'
+    authorization: `Bearer ${localStorage.getItem('token')}`
   },
   userId: 'cd3621b6a6461b94618c14ae',
   paths: {

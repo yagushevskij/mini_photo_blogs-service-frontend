@@ -5,8 +5,7 @@ export class SignupPopup extends FormPopup {
     super(container, markup);
     this._sendDataToApi = sendRegDataToApi;
   }
-  _submitAction = (obj) => {
-    // this._userInfo.setUserInfo(obj);
-    // this._userInfo.updateUserInfo();
+  _submitAction = (data) => {
+    localStorage.setItem('token', data.token);
 };
 }
