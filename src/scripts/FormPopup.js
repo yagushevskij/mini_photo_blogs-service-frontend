@@ -8,7 +8,7 @@ export class FormPopup extends Popup {
 
     create = (formValidator) => {
         super.create();
-        this._formValidator = formValidator(this._view);
+        this._formValidator = formValidator(this._view.querySelector('.popup__form'));
     };
 
     _getDataObj = (elem) => {

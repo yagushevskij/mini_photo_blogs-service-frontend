@@ -26,7 +26,7 @@ import { FormValidator } from './FormValidator.js';
   const cardsLoader = document.querySelector('#cards-loader');
   const profileContainer = document.querySelector('.user-info');
 
-  const createFormValidator = (...arg) => new FormValidator(...arg);
+  const createFormValidator = (...arg) => new FormValidator(...arg, config.text);
 
   const api = new Api(config);
   const loader = new Loader();

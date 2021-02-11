@@ -13,9 +13,17 @@ export const config = {
   paths: {
     avatar: 'avatar',
     like: 'like',
-    
+
   },
   text: {
+    inputClassName: '.popup__input',
     userNotFound: 'Пользователь не найден',
+    validationMessages: {
+      tooShort: 'Минимум символов:',
+      tooLong: 'Максимум символов',
+      required: 'Это обязательное поле',
+      requiredEmail: 'Здесь должен быть email',
+      requiredLink: 'Здесь должна быть ссылка',
+    }
   }
 };

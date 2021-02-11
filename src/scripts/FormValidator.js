@@ -1,53 +1,51 @@
-'use strict';
 export class FormValidator {
 
-    constructor(popup) {
-        this._form = popup.querySelector('.popup__form');
-    };
+  constructor(form, configText) {
+    this._form = form;
+    this.validationMessages = configText.validationMessages;
+    this.inputClassName = configText.inputClassName;
+    console.log(this.validationMessages, this.inputClassName)
+  };
 
-    _checkInputValidity = () => {
-        /*
-          Можно лучше: event не передан в функцию.
-          Использование window.event считается нежелательным, так как может привести к трудноотлавливаемым багам.
-          https://developer.mozilla.org/en-US/docs/Web/API/Window/event
-         */
-        const input = event.target;
-        this._errorEl = input.nextElementSibling;
+  _checkInputValidity = () => {
+    const input = event.target;
+    const errorEl = input.nextElementSibling;
+    if (input.validity.valueMissing) {
+      errorEl.textContent = this.validationMessages.required;
+    }
+    else if (input.validity.tooLong) {
+      errorEl.textContent = this.validationMessages.tooLong + ' ' + input.maxLength;
+    }
+    else if (input.validity.tooShort) {
+      errorEl.textContent = this.validationMessages.tooShort + ' ' + input.minLength;
+    }
+    else if (input.validity.typeMismatch && input.type === 'url') {
+      errorEl.textContent = this.validationMessages.requiredLink;
+    }
+    else if (input.validity.typeMismatch && input.type === 'email') {
+      errorEl.textContent = this.validationMessages.requiredEmail;
+    }
+    else {
+      errorEl.textContent = '';
+    }
+    this._setSubmitButtonState();
+  };
 
-        if (input.validity.valueMissing) {
-            this._errorEl.textContent = 'Это обязательное поле';
-        }
-        else if (input.validity.tooLong || input.validity.tooShort) {
-            this._errorEl.textContent = 'Должно быть от 2 до 30 символов';
-        }
-        else if (input.validity.typeMismatch && input.type === 'url') {
-            this._errorEl.textContent = 'Здесь должна быть ссылка';
-        }
-        else {
-            this._errorEl.textContent = '';
-        }
-        this._setSubmitButtonState();
-    };
+  _setSubmitButtonState = () => {
+    const submitButton = this._form.querySelector('button');
+    const isFormValid = this._form.checkValidity();
+    submitButton.disabled = !isFormValid;
+  };
 
-    _setSubmitButtonState = () => {
-        const _submitButton = this._form.querySelector('.popup__button');
-        const _isFormValid = this._form.checkValidity();
-        _submitButton.disabled = !_isFormValid;
-    };
+  setEventListeners = () => {
+    Array.from(this._form.querySelectorAll(this.inputClassName)).forEach((elem) => {
+      elem.addEventListener('input', this._checkInputValidity);
+    });
+  };
 
-    setEventListeners = () => {
-        /*
-            +Можно лучше: Инпуты лучше искать по классу popup__input, ане по тегу, так как может быть инпут-кнопка:
-            https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/submit
-         */
-        Array.from(this._form.querySelectorAll('.popup__input')).forEach((elem) => {
-            elem.addEventListener('input', this._checkInputValidity);
-        });
-    };
-
-    removeEventListeners = () => {
-        Array.from(this._form.querySelectorAll('.popup__input')).forEach((elem) => {
-            elem.removeEventListener('input', this._checkInputValidity);
-        });
-    };
+  removeEventListeners = () => {
+    Array.from(this._form.querySelectorAll(this.inputClassName)).forEach((elem) => {
+      elem.removeEventListener('input', this._checkInputValidity);
+    });
+  };
 }
