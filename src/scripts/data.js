@@ -6,6 +6,10 @@ export const config = {
       url: `${API_URL}/signup/`,
       method: 'POST',
     },
+    signin: {
+      url: `${API_URL}/signin/`,
+      method: 'POST',
+    },
     addCard: {
       url: `${API_URL}/cards/`,
       method: 'POST',

@@ -1,6 +1,6 @@
 import '../pages/index.css';
 import {
-  signinButton, signupButton, signupPopupTemplate,
+  signinButton, signupButton, signupPopupTemplate, signinPopupTemplate,
 }
   from './constants/selectors';
 
@@ -17,6 +17,7 @@ import { CardPopup } from './CardPopup.js';
 import { ProfilePopup } from './ProfilePopup.js';
 import { ImagePopup } from './ImagePopup.js';
 import { SignupPopup } from './SignupPopup';
+import { SigninPopup } from './SigninPopup';
 import { FormValidator } from './FormValidator.js';
 
 (function () {
@@ -33,6 +34,7 @@ import { FormValidator } from './FormValidator.js';
 
   const sendCardToApi = (...args) => api.createData(config.reqApiParams.addCard, ...args);
   const sendRegDataToApi = (...args) => api.createData(config.reqApiParams.signup, ...args);
+  const sendAuthDataToApi = (...args) => api.createData(config.reqApiParams.signin, ...args);
   const sendAvatarDataToApi = (...args) => api.createData(config.reqApiParams.changeAvatar,
     ...args);
   const sendUserDataToApi = (...args) => api.createData(config.reqApiParams.changeUserInfo,
@@ -49,6 +51,7 @@ import { FormValidator } from './FormValidator.js';
   const cardPopup = new CardPopup(document.querySelector('#place-popup'), popupContainer, addCard, sendCardToApi);
   const avatarPopup = new AvatarPopup(document.querySelector('#avatar-popup'), popupContainer, userInfo, sendAvatarDataToApi);
   const signupPopup = new SignupPopup(signupPopupTemplate, popupContainer, sendRegDataToApi);
+  const signinPopup = new SigninPopup(signinPopupTemplate, popupContainer, sendAuthDataToApi);
   document.querySelector('.user-info__button').addEventListener('click', () => {
     cardPopup.create(createFormValidator);
     cardPopup.open();
@@ -65,6 +68,10 @@ import { FormValidator } from './FormValidator.js';
   signupButton.addEventListener('click', () => {
     signupPopup.create(createFormValidator);
     signupPopup.open();
+  });
+  signinButton.addEventListener('click', () => {
+    signinPopup.create(createFormValidator);
+    signinPopup.open();
   });
 
   const urlParams = window.location.search;
