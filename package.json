@@ -54,6 +54,7 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
-    "core-js": "^3.4.1"
+    "core-js": "^3.4.1",
+    "@bem/sdk.config": "0.1.0"
   }
 }
