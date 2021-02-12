@@ -9,5 +9,6 @@ export class SignupPopup extends FormPopup {
     localStorage.setItem('token', data.token);
     localStorage.setItem('userId', data.user._id);
     localStorage.setItem('username', data.user.username);
+    location.reload()
 };
 }
