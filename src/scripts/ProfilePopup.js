@@ -17,8 +17,8 @@ export class ProfilePopup extends FormPopup {
         })
     };
 
-    _submitAction = (obj) => {
-        this._userInfo.setUserInfo(obj);
-        this._userInfo.updateUserInfo();
+    _submitAction = (userData) => {
+      this._userInfo.setUserInfo(userData)
+      this._userInfo.updateUserInfo();
     };
 }

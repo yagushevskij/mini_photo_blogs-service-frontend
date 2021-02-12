@@ -8,6 +8,7 @@ export class Card {
     this._requestDislikeCardToApi = requestCardDislikeToApi;
     this._requestCardRemoveToApi = requestCardRemoveToApi;
     (userId) ? this._userId = userId : false;
+    console.log(userId)
   };
 
   _like = () => {

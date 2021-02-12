@@ -1,22 +1,17 @@
-'use strict';
 export class Api {
   constructor(config) {
     this._headers = config.headers;
   }
-
-  _checkResponse = (res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  }
-  sendRequest = (objParams, dataObj) => {
+  sendRequest = async (objParams, dataObj) => {
     const { url, method } = objParams;
-    return fetch(url, {
+    const res = await fetch(url, {
       method: method,
       headers: this._headers,
       body: JSON.stringify(dataObj)
-    })
-      .then(this._checkResponse)
+    });
+    if (res.ok) {
+      return await res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
   }
 }

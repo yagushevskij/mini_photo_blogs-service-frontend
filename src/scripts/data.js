@@ -1,5 +1,5 @@
 const API_URL = NODE_ENV === 'production' ? 'https://mesto-api.turbomegapro.ru' : 'http://localhost:3001';
-export const config = {
+const config = {
   userPageFeature: {
     path: 'user',
     urlParams: window.location.search,
@@ -52,12 +52,12 @@ export const config = {
   },
   headers: {
     'Content-Type': 'application/json',
-    authorization: `Bearer ${localStorage.getItem('token')}`
+    authorization: `Bearer ${localStorage.getItem('token')}`,
   },
-  // user: {
-  //   id: localStorage.getItem('userId'),
-  //   username: localStorage.getItem('username'),
-  // },
+  user: {
+    id: localStorage.getItem('userId'),
+    username: localStorage.getItem('username'),
+  },
   text: {
     inputClassName: '.popup__input',
     userNotFound: 'Пользователь не найден',
@@ -67,6 +67,7 @@ export const config = {
       required: 'Это обязательное поле',
       requiredEmail: 'Здесь должен быть email',
       requiredLink: 'Здесь должна быть ссылка',
-    }
-  }
+    },
+  },
 };
+export default config;

@@ -1,11 +1,6 @@
 export class User {
-  constructor(requestUserExistToApi) {
-    this._requestUserExistToApi = requestUserExistToApi
+  constructor() {
+    this.data = {};
   }
-  _isLoggedIn = () => localStorage.getItem('token') ? true : false;
-  _checkUserExist = () => this._isLoggedIn() ? this._requestUserExistToApi() : false;
-  updateUserData = async () => {
-    this.data = await this._checkUserExist()
-      .catch(err => console.log(err));
-  }
-};
+  // _isLoggedIn = () => localStorage.getItem('token') ? true : false;
+}

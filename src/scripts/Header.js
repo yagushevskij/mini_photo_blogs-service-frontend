@@ -1,7 +1,7 @@
 export class Header {
-  constructor(config) {
+  constructor() {
   }
-  render = () => {
-
+  render = (userData) => {
+    console.log(userData)
   };
 }
