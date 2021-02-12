@@ -1,6 +1,9 @@
 const API_URL = NODE_ENV === 'production' ? 'https://mesto-api.turbomegapro.ru' : 'http://localhost:3001';
 export const config = {
-  userPath: 'user',
+  userPageFeature: {
+    path: 'user',
+    urlParams: window.location.search,
+  },
   reqApiParams: {
     signup: {
       url: `${API_URL}/signup/`,
