@@ -32,20 +32,20 @@ import { FormValidator } from './FormValidator.js';
   const api = new Api(config);
   const loader = new Loader();
 
-  const sendCardLikeToApi = (cardId) => api.createData({
+  const sendCardLikeToApi = (cardId) => api.sendRequest({
     method: config.reqApiParams.addLike.method,
     url: config.reqApiParams.addLike.url + cardId,
   });
-  const sendCardDislikeToApi = (cardId) => api.changeData({
+  const sendCardDislikeToApi = (cardId) => api.sendRequest({
     method: config.reqApiParams.removeLike.method,
     url: config.reqApiParams.removeLike.url + cardId,
   });
-  const sendCardToApi = (...args) => api.createData(config.reqApiParams.addCard, ...args);
-  const sendRegDataToApi = (...args) => api.createData(config.reqApiParams.signup, ...args);
-  const sendAuthDataToApi = (...args) => api.createData(config.reqApiParams.signin, ...args);
-  const sendAvatarDataToApi = (...args) => api.createData(config.reqApiParams.changeAvatar,
+  const sendCardToApi = (...args) => api.sendRequest(config.reqApiParams.addCard, ...args);
+  const sendRegDataToApi = (...args) => api.sendRequest(config.reqApiParams.signup, ...args);
+  const sendAuthDataToApi = (...args) => api.sendRequest(config.reqApiParams.signin, ...args);
+  const sendAvatarDataToApi = (...args) => api.sendRequest(config.reqApiParams.changeAvatar,
     ...args);
-  const sendUserDataToApi = (...args) => api.createData(config.reqApiParams.changeUserInfo,
+  const sendUserDataToApi = (...args) => api.sendRequest(config.reqApiParams.changeUserInfo,
     ...args);
   const createCard = (obj) => new Card(imagePopup, templateCard, sendCardLikeToApi,
     sendCardDislikeToApi, config.user.id).create(obj);
@@ -88,14 +88,20 @@ import { FormValidator } from './FormValidator.js';
   if (regExp.test(urlParams)) {
     const username = urlParams.replace(`?${config.userPath}=`, '');
     loader.changeStatus(cardsLoader, true);
-    api.getData(config.usersApiUrl + username)
+    api.sendRequest({
+      url: config.reqApiParams.getUserInfo.url + username,
+      method: config.reqApiParams.getUserInfo.methhod,
+    })
       .then((res) => {
         userInfo.setUserInfo(res);
         userInfo.updateUserInfo();
         return res;
       })
       .then((res) => {
-        api.getData(config.userCardsApiUrl + res._id)
+        api.sendRequest({
+          url: config.reqApiParams.getUserCards.url + res._id,
+          method: config.reqApiParams.getUserCards.methhod,
+        })
           .then((cards) => {
             cardList.render(cards);
           })

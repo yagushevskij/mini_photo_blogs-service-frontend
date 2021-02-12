@@ -30,10 +30,19 @@ export const config = {
       url: `${API_URL}/cards/like/`,
       method: 'DELETE',
     },
+    deleteCard: {
+      url: `${API_URL}/cards/delete/`,
+      method: 'DELETE',
+    },
+    getUserInfo: {
+      url: `${API_URL}/users/`,
+      method: 'GET',
+    },
+    getUserCards: {
+      url: `${API_URL}/cards/user/`,
+      method: 'GET',
+    },
   },
-  cardsApiUrl: `${API_URL}/cards/`,
-  userCardsApiUrl: `${API_URL}/cards/user/`,
-  usersApiUrl: `${API_URL}/users/`,
   headers: {
     'Content-Type': 'application/json',
     authorization: `Bearer ${localStorage.getItem('token')}`
@@ -41,11 +50,6 @@ export const config = {
   user: {
     id: localStorage.getItem('userId'),
     username: localStorage.getItem('username'),
-  },
-  paths: {
-    avatar: 'avatar',
-    like: 'like',
-
   },
   text: {
     inputClassName: '.popup__input',
