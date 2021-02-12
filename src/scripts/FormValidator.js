@@ -4,7 +4,6 @@ export class FormValidator {
     this._form = form;
     this.validationMessages = configText.validationMessages;
     this.inputClassName = configText.inputClassName;
-    console.log(this.validationMessages, this.inputClassName)
   };
 
   _checkInputValidity = () => {

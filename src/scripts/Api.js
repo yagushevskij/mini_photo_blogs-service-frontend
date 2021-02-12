@@ -2,11 +2,6 @@
 export class Api {
   constructor(config) {
     this._headers = config.headers;
-    this.cohort = config.cohort;
-    this.cardsApiUrl = config.cardsApiUrl;
-    this.userApiUrl = config.userApiUrl;
-    this.userId = config.userId;
-    this.paths = config.paths;
   }
 
   _checkResponse = (res) => {
@@ -28,11 +23,9 @@ export class Api {
     })
       .then(this._checkResponse)
   }
-  changeData = (obj) => {
-    const url = obj.url;
-    const id = obj.id;
-    const method = obj.method;
-    return fetch(url + '/' + id, {
+  changeData = (objParams) => {
+    const { url, method } = objParams;
+    return fetch(url, {
       method: method,
       headers: this._headers,
     })

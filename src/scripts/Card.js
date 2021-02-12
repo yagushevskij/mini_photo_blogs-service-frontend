@@ -1,15 +1,19 @@
 'use strict';
 export class Card {
 
-  constructor(imagePopup, templateCard, api) {
+  constructor(imagePopup, templateCard, sendLikeCardToApi, sendDislikeCardToApi, userId) {
     this._imagePopup = imagePopup;
     this._templateCard = templateCard;
-    this._api = api;
+    this._sendLikeCardToApi = sendLikeCardToApi;
+    this._sendDislikeCardToApi = sendDislikeCardToApi;
+    (userId) ? this._userId = userId : false;
   };
 
   _like = () => {
-    const method = this._hasOwnLike() ? 'DELETE' : 'PUT';
-    this._api.changeData({ url: this._api.cardsApiUrl + '/' + this._api.paths.like, id: this._view.getAttribute('data-id'), method: method })
+    const changeLike = this._hasOwnLike() ? this._sendDislikeCardToApi : this._sendLikeCardToApi;
+    // console.log(this._hasOwnLike(), this._userId)
+    changeLike(this._item._id)
+    // this._api.changeData({ url: this._api.cardsApiUrl + '/' + this._api.paths.like, id: this._view.getAttribute('data-id'), method: method })
       .then((res) => {
         this._item = res;
         this._changeLikesCount();
@@ -24,13 +28,9 @@ export class Card {
     this._view.likeCount.textContent = this._item.likes.length;
   }
 
-  _hasOwnLike = () => {
-    return this._item.likes.some(item => item._id === this._api.userId);
-  };
+  _hasOwnLike = () => this._item.likes.some(item => item === this._userId);
 
-  _isOwner = () => {
-    return this._item.owner._id === this._api.userId;
-  };
+  _isOwner = () => this._item.owner._id === this._userId;
 
   _remove = (event) => {
     this._api.changeData({ url: this._api.cardsApiUrl, id: this._view.getAttribute('data-id'), method: 'DELETE' })

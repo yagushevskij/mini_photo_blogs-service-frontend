@@ -32,6 +32,14 @@ import { FormValidator } from './FormValidator.js';
   const api = new Api(config);
   const loader = new Loader();
 
+  const sendCardLikeToApi = (cardId) => api.createData({
+    method: config.reqApiParams.addLike.method,
+    url: config.reqApiParams.addLike.url + cardId,
+  });
+  const sendCardDislikeToApi = (cardId) => api.changeData({
+    method: config.reqApiParams.removeLike.method,
+    url: config.reqApiParams.removeLike.url + cardId,
+  });
   const sendCardToApi = (...args) => api.createData(config.reqApiParams.addCard, ...args);
   const sendRegDataToApi = (...args) => api.createData(config.reqApiParams.signup, ...args);
   const sendAuthDataToApi = (...args) => api.createData(config.reqApiParams.signin, ...args);
@@ -39,7 +47,8 @@ import { FormValidator } from './FormValidator.js';
     ...args);
   const sendUserDataToApi = (...args) => api.createData(config.reqApiParams.changeUserInfo,
     ...args);
-  const createCard = (obj) => new Card(imagePopup, templateCard, api).create(obj);
+  const createCard = (obj) => new Card(imagePopup, templateCard, sendCardLikeToApi,
+    sendCardDislikeToApi, config.user.id).create(obj);
 
   const cardList = new CardList(cardsContainer, createCard);
   const { addCard } = cardList;

@@ -22,6 +22,14 @@ export const config = {
       url: `${API_URL}/users/me/avatar/`,
       method: 'PATCH',
     },
+    addLike: {
+      url: `${API_URL}/cards/like/`,
+      method: 'PUT',
+    },
+    removeLike: {
+      url: `${API_URL}/cards/like/`,
+      method: 'DELETE',
+    },
   },
   cardsApiUrl: `${API_URL}/cards/`,
   userCardsApiUrl: `${API_URL}/cards/user/`,
@@ -30,7 +38,10 @@ export const config = {
     'Content-Type': 'application/json',
     authorization: `Bearer ${localStorage.getItem('token')}`
   },
-  userId: 'cd3621b6a6461b94618c14ae',
+  user: {
+    id: localStorage.getItem('userId'),
+    username: localStorage.getItem('username'),
+  },
   paths: {
     avatar: 'avatar',
     like: 'like',
