@@ -32,13 +32,17 @@ import { FormValidator } from './FormValidator.js';
   const api = new Api(config);
   const loader = new Loader();
 
-  const sendCardLikeToApi = (cardId) => api.sendRequest({
+  const requestCardLikeToApi = (cardId) => api.sendRequest({
     method: config.reqApiParams.addLike.method,
     url: config.reqApiParams.addLike.url + cardId,
   });
-  const sendCardDislikeToApi = (cardId) => api.sendRequest({
+  const requestCardDislikeToApi = (cardId) => api.sendRequest({
     method: config.reqApiParams.removeLike.method,
     url: config.reqApiParams.removeLike.url + cardId,
+  });
+  const requestCardRemoveToApi = (cardId) => api.sendRequest({
+    method: config.reqApiParams.deleteCard.method,
+    url: config.reqApiParams.deleteCard.url + cardId,
   });
   const sendCardToApi = (...args) => api.sendRequest(config.reqApiParams.addCard, ...args);
   const sendRegDataToApi = (...args) => api.sendRequest(config.reqApiParams.signup, ...args);
@@ -47,8 +51,8 @@ import { FormValidator } from './FormValidator.js';
     ...args);
   const sendUserDataToApi = (...args) => api.sendRequest(config.reqApiParams.changeUserInfo,
     ...args);
-  const createCard = (obj) => new Card(imagePopup, templateCard, sendCardLikeToApi,
-    sendCardDislikeToApi, config.user.id).create(obj);
+  const createCard = (obj) => new Card(imagePopup, templateCard, requestCardLikeToApi,
+    requestCardDislikeToApi, requestCardRemoveToApi, config.user.id).create(obj);
 
   const cardList = new CardList(cardsContainer, createCard);
   const { addCard } = cardList;

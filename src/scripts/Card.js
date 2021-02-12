@@ -1,16 +1,17 @@
 'use strict';
 export class Card {
 
-  constructor(imagePopup, templateCard, sendLikeCardToApi, sendDislikeCardToApi, userId) {
+  constructor(imagePopup, templateCard, requestCardLikeToApi, requestCardDislikeToApi, requestCardRemoveToApi, userId) {
     this._imagePopup = imagePopup;
     this._templateCard = templateCard;
-    this._sendLikeCardToApi = sendLikeCardToApi;
-    this._sendDislikeCardToApi = sendDislikeCardToApi;
+    this._requestLikeCardToApi = requestCardLikeToApi;
+    this._requestDislikeCardToApi = requestCardDislikeToApi;
+    this._requestCardRemoveToApi = requestCardRemoveToApi;
     (userId) ? this._userId = userId : false;
   };
 
   _like = () => {
-    const changeLike = this._hasOwnLike() ? this._sendDislikeCardToApi : this._sendLikeCardToApi;
+    const changeLike = this._hasOwnLike() ? this._requestDislikeCardToApi : this._requestLikeCardToApi;
     // console.log(this._hasOwnLike(), this._userId)
     changeLike(this._item._id)
     // this._api.changeData({ url: this._api.cardsApiUrl + '/' + this._api.paths.like, id: this._view.getAttribute('data-id'), method: method })
@@ -33,7 +34,8 @@ export class Card {
   _isOwner = () => this._item.owner._id === this._userId;
 
   _remove = (event) => {
-    this._api.changeData({ url: this._api.cardsApiUrl, id: this._view.getAttribute('data-id'), method: 'DELETE' })
+    event.stopImmediatePropagation();
+    this._requestCardRemoveToApi(this._getCardId())
       .then(() => {
         this._removeEventListeners()
         this._view.remove()
@@ -41,8 +43,9 @@ export class Card {
       .catch((err) => {
         console.log(err);
       });
-    event.stopImmediatePropagation();
   };
+
+  _getCardId = () => this._view.getAttribute('data-id');
 
   _handleRemove = () => {
     if (confirm("Вы действительно хотите удалить эту карточку?")) {

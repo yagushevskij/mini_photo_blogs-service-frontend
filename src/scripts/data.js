@@ -31,7 +31,7 @@ export const config = {
       method: 'DELETE',
     },
     deleteCard: {
-      url: `${API_URL}/cards/delete/`,
+      url: `${API_URL}/cards/`,
       method: 'DELETE',
     },
     getUserInfo: {
