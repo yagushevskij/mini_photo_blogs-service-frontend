@@ -58,8 +58,10 @@ api.sendRequest(config.reqApiParams.checkUserExist)
       requestCardDislikeToApi, requestCardRemoveToApi, userData._id);
     const cardPopup = new CardPopup(document.querySelector('#place-popup'), popupContainer, cardList.addCard, sendCardToApi);
     const avatarPopup = new AvatarPopup(document.querySelector('#avatar-popup'), popupContainer, userInfo, sendAvatarDataToApi);
-    const signupPopup = new SignupPopup(signupPopupTemplate, popupContainer, sendRegDataToApi);
-    const signinPopup = new SigninPopup(signinPopupTemplate, popupContainer, sendAuthDataToApi);
+    const signupPopup = new SignupPopup(signupPopupTemplate, popupContainer, sendRegDataToApi,
+      config.userPageFeature.url);
+    const signinPopup = new SigninPopup(signinPopupTemplate, popupContainer, sendAuthDataToApi,
+      config.userPageFeature.url);
 
     header.render(userData);
     const regExp = new RegExp(`\\?${config.userPageFeature.path}\\=[a-zA-Z0-9]+`);
