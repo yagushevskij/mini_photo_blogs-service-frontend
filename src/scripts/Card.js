@@ -8,7 +8,7 @@ export class Card {
     this._requestDislikeCardToApi = requestCardDislikeToApi;
     this._requestCardRemoveToApi = requestCardRemoveToApi;
     (userId) ? this._userId = userId : false;
-    console.log(userId)
+    // console.log(userId)
   };
 
   _like = () => {
@@ -32,7 +32,7 @@ export class Card {
 
   _hasOwnLike = () => this._item.likes.some(item => item === this._userId);
 
-  _isOwner = () => this._item.owner._id === this._userId;
+  _isOwner = () => (this._item.owner._id || this._item.owner) === this._userId;
 
   _remove = (event) => {
     event.stopImmediatePropagation();
@@ -85,6 +85,7 @@ export class Card {
     this._view.img.setAttribute('style', `background-image: url(${this._item.link})`);
     this._changeLikesCount();
     this._setEventListeners();
+    console.log(item)
     return this._view;
   };
 

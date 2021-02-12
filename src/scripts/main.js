@@ -19,50 +19,55 @@ import { SignupPopup } from './SignupPopup';
 import { SigninPopup } from './SigninPopup';
 import { FormValidator } from './FormValidator';
 import { Header } from './Header';
-import { User } from './User';
+// import { User } from './User';
 
+// Колбэки
+const requestCardLikeToApi = (cardId) => api.sendRequest({
+  method: config.reqApiParams.addLike.method,
+  url: config.reqApiParams.addLike.url + cardId,
+});
+const requestCardDislikeToApi = (cardId) => api.sendRequest({
+  method: config.reqApiParams.removeLike.method,
+  url: config.reqApiParams.removeLike.url + cardId,
+});
+const requestCardRemoveToApi = (cardId) => api.sendRequest({
+  method: config.reqApiParams.deleteCard.method,
+  url: config.reqApiParams.deleteCard.url + cardId,
+});
+const sendCardToApi = (...args) => api.sendRequest(config.reqApiParams.addCard, ...args);
+const sendRegDataToApi = (...args) => api.sendRequest(config.reqApiParams.signup, ...args);
+const sendAuthDataToApi = (...args) => api.sendRequest(config.reqApiParams.signin, ...args);
+const sendAvatarDataToApi = (...args) => api.sendRequest(config.reqApiParams.changeAvatar,
+  ...args);
+const sendUserDataToApi = (...args) => api.sendRequest(config.reqApiParams.changeUserInfo,
+  ...args);
+const createCard = (obj) => card.create(obj);
+const createFormValidator = (...args) => new FormValidator(...args, config.text);
+
+let userData = {};
 const api = new Api(config);
+// const user = new User();
+const header = new Header();
+const loader = new Loader();
+const cardList = new CardList(cardsContainer, createCard);
+const userInfo = new UserInfo(profileContainer, ['name', 'about'], ['avatar']);
+const imagePopup = new ImagePopup(document.querySelector('#image-popup'), popupContainer);
+const profilePopup = new ProfilePopup(document.querySelector('#profile-popup'), popupContainer, userInfo, sendUserDataToApi);
+const card = new Card(imagePopup, templateCard, requestCardLikeToApi,
+  requestCardDislikeToApi, requestCardRemoveToApi, userData._id);
+const cardPopup = new CardPopup(document.querySelector('#place-popup'), popupContainer, cardList.addCard, sendCardToApi);
+const avatarPopup = new AvatarPopup(document.querySelector('#avatar-popup'), popupContainer, userInfo, sendAvatarDataToApi);
+const signupPopup = new SignupPopup(signupPopupTemplate, popupContainer, sendRegDataToApi,
+  config.userPageFeature.url);
+const signinPopup = new SigninPopup(signinPopupTemplate, popupContainer, sendAuthDataToApi,
+  config.userPageFeature.url);
+
 api.sendRequest(config.reqApiParams.checkUserExist)
-  .then((userData) => {
-    // Колбэки
-    const requestCardLikeToApi = (cardId) => api.sendRequest({
-      method: config.reqApiParams.addLike.method,
-      url: config.reqApiParams.addLike.url + cardId,
-    });
-    const requestCardDislikeToApi = (cardId) => api.sendRequest({
-      method: config.reqApiParams.removeLike.method,
-      url: config.reqApiParams.removeLike.url + cardId,
-    });
-    const requestCardRemoveToApi = (cardId) => api.sendRequest({
-      method: config.reqApiParams.deleteCard.method,
-      url: config.reqApiParams.deleteCard.url + cardId,
-    });
-    const sendCardToApi = (...args) => api.sendRequest(config.reqApiParams.addCard, ...args);
-    const sendRegDataToApi = (...args) => api.sendRequest(config.reqApiParams.signup, ...args);
-    const sendAuthDataToApi = (...args) => api.sendRequest(config.reqApiParams.signin, ...args);
-    const sendAvatarDataToApi = (...args) => api.sendRequest(config.reqApiParams.changeAvatar,
-      ...args);
-    const sendUserDataToApi = (...args) => api.sendRequest(config.reqApiParams.changeUserInfo,
-      ...args);
-    const createCard = (obj) => card.create(obj);
-    const createFormValidator = (...args) => new FormValidator(...args, config.text);
-
-    const user = new User();
-    const header = new Header();
-    const loader = new Loader();
-    const cardList = new CardList(cardsContainer, createCard);
-    const userInfo = new UserInfo(profileContainer, ['name', 'about'], ['avatar']);
-    const imagePopup = new ImagePopup(document.querySelector('#image-popup'), popupContainer);
-    const profilePopup = new ProfilePopup(document.querySelector('#profile-popup'), popupContainer, userInfo, sendUserDataToApi);
-    const card = new Card(imagePopup, templateCard, requestCardLikeToApi,
-      requestCardDislikeToApi, requestCardRemoveToApi, userData._id);
-    const cardPopup = new CardPopup(document.querySelector('#place-popup'), popupContainer, cardList.addCard, sendCardToApi);
-    const avatarPopup = new AvatarPopup(document.querySelector('#avatar-popup'), popupContainer, userInfo, sendAvatarDataToApi);
-    const signupPopup = new SignupPopup(signupPopupTemplate, popupContainer, sendRegDataToApi,
-      config.userPageFeature.url);
-    const signinPopup = new SigninPopup(signinPopupTemplate, popupContainer, sendAuthDataToApi,
-      config.userPageFeature.url);
-
+  .then((res) => {
+    userData = res;
+  })
+  .catch((err) => console.log(err))
+  .finally(() => {
     header.render(userData);
     const regExp = new RegExp(`\\?${config.userPageFeature.path}\\=[a-zA-Z0-9]+`);
     if (regExp.test(config.userPageFeature.urlParams)) {
@@ -85,14 +90,10 @@ api.sendRequest(config.reqApiParams.checkUserExist)
             .then((cards) => {
               cardList.render(cards);
             })
-            .catch((err) => {
-              console.log(err);
-            })
+            .catch((err) => console.log(err))
             .finally(() => loader.changeStatus(cardsLoader, false));
         })
-        .catch((err) => {
-          console.log(err);
-        });
+        .catch((err) => console.log(err));
     } else {
       console.log('Главная');
     }
