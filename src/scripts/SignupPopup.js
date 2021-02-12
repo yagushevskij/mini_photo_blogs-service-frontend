@@ -7,8 +7,8 @@ export class SignupPopup extends FormPopup {
   }
   _submitAction = (data) => {
     localStorage.setItem('token', data.token);
-    localStorage.setItem('userId', data.user._id);
-    localStorage.setItem('username', data.user.username);
+    // localStorage.setItem('userId', data.user._id);
+    // localStorage.setItem('username', data.user.username);
     location.reload()
 };
 }

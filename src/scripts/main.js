@@ -4,21 +4,23 @@ import {
 }
   from './constants/selectors';
 
-import { config } from './data.js';
-import { Api } from './Api.js';
-import { Loader } from './Loader.js';
-import { UserInfo } from './UserInfo.js';
-import { Card } from './Card.js';
-import { CardList } from './CardList.js';
+import { config } from './data';
+import { Api } from './Api';
+import { Loader } from './Loader';
+import { UserInfo } from './UserInfo';
+import { Card } from './Card';
+import { CardList } from './CardList';
 // import {Popup} from './Popup.js';
 // import {FormPopup} from './FormPopup.js';
-import { AvatarPopup } from './AvatarPopup.js';
-import { CardPopup } from './CardPopup.js';
-import { ProfilePopup } from './ProfilePopup.js';
-import { ImagePopup } from './ImagePopup.js';
+import { AvatarPopup } from './AvatarPopup';
+import { CardPopup } from './CardPopup';
+import { ProfilePopup } from './ProfilePopup';
+import { ImagePopup } from './ImagePopup';
 import { SignupPopup } from './SignupPopup';
 import { SigninPopup } from './SigninPopup';
-import { FormValidator } from './FormValidator.js';
+import { FormValidator } from './FormValidator';
+import { Header } from './Header';
+import { User } from './User';
 
 (function () {
   const cardsContainer = document.querySelector('.places-list');
@@ -29,6 +31,7 @@ import { FormValidator } from './FormValidator.js';
 
   const createFormValidator = (...args) => new FormValidator(...args, config.text);
 
+  const header = new Header();
   const api = new Api(config);
   const loader = new Loader();
 
@@ -44,6 +47,7 @@ import { FormValidator } from './FormValidator.js';
     method: config.reqApiParams.deleteCard.method,
     url: config.reqApiParams.deleteCard.url + cardId,
   });
+  const requestUserExistToApi = () => api.sendRequest(config.reqApiParams.checkUserExist);
   const sendCardToApi = (...args) => api.sendRequest(config.reqApiParams.addCard, ...args);
   const sendRegDataToApi = (...args) => api.sendRequest(config.reqApiParams.signup, ...args);
   const sendAuthDataToApi = (...args) => api.sendRequest(config.reqApiParams.signin, ...args);
@@ -52,13 +56,13 @@ import { FormValidator } from './FormValidator.js';
   const sendUserDataToApi = (...args) => api.sendRequest(config.reqApiParams.changeUserInfo,
     ...args);
   const createCard = (obj) => new Card(imagePopup, templateCard, requestCardLikeToApi,
-    requestCardDislikeToApi, requestCardRemoveToApi, config.user.id).create(obj);
+    requestCardDislikeToApi, requestCardRemoveToApi, user.data._id).create(obj);
 
   const cardList = new CardList(cardsContainer, createCard);
   const { addCard } = cardList;
 
+  const user = new User(requestUserExistToApi);
   const userInfo = new UserInfo(profileContainer, ['name', 'about'], ['avatar']);
-
   const imagePopup = new ImagePopup(document.querySelector('#image-popup'), popupContainer);
   const profilePopup = new ProfilePopup(document.querySelector('#profile-popup'), popupContainer, userInfo, sendUserDataToApi);
   const cardPopup = new CardPopup(document.querySelector('#place-popup'), popupContainer, addCard, sendCardToApi);
@@ -87,6 +91,8 @@ import { FormValidator } from './FormValidator.js';
     signinPopup.open();
   });
 
+  user.updateUserData();
+  header.render();
   const urlParams = window.location.search;
   const regExp = new RegExp(`\\?${config.userPath}\\=[a-zA-Z0-9]+`);
   if (regExp.test(urlParams)) {

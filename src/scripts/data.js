@@ -42,15 +42,19 @@ export const config = {
       url: `${API_URL}/cards/user/`,
       method: 'GET',
     },
+    checkUserExist: {
+      url: `${API_URL}/users/me/`,
+      method: 'GET',
+    },
   },
   headers: {
     'Content-Type': 'application/json',
     authorization: `Bearer ${localStorage.getItem('token')}`
   },
-  user: {
-    id: localStorage.getItem('userId'),
-    username: localStorage.getItem('username'),
-  },
+  // user: {
+  //   id: localStorage.getItem('userId'),
+  //   username: localStorage.getItem('username'),
+  // },
   text: {
     inputClassName: '.popup__input',
     userNotFound: 'Пользователь не найден',
