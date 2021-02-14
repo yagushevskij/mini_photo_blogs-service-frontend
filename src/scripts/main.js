@@ -1,7 +1,8 @@
 import '../pages/index.css';
 import {
   cardsContainer, popupContainer, templateCard, profileContainer, cardsLoader,
-  signinButton, signupButton, signupPopupTemplate, signinPopupTemplate, userBlockContainer,
+  signinButton, signupButton, signupPopupTemplate, signinPopupTemplate, imagePopupTemplate,
+  profilePopupTemplate, cardPopupTemplate, avatarPopupTemplate, userBlockContainer,
 }
   from './constants/selectors';
 
@@ -59,12 +60,15 @@ api.sendRequest(config.reqApiParams.checkUserExist)
     const loader = new Loader();
     const cardList = new CardList(cardsContainer, createCard);
     const userInfo = new UserInfo(profileContainer, ['name', 'about'], ['avatar']);
-    const imagePopup = new ImagePopup(document.querySelector('#image-popup'), popupContainer);
-    const profilePopup = new ProfilePopup(document.querySelector('#profile-popup'), popupContainer, userInfo, sendUserDataToApi);
+    const imagePopup = new ImagePopup(imagePopupTemplate, popupContainer);
+    const profilePopup = new ProfilePopup(profilePopupTemplate, popupContainer, userInfo,
+      sendUserDataToApi);
     const card = new Card(imagePopup, templateCard, requestCardLikeToApi,
       requestCardDislikeToApi, requestCardRemoveToApi, userData._id);
-    const cardPopup = new CardPopup(document.querySelector('#place-popup'), popupContainer, cardList.addCard, sendCardToApi);
-    const avatarPopup = new AvatarPopup(document.querySelector('#avatar-popup'), popupContainer, userInfo, sendAvatarDataToApi);
+    const cardPopup = new CardPopup(cardPopupTemplate, popupContainer, cardList.addCard,
+      sendCardToApi);
+    const avatarPopup = new AvatarPopup(avatarPopupTemplate, popupContainer, userInfo,
+      sendAvatarDataToApi);
     const signupPopup = new SignupPopup(signupPopupTemplate, popupContainer, sendRegDataToApi,
       config.userPageFeature.url);
     const signinPopup = new SigninPopup(signinPopupTemplate, popupContainer, sendAuthDataToApi,
