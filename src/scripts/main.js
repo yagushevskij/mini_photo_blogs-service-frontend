@@ -1,8 +1,9 @@
 import '../pages/index.css';
 import {
-  cardsContainer, popupContainer, templateCard, profileContainer, cardsLoader,
-  signinButton, signupButton, signupPopupTemplate, signinPopupTemplate, imagePopupTemplate,
+  cardsContainer, popupContainer, cardTemplate, profileContainer, cardsLoader,
+  signupPopupTemplate, signinPopupTemplate, imagePopupTemplate,
   profilePopupTemplate, cardPopupTemplate, avatarPopupTemplate, userBlockContainer,
+  userMenuTemplate, userLinksTemplate,
 }
   from './constants/selectors';
 
@@ -20,7 +21,7 @@ import { SignupPopup } from './SignupPopup';
 import { SigninPopup } from './SigninPopup';
 import { FormValidator } from './FormValidator';
 import { Header } from './Header';
-// import { User } from './User';
+import { UserMenu } from './UserMenu';
 
 // Колбэки
 const requestCardLikeToApi = (cardId) => api.sendRequest({
@@ -51,29 +52,30 @@ const header = new Header(userBlockContainer);
 api.sendRequest(config.reqApiParams.checkUserExist)
   .then((res) => {
     userData = res;
-    header.render(userData);
   })
   .catch((err) => console.log(err))
   .finally(() => {
     const createCard = (obj) => card.create(obj);
     const createFormValidator = (...args) => new FormValidator(...args, config.text);
+    const signupPopup = new SignupPopup(signupPopupTemplate, popupContainer, createFormValidator,
+      sendRegDataToApi, config.userPageFeature.url);
+    const signinPopup = new SigninPopup(signinPopupTemplate, popupContainer, createFormValidator,
+      sendAuthDataToApi, config.userPageFeature.url);
     const loader = new Loader();
+    const userMenu = new UserMenu(userMenuTemplate, userLinksTemplate,
+      signupPopup.open, signinPopup.open).create(userData);
     const cardList = new CardList(cardsContainer, createCard);
     const userInfo = new UserInfo(profileContainer, ['name', 'about'], ['avatar']);
     const imagePopup = new ImagePopup(imagePopupTemplate, popupContainer);
-    const profilePopup = new ProfilePopup(profilePopupTemplate, popupContainer, userInfo,
-      sendUserDataToApi);
-    const card = new Card(imagePopup, templateCard, requestCardLikeToApi,
+    const profilePopup = new ProfilePopup(profilePopupTemplate, popupContainer, createFormValidator,
+      sendUserDataToApi, userInfo);
+    const card = new Card(imagePopup, cardTemplate, requestCardLikeToApi,
       requestCardDislikeToApi, requestCardRemoveToApi, userData._id);
-    const cardPopup = new CardPopup(cardPopupTemplate, popupContainer, cardList.addCard,
-      sendCardToApi);
-    const avatarPopup = new AvatarPopup(avatarPopupTemplate, popupContainer, userInfo,
-      sendAvatarDataToApi);
-    const signupPopup = new SignupPopup(signupPopupTemplate, popupContainer, sendRegDataToApi,
-      config.userPageFeature.url);
-    const signinPopup = new SigninPopup(signinPopupTemplate, popupContainer, sendAuthDataToApi,
-      config.userPageFeature.url);
-    // header.render(userData);
+    const cardPopup = new CardPopup(cardPopupTemplate, popupContainer, createFormValidator,
+      sendCardToApi, cardList.addCard);
+    const avatarPopup = new AvatarPopup(avatarPopupTemplate, popupContainer, createFormValidator,
+      sendAvatarDataToApi, userInfo);
+    header.render(userMenu);
     const regExp = new RegExp(`\\?${config.userPageFeature.path}\\=[a-zA-Z0-9]+`);
     if (regExp.test(config.userPageFeature.urlParams)) {
       const username = config.userPageFeature.urlParams.replace(`?${config.userPageFeature.path}=`, '');
@@ -103,24 +105,19 @@ api.sendRequest(config.reqApiParams.checkUserExist)
       console.log('Главная');
     }
     document.querySelector('.user-info__button').addEventListener('click', () => {
-      cardPopup.create(createFormValidator);
       cardPopup.open();
     });
     document.querySelector('.user-info__edit-button').addEventListener('click', () => {
-      profilePopup.create(createFormValidator);
       profilePopup.getInformation();
       profilePopup.open();
     });
     document.querySelector('.user-info__avatar').addEventListener('click', () => {
-      avatarPopup.create(createFormValidator);
       avatarPopup.open();
     });
-    signupButton.addEventListener('click', () => {
-      signupPopup.create(createFormValidator);
-      signupPopup.open();
-    });
-    signinButton.addEventListener('click', () => {
-      signinPopup.create(createFormValidator);
-      signinPopup.open();
-    });
+    // signupButton.addEventListener('click', () => {
+    //   signupPopup.open();
+    // });
+    // signinButton.addEventListener('click', () => {
+    //   signinPopup.open();
+    // });
   });

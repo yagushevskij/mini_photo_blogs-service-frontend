@@ -14,8 +14,6 @@
     <header class="header root__section">
       <a href="/"><img src="<%=require('./images/logo.svg')%>" alt="mesto logo" class="logo"></a>
       <div class="header__user-container">
-        <button class="button header__button header__button_type_signin">Вход</button>
-        <button class="button header__button header__button_type_signup">Регистрация</button>
       </div>
     </header>
     <div class="profile root__section">
@@ -140,15 +138,20 @@
     <template id="user-menu">
       <div class="dropdown">
         <div class="dropdown__mainmenu">
-          <img class="dropdown__mainmenubtn" src="https://pbs.twimg.com/profile_images/2881220369/2b27ac38b43b17a8c5eacfc443ce3384_400x400.jpeg" alt="">
+          <img class="dropdown__mainmenubtn" src="" alt="">
           <span class="dropdown__carret"></span>
         </div>
-        <ul class="dropdown__child dropdown__child_is-visible">
+        <ul class="dropdown__child">
           <li class="dropdown__item dropdown__item_type_greeting"><a href="" class="dropdown__link">username</a></li>
           <li class="dropdown__item"><a href="" class="dropdown__link">Подраздел 2</a></li>
           <li class="dropdown__item"><a href="" class="dropdown__link">Подраздел 3</a></li>
         </ul>
       </div>
+    </template>
+
+    <template id="user-links">
+      <button class="button header__button header__button_type_signin">Вход</button>
+      <button class="button header__button header__button_type_signup">Регистрация</button>
     </template>
 
   </div>

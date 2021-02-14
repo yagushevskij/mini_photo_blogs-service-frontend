@@ -3,7 +3,6 @@ export class Api {
     this._headers = config.headers;
   }
   sendRequest = async (objParams, dataObj) => {
-    // console.log(objParams, dataObj)
     const { url, method } = objParams;
     const res = await fetch(url, {
       method: method,

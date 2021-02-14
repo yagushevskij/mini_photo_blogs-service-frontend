@@ -1,12 +1,15 @@
 'use strict';
 export class Popup {
 
-  constructor(container, markup) {
+  constructor(container, markup, createFormValidator, sendCardToApi) {
     this._container = container;
     this._markup = markup;
+    this._createFormValidator = createFormValidator;
+    this._sendDataToApi = sendCardToApi;
   };
 
   open = () => {
+    this.create();
     this._container.classList.toggle('popup_is-opened');
     this._setEventListeners();
   };

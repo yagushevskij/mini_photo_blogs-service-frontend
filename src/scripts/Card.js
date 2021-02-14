@@ -1,9 +1,9 @@
 'use strict';
 export class Card {
 
-  constructor(imagePopup, templateCard, requestCardLikeToApi, requestCardDislikeToApi, requestCardRemoveToApi, userId) {
+  constructor(imagePopup, cardTemplate, requestCardLikeToApi, requestCardDislikeToApi, requestCardRemoveToApi, userId) {
     this._imagePopup = imagePopup;
-    this._templateCard = templateCard;
+    this._cardTemplate = cardTemplate;
     this._requestLikeCardToApi = requestCardLikeToApi;
     this._requestDislikeCardToApi = requestCardDislikeToApi;
     this._requestCardRemoveToApi = requestCardRemoveToApi;
@@ -31,12 +31,12 @@ export class Card {
   }
 
   _hasOwnLike = () => {
-    console.log(this._item.likes, this._userId)
+    // console.log(this._item.likes, this._userId)
     return this._item.likes.some(item => item === this._userId)
   };
 
   _isOwner = () => {
-    console.log(this._userId)
+    // console.log(this._userId)
     return (this._item.owner._id || this._item.owner) === this._userId;
   };
 
@@ -74,9 +74,9 @@ export class Card {
   };
 
   create = (item) => {
-    console.log(item)
+    // console.log(item)
     this._item = item;
-    this._view = this._templateCard.cloneNode(true).children[0];
+    this._view = this._cardTemplate.content.cloneNode(true).children[0];
     this._view.dataset.id = this._item._id;
     this._view.querySelector('.place-card__name').textContent = this._item.name;
     this._view.img = this._view.querySelector('.place-card__image');

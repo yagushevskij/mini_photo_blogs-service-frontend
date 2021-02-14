@@ -2,10 +2,9 @@
 import { FormPopup } from './FormPopup.js';
 export class AvatarPopup extends FormPopup {
 
-  constructor(markup, container, userInfo, sendAvatarDataToApi) {
-    super(container, markup);
+  constructor(markup, container, createFormValidator, sendAvatarDataToApi, userInfo) {
+    super(container, markup, createFormValidator, sendAvatarDataToApi);
     this._userInfo = userInfo;
-    this._sendDataToApi = sendAvatarDataToApi;
   };
 
   _submitAction = (userData) => {

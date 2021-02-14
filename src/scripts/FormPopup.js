@@ -2,13 +2,13 @@
 import { Popup } from './Popup.js';
 export class FormPopup extends Popup {
 
-  constructor(container, markup) {
-    super(container, markup)
+  constructor(container, markup, createFormValidator, sendCardToApi) {
+    super(container, markup, createFormValidator, sendCardToApi)
   }
 
-  create = (formValidator) => {
+  create = () => {
     super.create();
-    this._formValidator = formValidator(this._view.querySelector('.popup__form'));
+    this._formValidator = this._createFormValidator(this._view.querySelector('.popup__form'));
   };
 
   _getDataObj = (elem) => {

@@ -2,10 +2,9 @@
 import {FormPopup} from './FormPopup.js';
 export class CardPopup extends FormPopup {
 
-    constructor(markup, container, addCard, sendCardToApi) {
-        super(container, markup);
+    constructor(markup, container, createFormValidator, sendCardToApi, addCard) {
+        super(container, markup, createFormValidator, sendCardToApi);
         this._addCard = addCard;
-        this._sendDataToApi = sendCardToApi;
     };
 
     _submitAction = (obj) => {

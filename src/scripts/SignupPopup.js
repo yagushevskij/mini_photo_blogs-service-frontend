@@ -1,9 +1,8 @@
 import { FormPopup } from './FormPopup';
 
 export class SignupPopup extends FormPopup {
-  constructor(markup, container, sendRegDataToApi, userPageUrl) {
-    super(container, markup);
-    this._sendDataToApi = sendRegDataToApi;
+  constructor(markup, container, createFormValidator, sendRegDataToApi, userPageUrl) {
+    super(container, markup, createFormValidator, sendRegDataToApi);
     this._userPageUrl = userPageUrl;
   }
   _submitAction = (data) => {
