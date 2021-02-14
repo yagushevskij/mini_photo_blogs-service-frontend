@@ -1,6 +1,6 @@
 export class Api {
-  constructor(config) {
-    this._headers = config.headers;
+  constructor(headers) {
+    this._headers = headers;
   }
   sendRequest = async (objParams, dataObj) => {
     const { url, method } = objParams;

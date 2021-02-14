@@ -3,7 +3,7 @@ import {
   cardsContainer, popupContainer, cardTemplate, profileContainer, cardsLoader,
   signupPopupTemplate, signinPopupTemplate, imagePopupTemplate,
   profilePopupTemplate, cardPopupTemplate, avatarPopupTemplate, userBlockContainer,
-  userMenuTemplate, userLinksTemplate,
+  userMenuTemplate, userLinksTemplate, addCardBtn, editProfileBtn, updateAvatarBtn,
 }
   from './constants/selectors';
 
@@ -45,9 +45,8 @@ const sendUserDataToApi = (...args) => api.sendRequest(config.reqApiParams.chang
   ...args);
 
 let userData = {};
-const api = new Api(config);
+const api = new Api(config.headers);
 const header = new Header(userBlockContainer);
-// const user = new User();
 
 api.sendRequest(config.reqApiParams.checkUserExist)
   .then((res) => {
@@ -104,20 +103,14 @@ api.sendRequest(config.reqApiParams.checkUserExist)
     } else {
       console.log('Главная');
     }
-    document.querySelector('.user-info__button').addEventListener('click', () => {
+    addCardBtn.addEventListener('click', () => {
       cardPopup.open();
     });
-    document.querySelector('.user-info__edit-button').addEventListener('click', () => {
+    editProfileBtn.addEventListener('click', () => {
       profilePopup.getInformation();
       profilePopup.open();
     });
-    document.querySelector('.user-info__avatar').addEventListener('click', () => {
+    updateAvatarBtn.addEventListener('click', () => {
       avatarPopup.open();
     });
-    // signupButton.addEventListener('click', () => {
-    //   signupPopup.open();
-    // });
-    // signinButton.addEventListener('click', () => {
-    //   signinPopup.open();
-    // });
   });

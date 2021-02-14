@@ -1,7 +1,6 @@
 export class Header {
-  constructor(userBlockContainer, userLinksTemplate) {
+  constructor(userBlockContainer) {
     this.userBlockContainer = userBlockContainer;
-    this.userLinksTemplate = userLinksTemplate;
   }
   render = ({ userMenu }) => {
     this.userBlockContainer.append(userMenu);
