@@ -1,0 +1,11 @@
+.dropdown__carret {
+  content: '';
+  width: 0; 
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 10px solid #a8a8a8;
+  position: absolute;
+  bottom: 0px;
+  left: 102%;
+}

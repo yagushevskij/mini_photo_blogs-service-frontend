@@ -14,6 +14,7 @@
 @import url(../blocks/place-popup/place-popup.css);
 @import url(../blocks/profile-popup/profile-popup.css);
 @import url(../blocks/loader/loader.css);
+@import url(../blocks/dropdown/dropdown.css);
 
 body {
   background-color: #000;

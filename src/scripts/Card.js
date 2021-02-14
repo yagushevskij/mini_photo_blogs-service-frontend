@@ -7,7 +7,7 @@ export class Card {
     this._requestLikeCardToApi = requestCardLikeToApi;
     this._requestDislikeCardToApi = requestCardDislikeToApi;
     this._requestCardRemoveToApi = requestCardRemoveToApi;
-    (userId) ? this._userId = userId : false;
+    this._userId = userId
     // console.log(userId)
   };
 
@@ -30,9 +30,15 @@ export class Card {
     this._view.likeCount.textContent = this._item.likes.length;
   }
 
-  _hasOwnLike = () => this._item.likes.some(item => item === this._userId);
+  _hasOwnLike = () => {
+    console.log(this._item.likes, this._userId)
+    return this._item.likes.some(item => item === this._userId)
+  };
 
-  _isOwner = () => (this._item.owner._id || this._item.owner) === this._userId;
+  _isOwner = () => {
+    console.log(this._userId)
+    return (this._item.owner._id || this._item.owner) === this._userId;
+  };
 
   _remove = (event) => {
     event.stopImmediatePropagation();
@@ -68,6 +74,7 @@ export class Card {
   };
 
   create = (item) => {
+    console.log(item)
     this._item = item;
     this._view = this._templateCard.cloneNode(true).children[0];
     this._view.dataset.id = this._item._id;
@@ -85,7 +92,6 @@ export class Card {
     this._view.img.setAttribute('style', `background-image: url(${this._item.link})`);
     this._changeLikesCount();
     this._setEventListeners();
-    console.log(item)
     return this._view;
   };
 

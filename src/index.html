@@ -137,6 +137,20 @@
       </div>
     </template>
 
+    <template id="user-menu">
+      <div class="dropdown">
+        <div class="dropdown__mainmenu">
+          <img class="dropdown__mainmenubtn" src="https://pbs.twimg.com/profile_images/2881220369/2b27ac38b43b17a8c5eacfc443ce3384_400x400.jpeg" alt="">
+          <span class="dropdown__carret"></span>
+        </div>
+        <ul class="dropdown__child dropdown__child_is-visible">
+          <li class="dropdown__item dropdown__item_type_greeting"><a href="" class="dropdown__link">username</a></li>
+          <li class="dropdown__item"><a href="" class="dropdown__link">Подраздел 2</a></li>
+          <li class="dropdown__item"><a href="" class="dropdown__link">Подраздел 3</a></li>
+        </ul>
+      </div>
+    </template>
+
   </div>
   <script type="module" src="<%= htmlWebpackPlugin.files.js %>"></script>
 </body>

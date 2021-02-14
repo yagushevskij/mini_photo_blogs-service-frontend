@@ -7,8 +7,9 @@ const signinButton = document.querySelector('.header__button_type_signin');
 const signupButton = document.querySelector('.header__button_type_signup');
 const signupPopupTemplate = document.querySelector('#signup-popup');
 const signinPopupTemplate = document.querySelector('#signin-popup');
+const userBlockContainer = document.querySelector('.header__user-container');
 
 export {
   cardsContainer, popupContainer, templateCard, profileContainer, cardsLoader, signinButton,
-  signupButton, signupPopupTemplate, signinPopupTemplate,
+  signupButton, signupPopupTemplate, signinPopupTemplate, userBlockContainer,
 };

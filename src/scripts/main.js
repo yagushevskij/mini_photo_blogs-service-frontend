@@ -1,7 +1,7 @@
 import '../pages/index.css';
 import {
   cardsContainer, popupContainer, templateCard, profileContainer, cardsLoader,
-  signinButton, signupButton, signupPopupTemplate, signinPopupTemplate,
+  signinButton, signupButton, signupPopupTemplate, signinPopupTemplate, userBlockContainer,
 }
   from './constants/selectors';
 
@@ -41,34 +41,35 @@ const sendAvatarDataToApi = (...args) => api.sendRequest(config.reqApiParams.cha
   ...args);
 const sendUserDataToApi = (...args) => api.sendRequest(config.reqApiParams.changeUserInfo,
   ...args);
-const createCard = (obj) => card.create(obj);
-const createFormValidator = (...args) => new FormValidator(...args, config.text);
 
 let userData = {};
 const api = new Api(config);
+const header = new Header(userBlockContainer);
 // const user = new User();
-const header = new Header();
-const loader = new Loader();
-const cardList = new CardList(cardsContainer, createCard);
-const userInfo = new UserInfo(profileContainer, ['name', 'about'], ['avatar']);
-const imagePopup = new ImagePopup(document.querySelector('#image-popup'), popupContainer);
-const profilePopup = new ProfilePopup(document.querySelector('#profile-popup'), popupContainer, userInfo, sendUserDataToApi);
-const card = new Card(imagePopup, templateCard, requestCardLikeToApi,
-  requestCardDislikeToApi, requestCardRemoveToApi, userData._id);
-const cardPopup = new CardPopup(document.querySelector('#place-popup'), popupContainer, cardList.addCard, sendCardToApi);
-const avatarPopup = new AvatarPopup(document.querySelector('#avatar-popup'), popupContainer, userInfo, sendAvatarDataToApi);
-const signupPopup = new SignupPopup(signupPopupTemplate, popupContainer, sendRegDataToApi,
-  config.userPageFeature.url);
-const signinPopup = new SigninPopup(signinPopupTemplate, popupContainer, sendAuthDataToApi,
-  config.userPageFeature.url);
 
 api.sendRequest(config.reqApiParams.checkUserExist)
   .then((res) => {
     userData = res;
+    header.render(userData);
   })
   .catch((err) => console.log(err))
   .finally(() => {
-    header.render(userData);
+    const createCard = (obj) => card.create(obj);
+    const createFormValidator = (...args) => new FormValidator(...args, config.text);
+    const loader = new Loader();
+    const cardList = new CardList(cardsContainer, createCard);
+    const userInfo = new UserInfo(profileContainer, ['name', 'about'], ['avatar']);
+    const imagePopup = new ImagePopup(document.querySelector('#image-popup'), popupContainer);
+    const profilePopup = new ProfilePopup(document.querySelector('#profile-popup'), popupContainer, userInfo, sendUserDataToApi);
+    const card = new Card(imagePopup, templateCard, requestCardLikeToApi,
+      requestCardDislikeToApi, requestCardRemoveToApi, userData._id);
+    const cardPopup = new CardPopup(document.querySelector('#place-popup'), popupContainer, cardList.addCard, sendCardToApi);
+    const avatarPopup = new AvatarPopup(document.querySelector('#avatar-popup'), popupContainer, userInfo, sendAvatarDataToApi);
+    const signupPopup = new SignupPopup(signupPopupTemplate, popupContainer, sendRegDataToApi,
+      config.userPageFeature.url);
+    const signinPopup = new SigninPopup(signinPopupTemplate, popupContainer, sendAuthDataToApi,
+      config.userPageFeature.url);
+    // header.render(userData);
     const regExp = new RegExp(`\\?${config.userPageFeature.path}\\=[a-zA-Z0-9]+`);
     if (regExp.test(config.userPageFeature.urlParams)) {
       const username = config.userPageFeature.urlParams.replace(`?${config.userPageFeature.path}=`, '');
