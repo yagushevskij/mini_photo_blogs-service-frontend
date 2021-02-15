@@ -1,4 +1,3 @@
-'use strict';
 export class Popup {
 
   constructor(container, markup, createFormValidator, sendCardToApi) {
@@ -8,8 +7,10 @@ export class Popup {
     this._sendDataToApi = sendCardToApi;
   };
 
-  open = (data) => {
-    this.create(data);
+  open = (userData) => {
+    this.create();
+    //Если у попапа есть свойство для обновления данных в полях и эти данные пришли
+    (this.hasOwnProperty('_updateInformation') && (userData)) ? this._updateInformation(userData) : false;
     this._container.classList.toggle('popup_is-opened');
     this._setEventListeners();
   };

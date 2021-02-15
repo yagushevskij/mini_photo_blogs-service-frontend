@@ -1,24 +1,20 @@
-'use strict';
 import {FormPopup} from './FormPopup.js';
 export class ProfilePopup extends FormPopup {
 
-    constructor(markup, container, createFormValidator, sendUserDataToApi, userInfo) {
+    constructor(markup, container, createFormValidator, sendUserDataToApi, updateUserInfo, updateUserMenu) {
         super(container, markup, createFormValidator, sendUserDataToApi);
-        this._userInfo = userInfo;
+        this._updateUserInfo = updateUserInfo;
+        this._updateUserMenu = updateUserMenu;
     };
 
-    /*
-        Можно лучше: Метод не возвращает информацию, а обновляет. Лучше назвать, например, updateInformation.
-     */
-    getInformation = () => {
-      console.log(this._view)
+    _updateInformation = (userData) => {
         Array.from(this._view.querySelectorAll('.popup__input')).forEach((elem) => {
-            elem.value = this._userInfo.obj[elem.name];
+            elem.value = userData[elem.name];
         })
     };
 
     _submitAction = (userData) => {
-      this._userInfo.setUserInfo(userData)
-      this._userInfo.updateUserInfo();
+      this._updateUserInfo(userData);
+      this._updateUserMenu(userData);
     };
 }

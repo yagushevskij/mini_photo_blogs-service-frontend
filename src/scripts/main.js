@@ -3,8 +3,7 @@ import {
   cardsContainer, popupContainer, cardTemplate, profileContainer, cardsLoader,
   signupPopupTemplate, signinPopupTemplate, imagePopupTemplate,
   profilePopupTemplate, cardPopupTemplate, avatarPopupTemplate, userBlockContainer,
-  userMenuTemplate, userLinksTemplate, addCardBtn, editProfileBtn, updateAvatarBtn,
-  profileTemplate,
+  userMenuTemplate, userLinksTemplate, profileTemplate,
 }
   from './constants/selectors';
 
@@ -42,16 +41,33 @@ const removeCardRequest = (cardId) => sendApiRequest({
   method: config.reqApiParams.deleteCard.method,
   url: config.reqApiParams.deleteCard.url + cardId,
 });
+const updateUserInfo = (...args) => userInfo.update(...args);
+const updateUserMenu = (...args) => userMenu.update(...args);
 
+const createFormValidator = (...args) => new FormValidator(...args, config.text);
 const createCard = (...args) => new Card(openImagePopup, cardTemplate, addLikeRequest,
   removeLikeRequest, removeCardRequest).create(user.data._id, ...args);
+const openCardPopup = () => new CardPopup(cardPopupTemplate, popupContainer, createFormValidator,
+  sendCardToApi, cardList.addCard).open();
+const openAvatarPopup = () => new AvatarPopup(avatarPopupTemplate, popupContainer,
+  createFormValidator, sendAvatarDataToApi, updateUserInfo, updateUserMenu).open();
+const openProfilePopup = () => new ProfilePopup(profilePopupTemplate, popupContainer,
+  createFormValidator, sendUserDataToApi, updateUserInfo, updateUserMenu).open(user.data);
+const openSignupPopup = () => new SignupPopup(signupPopupTemplate, popupContainer,
+  createFormValidator, sendRegDataToApi, config.userPageFeature.url).open();
+const openSigninPopup = () => new SigninPopup(signinPopupTemplate, popupContainer,
+  createFormValidator, sendAuthDataToApi, config.userPageFeature.url).open();
 
 const api = new Api(config.headers);
 const user = new User();
 const header = new Header(userBlockContainer);
-const userInfo = new UserInfo(profileContainer, profileTemplate, ['name', 'about'], ['avatar']);
+const userInfo = new UserInfo(profileContainer, profileTemplate, openCardPopup, openAvatarPopup,
+  openProfilePopup, ['name', 'about']);
 const imagePopup = new ImagePopup(imagePopupTemplate, popupContainer);
-
+const cardList = new CardList(cardsContainer, createCard);
+const userMenu = new UserMenu(userMenuTemplate, userLinksTemplate,
+  openSignupPopup, openSigninPopup);
+const loader = new Loader();
 
 const sendCardToApi = (...args) => api.sendRequest(config.reqApiParams.addCard, ...args);
 const sendRegDataToApi = (...args) => api.sendRequest(config.reqApiParams.signup, ...args);
@@ -68,23 +84,7 @@ checkUserExist
   })
   .catch((err) => console.log(err))
   .finally(() => {
-    const createFormValidator = (...args) => new FormValidator(...args, config.text);
-    const signupPopup = new SignupPopup(signupPopupTemplate, popupContainer, createFormValidator,
-      sendRegDataToApi, config.userPageFeature.url);
-    const signinPopup = new SigninPopup(signinPopupTemplate, popupContainer, createFormValidator,
-      sendAuthDataToApi, config.userPageFeature.url);
-    const loader = new Loader();
-    const userMenu = new UserMenu(userMenuTemplate, userLinksTemplate,
-      signupPopup.open, signinPopup.open).create(user.data);
-    const cardList = new CardList(cardsContainer, createCard);
-    const profilePopup = new ProfilePopup(profilePopupTemplate, popupContainer, createFormValidator,
-      sendUserDataToApi, userInfo);
-    const cardPopup = new CardPopup(cardPopupTemplate, popupContainer, createFormValidator,
-      sendCardToApi, cardList.addCard);
-    const avatarPopup = new AvatarPopup(avatarPopupTemplate, popupContainer, createFormValidator,
-      sendAvatarDataToApi, userInfo);
-    header.render(userMenu);
-
+    header.render(userMenu.create(user.data));
     const regExp = new RegExp(`\\?${config.userPageFeature.path}\\=[a-zA-Z0-9]+`);
     if (regExp.test(config.userPageFeature.urlParams)) {
       const username = config.userPageFeature.urlParams.replace(`?${config.userPageFeature.path}=`, '');
@@ -95,8 +95,6 @@ checkUserExist
       })
         .then((res) => {
           userInfo.render(user.data, res);
-          userInfo.setUserInfo();
-          userInfo.updateUserInfo();
           return res;
         })
         .then((res) => {

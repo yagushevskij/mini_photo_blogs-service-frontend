@@ -1,4 +1,3 @@
-'use strict';
 import { Popup } from './Popup.js';
 export class FormPopup extends Popup {
 
@@ -28,7 +27,6 @@ export class FormPopup extends Popup {
   _submit = () => {
     event.preventDefault();
     this._changeButtonText(this._view);
-    // console.log(this._getDataObj(this._view))
     this._sendDataToApi(this._getDataObj(this._view))
       .then((obj) => {
         this._submitAction(obj);

@@ -14,11 +14,11 @@ export class UserMenu extends BaseComponent {
     if (this._isUserDataExist()) {
       this._view = this.userMenuTemplate.content.cloneNode(true).children[0];
       // this._view.dataset.id = this._item._id;
-      const imgBtn = this._view.querySelector('.dropdown__mainmenubtn');
+      this._imgBtn = this._view.querySelector('.dropdown__mainmenubtn');
       const dropdown = this._view.querySelector('.dropdown__mainmenu');
       this._menu = this._view.querySelector('.dropdown__child');
       // this._view.querySelector('.place-card__name').textContent = this._item.name;
-      imgBtn.setAttribute('src', userData.avatar);
+      this._imgBtn.setAttribute('src', userData.avatar);
       this._handlersArr = [
         {
           element: dropdown,
@@ -49,6 +49,11 @@ export class UserMenu extends BaseComponent {
       return {userMenu: this._view};
     }
   }
+
+  update = (userData) => {
+    console.log('123')
+    this._imgBtn.setAttribute('src', userData.avatar)
+  };
 
   _isUserDataExist = () => Object.keys(this._userData).length != 0;
 
