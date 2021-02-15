@@ -55,7 +55,7 @@ export class UserMenu extends BaseComponent {
     this._imgBtn.setAttribute('src', userData.avatar)
   };
 
-  _isUserDataExist = () => Object.keys(this._userData).length != 0;
+  _isUserDataExist = () => (this._userData) ? Object.keys(this._userData).length != 0 : false;
 
   _open = () => this._menu.classList.add('dropdown__child_is-visible');
 }
