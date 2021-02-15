@@ -1,5 +1,8 @@
+@import url('./_is-visible/user-info__button_is-visible.css');
+
 .user-info__button {
   position: absolute;
+  display: none;
   top: 16px;
   right: 0;
   width: 150px;

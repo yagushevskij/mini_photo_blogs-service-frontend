@@ -1,21 +1,17 @@
 'use strict';
 export class Card {
 
-  constructor(imagePopup, cardTemplate, requestCardLikeToApi, requestCardDislikeToApi, requestCardRemoveToApi, userId) {
-    this._imagePopup = imagePopup;
+  constructor(openPopup, cardTemplate, requestApiLike, requestApiDislike, requestApiRemoveCard) {
+    this._openPopup = openPopup;
     this._cardTemplate = cardTemplate;
-    this._requestLikeCardToApi = requestCardLikeToApi;
-    this._requestDislikeCardToApi = requestCardDislikeToApi;
-    this._requestCardRemoveToApi = requestCardRemoveToApi;
-    this._userId = userId
-    // console.log(userId)
+    this._requestApiLike = requestApiLike;
+    this._requestApiDislike = requestApiDislike;
+    this._requestApiRemoveCard = requestApiRemoveCard;
   };
 
   _like = () => {
-    const changeLike = this._hasOwnLike() ? this._requestDislikeCardToApi : this._requestLikeCardToApi;
-    // console.log(this._hasOwnLike(), this._userId)
+    const changeLike = this._hasOwnLike() ? this._requestApiDislike : this._requestApiLike;
     changeLike(this._item._id)
-    // this._api.changeData({ url: this._api.cardsApiUrl + '/' + this._api.paths.like, id: this._view.getAttribute('data-id'), method: method })
       .then((res) => {
         this._item = res;
         this._changeLikesCount();
@@ -26,23 +22,15 @@ export class Card {
       });
   };
 
-  _changeLikesCount = () => {
-    this._view.likeCount.textContent = this._item.likes.length;
-  }
+  _changeLikesCount = () => this._view.likeCount.textContent = this._item.likes.length;
 
-  _hasOwnLike = () => {
-    // console.log(this._item.likes, this._userId)
-    return this._item.likes.some(item => item === this._userId)
-  };
+  _hasOwnLike = () => this._item.likes.some(item => item === this._userId);
 
-  _isOwner = () => {
-    // console.log(this._userId)
-    return (this._item.owner._id || this._item.owner) === this._userId;
-  };
+  _isOwner = () => (this._item.owner._id || this._item.owner) === this._userId; //В зависимости от типа запроса с сервера приходят данные владельца в разных свойствах;
 
   _remove = (event) => {
     event.stopImmediatePropagation();
-    this._requestCardRemoveToApi(this._getCardId())
+    this._requestApiRemoveCard(this._item._id)
       .then(() => {
         this._removeEventListeners()
         this._view.remove()
@@ -51,8 +39,6 @@ export class Card {
         console.log(err);
       });
   };
-
-  _getCardId = () => this._view.getAttribute('data-id');
 
   _handleRemove = () => {
     if (confirm("Вы действительно хотите удалить эту карточку?")) {
@@ -73,12 +59,10 @@ export class Card {
     }
   };
 
-  create = (item) => {
-    // console.log(item)
+  create = (userId, item) => {
+    this._userId = userId;
     this._item = item;
     this._view = this._cardTemplate.content.cloneNode(true).children[0];
-    this._view.dataset.id = this._item._id;
-    this._view.querySelector('.place-card__name').textContent = this._item.name;
     this._view.img = this._view.querySelector('.place-card__image');
     this._view.likeIcon = this._view.querySelector('.place-card__like-icon');
     this._view.likeCount = this._view.querySelector('.place-card__like-counter');
@@ -89,15 +73,16 @@ export class Card {
     if (this._hasOwnLike()) {
       this._view.likeIcon.classList.add('place-card__like-icon_liked');
     }
+    this._view.querySelector('.place-card__name').textContent = this._item.name;
     this._view.img.setAttribute('style', `background-image: url(${this._item.link})`);
+    this._view.dataset.id = this._item._id;
     this._changeLikesCount();
     this._setEventListeners();
     return this._view;
   };
 
   _open = () => {
-    this._imagePopup.create(this._item.link);
-    this._imagePopup.open();
+    this._openPopup(this._item.link)
   };
 
   _setEventListeners = () => {

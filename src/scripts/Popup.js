@@ -8,8 +8,8 @@ export class Popup {
     this._sendDataToApi = sendCardToApi;
   };
 
-  open = () => {
-    this.create();
+  open = (data) => {
+    this.create(data);
     this._container.classList.toggle('popup_is-opened');
     this._setEventListeners();
   };

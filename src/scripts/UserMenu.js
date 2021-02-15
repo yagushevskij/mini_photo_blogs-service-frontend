@@ -11,7 +11,6 @@ export class UserMenu extends BaseComponent {
 
   create = (userData) => {
     this._userData = userData;
-    console.log(userData)
     if (this._isUserDataExist()) {
       this._view = this.userMenuTemplate.content.cloneNode(true).children[0];
       // this._view.dataset.id = this._item._id;
