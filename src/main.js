@@ -1,28 +1,28 @@
-import '../pages/index.css';
+import './pages/index.css';
 import {
   cardsContainer, popupContainer, cardTemplate, profileContainer, cardsLoader,
   signupPopupTemplate, signinPopupTemplate, imagePopupTemplate,
   profilePopupTemplate, cardPopupTemplate, avatarPopupTemplate, userBlockContainer,
   userMenuTemplate, userLinksTemplate, profileTemplate,
 }
-  from './constants/selectors';
+  from './scripts/constants/selectors';
 
-import config from './data';
-import { Api } from './Api';
-import { Loader } from './Loader';
-import { UserInfo } from './UserInfo';
-import { Card } from './Card';
-import { CardList } from './CardList';
-import { AvatarPopup } from './AvatarPopup';
-import { CardPopup } from './CardPopup';
-import { ProfilePopup } from './ProfilePopup';
-import { ImagePopup } from './ImagePopup';
-import { SignupPopup } from './SignupPopup';
-import { SigninPopup } from './SigninPopup';
-import { FormValidator } from './FormValidator';
-import { Header } from './Header';
-import { UserMenu } from './UserMenu';
-import { User } from './User';
+import config from './scripts/constants/data';
+import { Api } from './scripts/classes/Api';
+import { Loader } from './scripts/classes/Loader';
+import { UserInfo } from './scripts/classes/UserInfo';
+import { Card } from './scripts/classes/Card';
+import { CardList } from './scripts/classes/CardList';
+import { AvatarPopup } from './scripts/classes/AvatarPopup';
+import { CardPopup } from './scripts/classes/CardPopup';
+import { ProfilePopup } from './scripts/classes/ProfilePopup';
+import { ImagePopup } from './scripts/classes/ImagePopup';
+import { SignupPopup } from './scripts/classes/SignupPopup';
+import { SigninPopup } from './scripts/classes/SigninPopup';
+import { FormValidator } from './scripts/classes/FormValidator';
+import { Header } from './scripts/classes/Header';
+import { UserMenu } from './scripts/classes/UserMenu';
+import { User } from './scripts/classes/User';
 
 // Колбэки
 const openPopup = (popup, ...args) => popup.open(args);
@@ -59,14 +59,14 @@ const openSigninPopup = () => new SigninPopup(signinPopupTemplate, popupContaine
   createFormValidator, sendAuthDataToApi, config.userPageFeature.url).open();
 
 const api = new Api(config.headers);
-const user = new User();
+const user = new User(config.userPageFeature.url);
 const header = new Header(userBlockContainer);
 const userInfo = new UserInfo(profileContainer, profileTemplate, openCardPopup, openAvatarPopup,
   openProfilePopup, ['name', 'about']);
 const imagePopup = new ImagePopup(imagePopupTemplate, popupContainer);
 const cardList = new CardList(cardsContainer, createCard);
 const userMenu = new UserMenu(userMenuTemplate, userLinksTemplate,
-  openSignupPopup, openSigninPopup);
+  openSignupPopup, openSigninPopup, config.menuLinks);
 const loader = new Loader();
 
 const sendCardToApi = (...args) => api.sendRequest(config.reqApiParams.addCard, ...args);
@@ -84,7 +84,7 @@ checkUserExist
   })
   .catch((err) => console.log(err))
   .finally(() => {
-    header.render(userMenu.create(user.data));
+    header.render(userMenu.create(user.data, user.pageUrl));
     const regExp = new RegExp(`\\?${config.userPageFeature.path}\\=[a-zA-Z0-9]+`);
     if (regExp.test(config.userPageFeature.urlParams)) {
       const username = config.userPageFeature.urlParams.replace(`?${config.userPageFeature.path}=`, '');

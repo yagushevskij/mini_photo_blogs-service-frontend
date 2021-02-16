@@ -1,27 +1,33 @@
 import { BaseComponent } from './BaseComponent';
 
 export class UserMenu extends BaseComponent {
-  constructor(userMenuTemplate, userLinksTemplate, signup, signin) {
+  constructor(userMenuTemplate, userLinksTemplate, signup, signin, menuLinks) {
     super();
     this.userMenuTemplate = userMenuTemplate;
     this.userLinksTemplate = userLinksTemplate;
     this._signup = signup;
     this._signin = signin;
+    this._menuLinks = menuLinks;
   }
 
-  create = (userData) => {
+  create = (userData, userpageUrl) => {
     this._userData = userData;
     if (this._isUserDataExist()) {
       this._view = this.userMenuTemplate.content.cloneNode(true).children[0];
       // this._view.dataset.id = this._item._id;
-      this._imgBtn = this._view.querySelector('.dropdown__mainmenubtn');
-      const dropdown = this._view.querySelector('.dropdown__mainmenu');
-      this._menu = this._view.querySelector('.dropdown__child');
+      const dropdownElem = this._view.querySelector('.dropdown__mainmenu');
+      const usernameElem = this._view.querySelector('.dropdown__link_type_greeting');
+      const myPageElem = this._view.querySelector('.dropdown__link_type_my-page');
+      this._imgBtnElem = this._view.querySelector('.dropdown__mainmenubtn');
+      this._menuElem = this._view.querySelector('.dropdown__child');
       // this._view.querySelector('.place-card__name').textContent = this._item.name;
-      this._imgBtn.setAttribute('src', userData.avatar);
+      this._imgBtnElem.setAttribute('src', userData.avatar);
+      usernameElem.textContent = userData.username;
+      myPageElem.setAttribute('href', userpageUrl);
+      myPageElem.textContent = this._menuLinks.myPage.title;
       this._handlersArr = [
         {
-          element: dropdown,
+          element: dropdownElem,
           event: 'click',
           callbacks: [this._open]
         }
@@ -51,11 +57,10 @@ export class UserMenu extends BaseComponent {
   }
 
   update = (userData) => {
-    console.log('123')
-    this._imgBtn.setAttribute('src', userData.avatar)
+    this._imgBtnElem.setAttribute('src', userData.avatar)
   };
 
   _isUserDataExist = () => (this._userData) ? Object.keys(this._userData).length != 0 : false;
 
-  _open = () => this._menu.classList.add('dropdown__child_is-visible');
+  _open = () => this._menuElem.classList.add('dropdown__child_is-visible');
 }

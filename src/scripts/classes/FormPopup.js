@@ -7,7 +7,8 @@ export class FormPopup extends Popup {
 
   create = () => {
     super.create();
-    this._formValidator = this._createFormValidator(this._view.querySelector('.popup__form'));
+    const form = this._view.querySelector('.popup__form')
+    this._formValidator = this._createFormValidator(form);
   };
 
   _getDataObj = (elem) => {
@@ -37,17 +38,12 @@ export class FormPopup extends Popup {
       });
   };
 
-  _setEventListeners = () => {
-    super._setEventListeners();
-    this._view.addEventListener('submit', this._submit);
-    // document.addEventListener('keydown', () => { this._escPopup(event) });
-    this._formValidator.setEventListeners();
-  }
-
-  _removeEventListeners = () => {
-    super._removeEventListeners();
-    this._view.removeEventListener('submit', this._submit);
-    // document.removeEventListener('keydown', () => { this._escPopup(event) });
-    this._formValidator.removeEventListeners();
+  _setHandlers() {
+    super._setHandlers();
+    this._handlersArr.push({
+      element: this._view,
+      event: 'submit',
+      callbacks: [this._submit],
+    })
   };
 }

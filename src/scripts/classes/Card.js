@@ -1,7 +1,9 @@
-'use strict';
-export class Card {
+import { BaseComponent } from './BaseComponent';
+
+export class Card extends BaseComponent {
 
   constructor(openPopup, cardTemplate, requestApiLike, requestApiDislike, requestApiRemoveCard) {
+    super();
     this._openPopup = openPopup;
     this._cardTemplate = cardTemplate;
     this._requestApiLike = requestApiLike;
@@ -77,23 +79,30 @@ export class Card {
     this._view.img.setAttribute('style', `background-image: url(${this._item.link})`);
     this._view.dataset.id = this._item._id;
     this._changeLikesCount();
+    this._setHandlers();
     this._setEventListeners();
     return this._view;
   };
 
   _open = () => {
-    this._openPopup(this._item.link)
+    this._openPopup(this._item.link);
   };
 
-  _setEventListeners = () => {
-    this._view.img.addEventListener('click', this._open);
-    this._view.likeIcon.addEventListener('click', this._like);
-    this._view.removeIcon.addEventListener('click', this._handleRemove);
-  };
-
-  _removeEventListeners = () => {
-    this._view.img.removeEventListener('click', this._open);
-    this._view.likeIcon.removeEventListener('click', this._like);
-    this._view.removeIcon.removeEventListener('click', this._handleRemove);
-  };
+  _setHandlers = () => this._handlersArr = [
+    {
+      element: this._view.img,
+      event: 'click',
+      callbacks: [this._open],
+    },
+    {
+      element: this._view.likeIcon,
+      event: 'click',
+      callbacks: [this._like],
+    },
+    {
+      element: this._view.removeIcon,
+      event: 'click',
+      callbacks: [this._handleRemove],
+    },
+  ]
 }

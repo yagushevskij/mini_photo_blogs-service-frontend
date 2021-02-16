@@ -56,10 +56,6 @@ const config = {
     'Content-Type': 'application/json',
     authorization: `Bearer ${localStorage.getItem('token')}`,
   },
-  user: {
-    id: localStorage.getItem('userId'),
-    username: localStorage.getItem('username'),
-  },
   text: {
     inputClassName: '.popup__input',
     userNotFound: 'Пользователь не найден',
@@ -69,6 +65,11 @@ const config = {
       required: 'Это обязательное поле',
       requiredEmail: 'Здесь должен быть email',
       requiredLink: 'Здесь должна быть ссылка',
+    },
+  },
+  menuLinks: {
+    myPage: {
+      title: 'Моя страница',
     },
   },
 };
