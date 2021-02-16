@@ -15,9 +15,9 @@ export class UserMenu extends BaseComponent {
     if (this._isUserDataExist()) {
       this._view = this.userMenuTemplate.content.cloneNode(true).children[0];
       // this._view.dataset.id = this._item._id;
-      const dropdownElem = this._view.querySelector('.dropdown__mainmenu');
       const usernameElem = this._view.querySelector('.dropdown__link_type_greeting');
       const myPageElem = this._view.querySelector('.dropdown__link_type_my-page');
+      const dropdownElem = this._view.querySelector('.dropdown__mainmenu');
       this._imgBtnElem = this._view.querySelector('.dropdown__mainmenubtn');
       this._menuElem = this._view.querySelector('.dropdown__child');
       // this._view.querySelector('.place-card__name').textContent = this._item.name;
@@ -30,7 +30,12 @@ export class UserMenu extends BaseComponent {
           element: dropdownElem,
           event: 'click',
           callbacks: [this._open]
-        }
+        },
+        {
+          element: document,
+          event: 'click',
+          callbacks: [this._close]
+        },
       ];
       this._setEventListeners()
       return {userMenu: this._view};
@@ -62,5 +67,11 @@ export class UserMenu extends BaseComponent {
 
   _isUserDataExist = () => (this._userData) ? Object.keys(this._userData).length != 0 : false;
 
-  _open = () => this._menuElem.classList.add('dropdown__child_is-visible');
+  _open = () => {
+    this._menuElem.classList.add('dropdown__child_is-visible');
+  };
+
+  _close = () => {
+    this._menuElem.classList.remove('dropdown__child_is-visible');
+  };
 }

@@ -43,6 +43,7 @@ const removeCardRequest = (cardId) => sendApiRequest({
 });
 const updateUserInfo = (...args) => userInfo.update(...args);
 const updateUserMenu = (...args) => userMenu.update(...args);
+const openUserMenu = (...args) => userMenu.open(...args);
 
 const createFormValidator = (...args) => new FormValidator(...args, config.text);
 const createCard = (...args) => new Card(openImagePopup, cardTemplate, addLikeRequest,
@@ -84,7 +85,8 @@ checkUserExist
   })
   .catch((err) => console.log(err))
   .finally(() => {
-    header.render(userMenu.create(user.data, user.pageUrl));
+    const createdUserMenu = userMenu.create(user.data, user.pageUrl);
+    header.render(createdUserMenu);
     const regExp = new RegExp(`\\?${config.userPageFeature.path}\\=[a-zA-Z0-9]+`);
     if (regExp.test(config.userPageFeature.urlParams)) {
       const username = config.userPageFeature.urlParams.replace(`?${config.userPageFeature.path}=`, '');
