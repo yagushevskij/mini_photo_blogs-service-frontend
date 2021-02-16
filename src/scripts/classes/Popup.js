@@ -44,13 +44,24 @@ export class Popup extends BaseComponent {
       {
         element: document,
         event: 'keydown',
-        callbacks: [this._escPopup],
+        callbacks: [this._closeByEsc],
+      },
+      {
+        element: this._container,
+        event: 'click',
+        callbacks: [this._closeByOverlay],
       },
     ];
   };
 
-  _escPopup = (event) => {
+  _closeByEsc = (event) => {
     if (event.keyCode == 27) {
+      this._close();
+    }
+  };
+
+  _closeByOverlay = (event) => {
+    if (event.target === this._container) {
       this._close();
     }
   };
