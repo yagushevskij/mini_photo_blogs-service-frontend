@@ -41,14 +41,18 @@ export class Popup extends BaseComponent {
         event: 'click',
         callbacks: [this._close],
       },
+      {
+        element: document,
+        event: 'keydown',
+        callbacks: [this._escPopup],
+      },
     ];
-        // document.addEventListener('keydown', () => { this._escPopup(event) });
   };
 
-  // _escPopup = (event) => {
-  //   if (event.keyCode == 27) {
-  //     this._close();
-  //   }
-  // };
+  _escPopup = (event) => {
+    if (event.keyCode == 27) {
+      this._close();
+    }
+  };
 
 }
