@@ -43,7 +43,6 @@ const removeCardRequest = (cardId) => sendApiRequest({
 });
 const updateUserInfo = (...args) => userInfo.update(...args);
 const updateUserMenu = (...args) => userMenu.update(...args);
-const openUserMenu = (...args) => userMenu.open(...args);
 
 const createFormValidator = (...args) => new FormValidator(...args, config.text);
 const createCard = (...args) => new Card(openImagePopup, cardTemplate, addLikeRequest,
@@ -58,6 +57,10 @@ const openSignupPopup = () => new SignupPopup(signupPopupTemplate, popupContaine
   createFormValidator, sendRegDataToApi, config.userPageFeature.url).open();
 const openSigninPopup = () => new SigninPopup(signinPopupTemplate, popupContainer,
   createFormValidator, sendAuthDataToApi, config.userPageFeature.url).open();
+const signout = () => {
+  localStorage.removeItem('token');
+  document.location.href = '/';
+};
 
 const api = new Api(config.headers);
 const user = new User(config.userPageFeature.url);
@@ -67,7 +70,7 @@ const userInfo = new UserInfo(profileContainer, profileTemplate, openCardPopup, 
 const imagePopup = new ImagePopup(imagePopupTemplate, popupContainer);
 const cardList = new CardList(cardsContainer, createCard);
 const userMenu = new UserMenu(userMenuTemplate, userLinksTemplate,
-  openSignupPopup, openSigninPopup, config.menuLinks);
+  openSignupPopup, openSigninPopup, signout);
 const loader = new Loader();
 
 const sendCardToApi = (...args) => api.sendRequest(config.reqApiParams.addCard, ...args);

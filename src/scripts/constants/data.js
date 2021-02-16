@@ -68,10 +68,5 @@ const config = {
       requiredLink: 'Здесь должна быть ссылка',
     },
   },
-  menuLinks: {
-    myPage: {
-      title: 'Моя страница',
-    },
-  },
 };
 export default config;

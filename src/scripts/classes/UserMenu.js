@@ -1,13 +1,13 @@
 import { BaseComponent } from './BaseComponent';
 
 export class UserMenu extends BaseComponent {
-  constructor(userMenuTemplate, userLinksTemplate, signup, signin, menuLinks) {
+  constructor(userMenuTemplate, userLinksTemplate, signup, signin, signout) {
     super();
     this.userMenuTemplate = userMenuTemplate;
     this.userLinksTemplate = userLinksTemplate;
     this._signup = signup;
     this._signin = signin;
-    this._menuLinks = menuLinks;
+    this._signout = signout;
   }
 
   create = (userData, userpageUrl) => {
@@ -17,6 +17,7 @@ export class UserMenu extends BaseComponent {
       // this._view.dataset.id = this._item._id;
       const usernameElem = this._view.querySelector('.dropdown__link_type_greeting');
       const myPageElem = this._view.querySelector('.dropdown__link_type_my-page');
+      const signoutElem = this._view.querySelector('.dropdown__link_type_signout');
       const dropdownElem = this._view.querySelector('.dropdown__mainmenu');
       this._imgBtnElem = this._view.querySelector('.dropdown__mainmenubtn');
       this._menuElem = this._view.querySelector('.dropdown__child');
@@ -24,12 +25,16 @@ export class UserMenu extends BaseComponent {
       this._imgBtnElem.setAttribute('src', userData.avatar);
       usernameElem.textContent = userData.username;
       myPageElem.setAttribute('href', userpageUrl);
-      myPageElem.textContent = this._menuLinks.myPage.title;
       this._handlersArr = [
         {
           element: dropdownElem,
           event: 'click',
           callbacks: [this._open]
+        },
+        {
+          element: signoutElem,
+          event: 'click',
+          callbacks: [this._signout]
         },
         {
           element: document,
@@ -38,7 +43,7 @@ export class UserMenu extends BaseComponent {
         },
       ];
       this._setEventListeners()
-      return {userMenu: this._view};
+      return { userMenu: this._view };
     } else {
       this._view = this.userLinksTemplate.content.cloneNode(true);
       const signinButton = this._view.querySelector('.header__button_type_signin');
@@ -57,7 +62,7 @@ export class UserMenu extends BaseComponent {
       ];
       console.log(this._handlersArr)
       this._setEventListeners()
-      return {userMenu: this._view};
+      return { userMenu: this._view };
     }
   }
 
