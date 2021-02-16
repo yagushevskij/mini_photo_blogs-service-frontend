@@ -2,29 +2,28 @@ import { BaseComponent } from './BaseComponent';
 
 export class Popup extends BaseComponent {
 
-  constructor(container, markup, createFormValidator, sendCardToApi) {
+  constructor(container, markup, sendCardToApi) {
     super();
     this._container = container;
     this._markup = markup;
-    this._createFormValidator = createFormValidator;
     this._sendDataToApi = sendCardToApi;
-    this._setHandlers = this._setHandlers.bind(this);
+    // this._setHandlers = this._setHandlers.bind(this);
   };
 
   open = (userData) => {
     this.create();
     //Если у попапа есть свойство для обновления данных в полях и эти данные пришли
     (this.hasOwnProperty('_updateInformation') && (userData)) ? this._updateInformation(userData) : false;
-    this._container.classList.toggle('popup_is-opened');
+    this._container.classList.add('popup_is-opened');
     this._setHandlers();
     this._setEventListeners();
-    this._formValidator.setEventListeners();
+    // this._formValidator.setEventListeners();
   };
 
-  _close = () => {
+  _close() {
     this._container.classList.remove('popup_is-opened');
     this._removeEventListeners();
-    this._formValidator.removeEventListeners();
+    // this._formValidator.removeEventListeners();
     this._view.remove();
   };
 

@@ -1,8 +1,8 @@
 import {FormPopup} from './FormPopup.js';
 export class ProfilePopup extends FormPopup {
 
-    constructor(markup, container, createFormValidator, sendUserDataToApi, updateUserInfo, updateUserMenu) {
-        super(container, markup, createFormValidator, sendUserDataToApi);
+    constructor(markup, container, setValidateListeners, removeValidateListeners, sendUserDataToApi, updateUserInfo, updateUserMenu) {
+        super(container, markup, setValidateListeners, removeValidateListeners, sendUserDataToApi);
         this._updateUserInfo = updateUserInfo;
         this._updateUserMenu = updateUserMenu;
     };

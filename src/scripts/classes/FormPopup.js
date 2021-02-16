@@ -1,14 +1,21 @@
 import { Popup } from './Popup.js';
 export class FormPopup extends Popup {
 
-  constructor(container, markup, createFormValidator, sendCardToApi) {
-    super(container, markup, createFormValidator, sendCardToApi)
+  constructor(container, markup, setValidateListeners, removeValidateListeners, sendCardToApi) {
+    super(container, markup, sendCardToApi)
+    this._setValidateListeners = setValidateListeners;
+    this._removeValidateListeners = removeValidateListeners;
   }
 
   create = () => {
     super.create();
     const form = this._view.querySelector('.popup__form')
-    this._formValidator = this._createFormValidator(form);
+    this._setValidateListeners(form);
+  };
+
+  _close = () => {
+    super._close();
+    this._removeValidateListeners();
   };
 
   _getDataObj = (elem) => {
@@ -44,6 +51,7 @@ export class FormPopup extends Popup {
       element: this._view,
       event: 'submit',
       callbacks: [this._submit],
-    })
+    },
+    )
   };
 }

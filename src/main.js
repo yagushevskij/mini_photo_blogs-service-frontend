@@ -44,19 +44,24 @@ const removeCardRequest = (cardId) => sendApiRequest({
 const updateUserInfo = (...args) => userInfo.update(...args);
 const updateUserMenu = (...args) => userMenu.update(...args);
 
-const createFormValidator = (...args) => new FormValidator(...args, config.text);
+const setValidateListeners = (...args) => formValidator.setEventListeners(...args);
+const removeValidateListeners = () => formValidator.removeEventListeners();
 const createCard = (...args) => new Card(openImagePopup, cardTemplate, addLikeRequest,
   removeLikeRequest, removeCardRequest).create(user.data._id, ...args);
-const openCardPopup = () => new CardPopup(cardPopupTemplate, popupContainer, createFormValidator,
-  sendCardToApi, cardList.addCard).open();
+const openCardPopup = () => new CardPopup(cardPopupTemplate, popupContainer, setValidateListeners,
+  removeValidateListeners, sendCardToApi, cardList.addCard).open();
 const openAvatarPopup = () => new AvatarPopup(avatarPopupTemplate, popupContainer,
-  createFormValidator, sendAvatarDataToApi, updateUserInfo, updateUserMenu).open();
+  setValidateListeners, removeValidateListeners, sendAvatarDataToApi, updateUserInfo,
+  updateUserMenu).open();
 const openProfilePopup = () => new ProfilePopup(profilePopupTemplate, popupContainer,
-  createFormValidator, sendUserDataToApi, updateUserInfo, updateUserMenu).open(user.data);
+  setValidateListeners, removeValidateListeners, sendUserDataToApi, updateUserInfo,
+  updateUserMenu).open(user.data);
 const openSignupPopup = () => new SignupPopup(signupPopupTemplate, popupContainer,
-  createFormValidator, sendRegDataToApi, config.userPageFeature.url).open();
+  setValidateListeners, removeValidateListeners, sendRegDataToApi,
+  config.userPageFeature.url).open();
 const openSigninPopup = () => new SigninPopup(signinPopupTemplate, popupContainer,
-  createFormValidator, sendAuthDataToApi, config.userPageFeature.url).open();
+  setValidateListeners, removeValidateListeners, sendAuthDataToApi,
+  config.userPageFeature.url).open();
 const signout = () => {
   localStorage.removeItem('token');
   document.location.href = '/';
@@ -65,6 +70,7 @@ const signout = () => {
 const api = new Api(config.headers);
 const user = new User(config.userPageFeature.url);
 const header = new Header(userBlockContainer);
+const formValidator = new FormValidator(config.text);
 const userInfo = new UserInfo(profileContainer, profileTemplate, openCardPopup, openAvatarPopup,
   openProfilePopup, ['name', 'about']);
 const imagePopup = new ImagePopup(imagePopupTemplate, popupContainer);
@@ -117,4 +123,9 @@ checkUserExist
     } else {
       console.log('Главная');
     }
+    document.addEventListener('keydown', (event) => { // Убираем срабатывание кнопок на странице по нажатию enter;
+      if (event.keyCode === 13 && event.target.nodeName === 'BUTTON') {
+        event.preventDefault();
+      }
+    });
   });
