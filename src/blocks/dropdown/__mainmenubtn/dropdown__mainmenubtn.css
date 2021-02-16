@@ -1,7 +1,7 @@
 .dropdown__mainmenubtn {
   position: relative;
-  max-width: 60px;
-  max-height: 60px;
+  width: 60px;
+  height: 60px;
   cursor: pointer;
   border-radius: 50%;
 }
