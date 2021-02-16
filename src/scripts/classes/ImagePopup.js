@@ -1,5 +1,4 @@
-'use strict';
-import {Popup} from './Popup.js';
+import {Popup} from './Popup';
 export class ImagePopup extends Popup {
 
     constructor(markup, container) {
