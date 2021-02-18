@@ -1,8 +1,8 @@
 {
-  "name": "sprint-11",
-  "homepage": "https://yagushevskij.github.io/sprint-11/",
+  "name": "mini_photo_blog-frontend",
+  "homepage": "https://github.com/yagushevskij/mini_photo_blog-frontend/",
   "version": "1.0.0",
-  "description": "Project work",
+  "description": "Self study project",
   "main": "./src/main.js",
   "scripts": {
     "build": "rimraf dist && cross-env NODE_ENV=production webpack --mode production",
@@ -11,20 +11,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yagushevskij/sprint-11.git"
+    "url": "git+https://github.com/yagushevskij/mini_photo_blog-frontend.git"
   },
   "keywords": [
-    "yandex",
-    "praktikum",
-    "sprint",
-    "11",
-    "git",
-    "webpack"
+    "blog",
+    "photo"
   ],
   "author": "Igor Yagushevskij",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/yagushevskij/sprint-11/issues"
+    "url": "https://github.com/yagushevskij/mini_photo_blog-frontend/issues"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.4",
