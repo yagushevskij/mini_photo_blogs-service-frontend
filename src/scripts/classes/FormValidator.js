@@ -1,11 +1,14 @@
-export class FormValidator {
+import { BaseComponent } from './BaseComponent';
 
-  constructor(configText) {
+export class FormValidator extends BaseComponent {
+  constructor(configText, fileExtensions) {
+    super();
     this.validationMessages = configText.validationMessages;
     this.inputClassName = configText.inputClassName;
+    this.picExtArr = fileExtensions.picture;
   };
 
-  _validate = () => {
+  _setValidationError = () => {
     const errorEl = this._input.nextElementSibling;
     if (this._input.validity.valueMissing) {
       errorEl.textContent = this.validationMessages.required;
@@ -22,15 +25,51 @@ export class FormValidator {
     else if (this._input.validity.typeMismatch && this._input.type === 'email') {
       errorEl.textContent = this.validationMessages.requiredEmail;
     }
+    else if (this._input.validity.customError) {
+      errorEl.textContent = this._input.validationMessage;
+    }
     else {
       errorEl.textContent = '';
     }
-    this._setSubmitButtonState();
   }
+
+  _isDataFormatValid = () => {
+    const regExp = (ext) => new RegExp(`\\.*${ext}`);
+    const result = this._extArray.some(ext => regExp(ext).test(this._input.value));
+    return result;
+  }
+
+  _validateByExtension = () => {
+    const pictureClass = 'popup__input_filetype_picture';
+    if (this._input.classList.contains(pictureClass) && (this._input.value)) {
+      this._extArray = this.picExtArr;
+      (this._isDataFormatValid()) ? this._input.setCustomValidity('') : this._input.setCustomValidity(this.validationMessages.requiredPicture
+        + ' ' + this.picExtArr.join(', '));
+    }
+  }
+
+  _validateGroupInputs = () => {
+    const inputsArr = Array.from(this._form.querySelectorAll('.popup__input_type_group'));
+    const isFullInputExist = inputsArr.some(el => (el.value));
+    if (isFullInputExist) {
+      inputsArr.forEach((el) => {
+        (!el.value) ? el.setAttribute('disabled', 'disabled') : false;
+        el.setCustomValidity('');
+      });
+    } else {
+      inputsArr.forEach((el) => {
+        (!el.value) ? el.removeAttribute('disabled', 'disabled') : false
+        el.setCustomValidity(this.validationMessages.groupRequired);
+      });
+    }
+  };
 
   _checkInputValidity = (event) => {
     this._input = event.target
-    this._validate();
+    this._validateGroupInputs();
+    this._validateByExtension();
+    this._setValidationError();
+    this._setSubmitButtonState();
   };
 
   _setSubmitButtonState = () => {
@@ -39,26 +78,24 @@ export class FormValidator {
     submitButton.disabled = !isFormValid;
   };
 
-  _validateFormByEnter = () => {
-    if (event.keyCode === 13) {
-      Array.from(this._form.querySelectorAll(this.inputClassName)).forEach((elem) => {
-        this._input = elem;
-        this._validate();
+  _setHandlers = () => {
+    this._handlersArr = [];
+    Array.from(this._form.querySelectorAll(this.inputClassName)).forEach((elem) => {
+      this._handlersArr.push({
+        element: elem,
+        event: 'input',
+        callbacks: [this._checkInputValidity],
       });
-    }
+    });
   }
 
   setEventListeners = (form) => {
     this._form = form;
-    Array.from(this._form.querySelectorAll(this.inputClassName)).forEach((elem) => {
-      elem.addEventListener('input', this._checkInputValidity);
-      elem.addEventListener('keydown', this._validateFormByEnter);
-    });
+    this._setHandlers()
+    this._setEventListeners();
   };
 
   removeEventListeners = () => {
-    Array.from(this._form.querySelectorAll(this.inputClassName)).forEach((elem) => {
-      elem.removeEventListener('input', this._checkInputValidity);
-    });
+    this._removeEventListeners();
   };
 }

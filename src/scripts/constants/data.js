@@ -66,7 +66,12 @@ const config = {
       required: 'Это обязательное поле',
       requiredEmail: 'Здесь должен быть email',
       requiredLink: 'Здесь должна быть ссылка',
+      groupRequired: 'Заполните хотя бы одно поле',
+      requiredPicture: 'Допустимые форматы:',
     },
+  },
+  fileExtensions: {
+    picture: ['.jpg', 'jpeg', '.png', '.gif'],
   },
 };
 export default config;

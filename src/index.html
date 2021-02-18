@@ -42,12 +42,17 @@
         <img src="<%=require('./images/close.svg')%>" alt="" class="popup__close">
         <h3 class="popup__title">Новое место</h3>
         <form class="popup__form" name="new">
-          <input type="text" name="name" class="popup__input popup__input_type_name" placeholder="Название"
-            minlength="2" maxlength="30" required>
-          <span class="error-message"></span>
-          <input type="url" name="link" class="popup__input popup__input_type_link-url" placeholder="Ссылка на картинку"
+          <input type="text" name="name" class="popup__input" placeholder="Название" minlength="2" maxlength="30"
             required>
           <span class="error-message"></span>
+          <div class="popup__group-elements">
+            <input type="url" name="link" class="popup__input popup__input_type_group popup__input_filetype_picture" placeholder="Ссылка на картинку">
+            <span class="error-message"></span>
+            <div class="popup__group-message">Или</div>
+            <span class="error-message error-message_type_group"></span>
+            <input type="file" name="file" class="popup__input popup__input_type_group popup__input_filetype_picture" placeholder="Выберите файл">
+            <span class="error-message"></span>
+          </div>
           <button type="submit" class="button popup__button popup__button_function_add" disabled>+</button>
         </form>
       </div>
@@ -58,11 +63,10 @@
         <img src="<%=require('./images/close.svg')%>" alt="" class="popup__close">
         <h3 class="popup__title">Редактировать профиль</h3>
         <form class="popup__form" name="edit">
-          <input type="text" name="name" class="popup__input popup__input_type_name" placeholder="Имя" minlength="2"
-            maxlength="30" required>
+          <input type="text" name="name" class="popup__input" placeholder="Имя" minlength="2" maxlength="30" required>
           <span class="error-message"></span>
-          <input type="text" name="about" class="popup__input popup__input_type_name" placeholder="О себе" minlength="2"
-            maxlength="30" required>
+          <input type="text" name="about" class="popup__input" placeholder="О себе" minlength="2" maxlength="30"
+            required>
           <span class="error-message"></span>
           <button type="submit" class="button popup__button popup__button_function_save">Сохранить</button>
         </form>
@@ -74,8 +78,7 @@
         <img src="<%=require('./images/close.svg')%>" alt="" class="popup__close">
         <h3 class="popup__title">Обновить аватар</h3>
         <form class="popup__form" name="new">
-          <input type="url" name="avatar" class="popup__input popup__input_type_link-url"
-            placeholder="Ссылка на картинку" required>
+          <input type="url" name="avatar" class="popup__input" placeholder="Ссылка на картинку" required>
           <span class="error-message"></span>
           <button type="submit" class="button popup__button popup__button_function_save" disabled>Сохранить</button>
         </form>
@@ -133,8 +136,10 @@
           <span class="dropdown__carret"></span>
         </div>
         <ul class="dropdown__child">
-          <li class="dropdown__item dropdown__item_type_greeting"><a href="" class="dropdown__link dropdown__link_type_greeting"></a></li>
-          <li class="dropdown__item"><a href="#" class="dropdown__link dropdown__link_type_my-page">Моя страница</a></li>
+          <li class="dropdown__item dropdown__item_type_greeting"><a href=""
+              class="dropdown__link dropdown__link_type_greeting"></a></li>
+          <li class="dropdown__item"><a href="#" class="dropdown__link dropdown__link_type_my-page">Моя страница</a>
+          </li>
           <li class="dropdown__item"><a href="#" class="dropdown__link dropdown__link_type_signout">Выход</a></li>
         </ul>
       </div>

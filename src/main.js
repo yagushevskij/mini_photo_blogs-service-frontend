@@ -70,7 +70,7 @@ const signout = () => {
 const api = new Api(config.headers);
 const user = new User(config.userPageFeature.url);
 const header = new Header(userBlockContainer);
-const formValidator = new FormValidator(config.text);
+const formValidator = new FormValidator(config.text, config.fileExtensions);
 const userInfo = new UserInfo(profileContainer, profileTemplate, openCardPopup, openAvatarPopup,
   openProfilePopup, ['name', 'about']);
 const imagePopup = new ImagePopup(imagePopupTemplate, popupContainer);
@@ -129,3 +129,5 @@ checkUserExist
       }
     });
   });
+
+  console.log(config.text.validationMessages.requiredPicture)
