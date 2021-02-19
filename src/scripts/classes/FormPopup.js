@@ -33,9 +33,6 @@ export class FormPopup extends Popup {
   };
 
   _submit() {
-    event.preventDefault();
-    this._changeButtonText();
-    this._getFormData();
     this._sendDataToApi(this._formData)
       .then((obj) => {
         this._result = obj;

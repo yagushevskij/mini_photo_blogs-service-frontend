@@ -14,6 +14,9 @@ export class SigninPopup extends FormPopup {
   };
 
   _submit = () => {
+    event.preventDefault();
+    this._changeButtonText();
+    this._getFormData();
     super._submit();
   }
 }

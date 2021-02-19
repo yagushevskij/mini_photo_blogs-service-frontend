@@ -94,10 +94,6 @@ const config = {
       },
     },
   },
-  // headers: {
-  //   // 'Content-Type': 'application/json',
-  //   authorization: localJWT,
-  // },
   text: {
     inputClassName: '.popup__input',
     userNotFound: 'Пользователь не найден',

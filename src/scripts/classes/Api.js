@@ -4,7 +4,6 @@ export class Api {
 
   sendRequest = async (objParams, formData) => {
     const { url, method, headers } = objParams;
-    console.log(url, method, headers)
     const res = await fetch(url, {
       method, headers,
       body: formData,
