@@ -1,13 +1,13 @@
 export class Api {
-  constructor(headers) {
-    this._headers = headers;
+  constructor() {
   }
-  sendRequest = async (objParams, dataObj) => {
-    const { url, method } = objParams;
+
+  sendRequest = async (objParams, formData) => {
+    const { url, method, headers } = objParams;
+    console.log(url, method, headers)
     const res = await fetch(url, {
-      method: method,
-      headers: this._headers,
-      body: JSON.stringify(dataObj)
+      method, headers,
+      body: formData,
     });
     if (res.ok) {
       return await res.json();

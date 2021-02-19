@@ -41,7 +41,7 @@
       <div class="popup__content">
         <img src="<%=require('./images/close.svg')%>" alt="" class="popup__close">
         <h3 class="popup__title">Новое место</h3>
-        <form class="popup__form" name="new">
+        <form class="popup__form" name="new" enctype="multipart/form-data">
           <input type="text" name="name" class="popup__input" placeholder="Название" minlength="2" maxlength="30"
             required>
           <span class="error-message"></span>
@@ -50,7 +50,7 @@
             <span class="error-message"></span>
             <div class="popup__group-message">Или</div>
             <span class="error-message error-message_type_group"></span>
-            <input type="file" name="file" class="popup__input popup__input_type_group popup__input_filetype_picture" accept=".jpg, .jpeg, .png, .gif" placeholder="Выберите файл">
+            <input type="file" name="picture" class="popup__input popup__input_type_group popup__input_filetype_picture" accept=".jpg, .jpeg, .png, .gif" placeholder="Выберите файл">
             <span class="error-message"></span>
           </div>
           <button type="submit" class="button popup__button popup__button_function_add" disabled>+</button>

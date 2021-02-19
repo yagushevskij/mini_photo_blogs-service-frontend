@@ -10,7 +10,7 @@ export class CardPopup extends FormPopup {
 
   _submit = () => {
     event.preventDefault();
-    this._getDataToSend()
+    this._getFormData()
     this._sendDataToApi = this._isFileUploadExist() ? this._uploadCard : this._sendCardToApi;
     super._submit();
   }
@@ -19,6 +19,5 @@ export class CardPopup extends FormPopup {
     this._addCard(this._result);
   }
 
-  _isFileUploadExist = () => this._dataToSend.hasOwnProperty('file') ? true : false;
-
+  _isFileUploadExist = () => this._formData.has('picture') ? true : false;
 };

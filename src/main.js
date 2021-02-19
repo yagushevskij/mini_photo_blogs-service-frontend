@@ -32,14 +32,17 @@ const sendApiRequest = (...args) => api.sendRequest(...args);
 const addLikeRequest = (cardId) => sendApiRequest({
   method: config.reqApiParams.addLike.method,
   url: config.reqApiParams.addLike.url + cardId,
+  headers: config.reqApiParams.addLike.headers,
 });
 const removeLikeRequest = (cardId) => sendApiRequest({
   method: config.reqApiParams.removeLike.method,
   url: config.reqApiParams.addLike.url + cardId,
+  headers: config.reqApiParams.removeLike.headers,
 });
 const removeCardRequest = (cardId) => sendApiRequest({
   method: config.reqApiParams.deleteCard.method,
   url: config.reqApiParams.deleteCard.url + cardId,
+  headers: config.reqApiParams.deleteCard.headers,
 });
 const updateUserInfo = (...args) => userInfo.update(...args);
 const updateUserMenu = (...args) => userMenu.update(...args);
@@ -104,6 +107,7 @@ checkUserExist
       api.sendRequest({
         url: config.reqApiParams.getUserInfo.url + username,
         method: config.reqApiParams.getUserInfo.method,
+        headers: config.reqApiParams.getUserInfo.headers,
       })
         .then((res) => {
           userInfo.render(user.data, res);
@@ -113,6 +117,7 @@ checkUserExist
           api.sendRequest({
             url: config.reqApiParams.getUserCards.url + res._id,
             method: config.reqApiParams.getUserCards.method,
+            headers: config.reqApiParams.getUserCards.headers,
           })
             .then((cards) => {
               cardList.render(cards);

@@ -18,12 +18,14 @@ export class FormPopup extends Popup {
     this._removeValidateListeners();
   };
 
-  _getDataToSend = () => {
+  _getFormData = () => {
+    this._formData = new FormData();
     const inputsArr = Array.from(this._view.querySelector('form').elements)
-    .filter((elem) => (!elem.classList.contains('button') && (elem.value)));
-    this._dataToSend = {};
-    inputsArr.forEach(elem => this._dataToSend[elem.name] = elem.value)
-    // return this._dataToSend;
+      .filter((elem) => (!elem.classList.contains('button') && (elem.value)));
+    inputsArr.forEach((elem) => {
+      (elem.type === 'file') ? this._formData.append(elem.name, elem.files[0]) : this._formData.append(elem.name, elem.value);
+    })
+    return this._formData;
   }
 
   _changeButtonText = () => {
@@ -33,8 +35,8 @@ export class FormPopup extends Popup {
   _submit() {
     event.preventDefault();
     this._changeButtonText();
-    this._getDataToSend();
-    this._sendDataToApi(this._dataToSend)
+    this._getFormData();
+    this._sendDataToApi(this._formData)
       .then((obj) => {
         this._result = obj;
         this._submitAction();
