@@ -60,7 +60,6 @@ export class UserMenu extends BaseComponent {
           callbacks: [this._signup]
         }
       ];
-      console.log(this._handlersArr)
       this._setEventListeners()
       return { userMenu: this._view };
     }

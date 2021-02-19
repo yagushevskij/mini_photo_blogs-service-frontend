@@ -1,8 +1,8 @@
 import { Popup } from './Popup.js';
 export class FormPopup extends Popup {
 
-  constructor(container, markup, setValidateListeners, removeValidateListeners, sendCardToApi) {
-    super(container, markup, sendCardToApi)
+  constructor(container, markup, setValidateListeners, removeValidateListeners) {
+    super(container, markup)
     this._setValidateListeners = setValidateListeners;
     this._removeValidateListeners = removeValidateListeners;
   }
@@ -18,26 +18,26 @@ export class FormPopup extends Popup {
     this._removeValidateListeners();
   };
 
-  _getDataObj = (elem) => {
-    this._obj = {};
-    Array.from(elem.querySelector('form').elements).forEach((elem) => {
-      if (!elem.classList.contains('button')) {
-        this._obj[elem.name] = elem.value;
-      }
-    });
-    return this._obj;
+  _getDataToSend = () => {
+    const inputsArr = Array.from(this._view.querySelector('form').elements)
+    .filter((elem) => (!elem.classList.contains('button') && (elem.value)));
+    this._dataToSend = {};
+    inputsArr.forEach(elem => this._dataToSend[elem.name] = elem.value)
+    // return this._dataToSend;
+  }
+
+  _changeButtonText = () => {
+    this._view.querySelector('button').textContent = 'Загрузка...';
   };
 
-  _changeButtonText = (elem) => {
-    elem.querySelector('button').textContent = 'Загрузка...';
-  };
-
-  _submit = () => {
+  _submit() {
     event.preventDefault();
-    this._changeButtonText(this._view);
-    this._sendDataToApi(this._getDataObj(this._view))
+    this._changeButtonText();
+    this._getDataToSend();
+    this._sendDataToApi(this._dataToSend)
       .then((obj) => {
-        this._submitAction(obj);
+        this._result = obj;
+        this._submitAction();
       })
       .then(() => this._close())
       .catch((err) => {

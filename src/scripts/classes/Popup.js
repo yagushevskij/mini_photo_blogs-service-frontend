@@ -2,18 +2,18 @@ import { BaseComponent } from './BaseComponent';
 
 export class Popup extends BaseComponent {
 
-  constructor(container, markup, sendCardToApi) {
+  constructor(container, markup) {
     super();
     this._container = container;
     this._markup = markup;
-    this._sendDataToApi = sendCardToApi;
+    // this._sendDataToApi = sendCardToApi;
     // this._setHandlers = this._setHandlers.bind(this);
   };
 
   open = (userData) => {
     this.create();
     //Если у попапа есть свойство для обновления данных в полях и эти данные пришли
-    (this.hasOwnProperty('_updateInformation') && (userData)) ? this._updateInformation(userData) : false;
+    (this.hasOwnProperty('updateInformation') && (userData)) ? this.updateInformation(userData) : false;
     this._container.classList.add('popup_is-opened');
     this._setHandlers();
     this._setEventListeners();

@@ -49,7 +49,7 @@ const removeValidateListeners = () => formValidator.removeEventListeners();
 const createCard = (...args) => new Card(openImagePopup, cardTemplate, addLikeRequest,
   removeLikeRequest, removeCardRequest).create(user.data._id, ...args);
 const openCardPopup = () => new CardPopup(cardPopupTemplate, popupContainer, setValidateListeners,
-  removeValidateListeners, sendCardToApi, cardList.addCard).open();
+  removeValidateListeners, sendCardToApi, uploadCard, cardList.addCard).open();
 const openAvatarPopup = () => new AvatarPopup(avatarPopupTemplate, popupContainer,
   setValidateListeners, removeValidateListeners, sendAvatarDataToApi, updateUserInfo,
   updateUserMenu).open();
@@ -80,6 +80,7 @@ const userMenu = new UserMenu(userMenuTemplate, userLinksTemplate,
 const loader = new Loader();
 
 const sendCardToApi = (...args) => api.sendRequest(config.reqApiParams.addCard, ...args);
+const uploadCard = (...args) => api.sendRequest(config.reqApiParams.upload, ...args);
 const sendRegDataToApi = (...args) => api.sendRequest(config.reqApiParams.signup, ...args);
 const sendAuthDataToApi = (...args) => api.sendRequest(config.reqApiParams.signin, ...args);
 const sendAvatarDataToApi = (...args) => api.sendRequest(config.reqApiParams.changeAvatar,
@@ -129,5 +130,3 @@ checkUserExist
       }
     });
   });
-
-  console.log(config.text.validationMessages.requiredPicture)

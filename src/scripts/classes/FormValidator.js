@@ -10,27 +10,13 @@ export class FormValidator extends BaseComponent {
 
   _setValidationError = () => {
     const errorEl = this._input.nextElementSibling;
-    if (this._input.validity.valueMissing) {
-      errorEl.textContent = this.validationMessages.required;
-    }
-    else if (this._input.validity.tooLong) {
-      errorEl.textContent = this.validationMessages.tooLong + ' ' + this._input.maxLength;
-    }
-    else if (this._input.validity.tooShort) {
-      errorEl.textContent = this.validationMessages.tooShort + ' ' + this._input.minLength;
-    }
-    else if (this._input.validity.typeMismatch && this._input.type === 'url') {
-      errorEl.textContent = this.validationMessages.requiredLink;
-    }
-    else if (this._input.validity.typeMismatch && this._input.type === 'email') {
-      errorEl.textContent = this.validationMessages.requiredEmail;
-    }
-    else if (this._input.validity.customError) {
-      errorEl.textContent = this._input.validationMessage;
-    }
-    else {
-      errorEl.textContent = '';
-    }
+    errorEl.textContent = 
+    (this._input.validity.valueMissing) ? this.validationMessages.required :
+    (this._input.validity.tooLong) ? this.validationMessages.tooLong + ' ' + this._input.maxLength :
+    (this._input.validity.tooShort) ? this.validationMessages.tooShort + ' ' + this._input.minLength :
+    (this._input.validity.typeMismatch && this._input.type === 'url') ? this.validationMessages.requiredLink :
+    (this._input.validity.typeMismatch && this._input.type === 'email') ? this.validationMessages.requiredEmail :
+    (this._input.validity.customError) ? this._input.validationMessage : '';
   }
 
   _isDataFormatValid = () => {

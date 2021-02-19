@@ -52,6 +52,10 @@ const config = {
       url: `${API_URL}/users/me/`,
       method: 'GET',
     },
+    upload: {
+      url: `${API_URL}/upload/`,
+      method: 'POST',
+    },
   },
   headers: {
     'Content-Type': 'application/json',
