@@ -61,17 +61,17 @@ const openProfilePopup = () => new ProfilePopup(profilePopupTemplate, popupConta
   updateUserMenu).open(user.data);
 const openSignupPopup = () => new SignupPopup(signupPopupTemplate, popupContainer,
   setValidateListeners, removeValidateListeners, sendRegDataToApi,
-  config.userPageFeature.url).open();
+  config.userPageFeature.url()).open();
 const openSigninPopup = () => new SigninPopup(signinPopupTemplate, popupContainer,
   setValidateListeners, removeValidateListeners, sendAuthDataToApi,
-  config.userPageFeature.url).open();
+  config.userPageFeature.url()).open();
 const signout = () => {
   localStorage.removeItem('token');
   document.location.href = '/';
 };
 
 const api = new Api(config.headers);
-const user = new User(config.userPageFeature.url);
+const user = new User(config.userPageFeature.url());
 const header = new Header(userBlockContainer);
 const formValidator = new FormValidator(config.text, config.fileExtensions);
 const userInfo = new UserInfo(profileContainer, profileTemplate, openCardPopup, openAvatarPopup,

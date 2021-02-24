@@ -27,6 +27,7 @@ export class UserInfo extends BaseComponent {
   };
 
   render = (userAuthData, userPageData) => {
+    console.log(userAuthData, userPageData)
     this._userPageData = userPageData;
     this._userAuthData = userAuthData;
     this._create()

@@ -1,9 +1,10 @@
-const API_URL = NODE_ENV === 'production' ? 'https://mesto-api.turbomegapro.ru' : 'http://localhost:3001';
-const MAIN_URL = NODE_ENV === 'production' ? 'https://mesto.turbomegapro.ru' : 'http://localhost:8080';
+const API_URL = process.env.NODE_ENV === 'production' ? 'https://mesto-api.turbomegapro.ru' : 'http://localhost:3001';
+const MAIN_URL = process.env.NODE_ENV === 'production' ? 'https://mesto.turbomegapro.ru' : 'http://localhost:8080';
 const localJWT = `Bearer ${localStorage.getItem('token')}`;
 const config = {
   userPageFeature: {
-    url: NODE_ENV === 'production' ? `${MAIN_URL}/user/` : `${MAIN_URL}?user=`,
+    // url() { return process.env.NODE_ENV === 'production' ? `${MAIN_URL}/${this.path}/` : `${MAIN_URL}?${this.path}=` }, //Фишка будет добавлена позже
+    url() { return `${MAIN_URL}?${this.path}=` },
     path: 'user',
     urlParams: window.location.search,
   },
@@ -13,6 +14,7 @@ const config = {
       method: 'POST',
       headers: {
         authorization: localJWT,
+        headers: { 'Content-Type': 'application/json' },
       },
     },
     signin: {
@@ -20,6 +22,7 @@ const config = {
       method: 'POST',
       headers: {
         authorization: localJWT,
+        headers: { 'Content-Type': 'application/json' },
       },
     },
     addCard: {
@@ -27,6 +30,7 @@ const config = {
       method: 'POST',
       headers: {
         authorization: localJWT,
+        headers: { 'Content-Type': 'application/json' },
       },
     },
     changeUserInfo: {
@@ -34,6 +38,7 @@ const config = {
       method: 'PATCH',
       headers: {
         authorization: localJWT,
+        headers: { 'Content-Type': 'application/json' },
       },
     },
     changeAvatar: {
@@ -41,6 +46,7 @@ const config = {
       method: 'PATCH',
       headers: {
         authorization: localJWT,
+        headers: { 'Content-Type': 'application/json' },
       },
     },
     addLike: {
