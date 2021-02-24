@@ -14,7 +14,6 @@ const config = {
       method: 'POST',
       headers: {
         authorization: localJWT,
-        headers: { 'Content-Type': 'application/json' },
       },
     },
     signin: {
@@ -22,7 +21,6 @@ const config = {
       method: 'POST',
       headers: {
         authorization: localJWT,
-        headers: { 'Content-Type': 'application/json' },
       },
     },
     addCard: {
@@ -30,7 +28,6 @@ const config = {
       method: 'POST',
       headers: {
         authorization: localJWT,
-        headers: { 'Content-Type': 'application/json' },
       },
     },
     changeUserInfo: {
@@ -38,7 +35,6 @@ const config = {
       method: 'PATCH',
       headers: {
         authorization: localJWT,
-        headers: { 'Content-Type': 'application/json' },
       },
     },
     changeAvatar: {
@@ -46,7 +42,6 @@ const config = {
       method: 'PATCH',
       headers: {
         authorization: localJWT,
-        headers: { 'Content-Type': 'application/json' },
       },
     },
     addLike: {
