@@ -1,4 +1,3 @@
-let NODE_ENV;
 const API_URL = NODE_ENV === 'production' ? 'https://mesto-api.turbomegapro.ru' : 'http://localhost:3001';
 const MAIN_URL = NODE_ENV === 'production' ? 'https://mesto.turbomegapro.ru' : 'http://localhost:8080';
 const localJWT = `Bearer ${localStorage.getItem('token')}`;
