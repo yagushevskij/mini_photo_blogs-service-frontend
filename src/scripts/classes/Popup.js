@@ -10,10 +10,10 @@ export class Popup extends BaseComponent {
     // this._setHandlers = this._setHandlers.bind(this);
   };
 
-  open = (userData) => {
-    this.create();
+  open = (data) => {
+    this._create(data);
     //Если у попапа есть свойство для обновления данных в полях и эти данные пришли
-    (this.hasOwnProperty('updateInformation') && (userData)) ? this.updateInformation(userData) : false;
+    (this.hasOwnProperty('updateInformation') && (data)) ? this.updateInformation(data) : false;
     this._container.classList.add('popup_is-opened');
     this._setHandlers();
     this._setEventListeners();
@@ -27,7 +27,7 @@ export class Popup extends BaseComponent {
     this._view.remove();
   };
 
-  create() {
+  _create() {
     this._view = this._markup.content.cloneNode(true).children[0];
     this._container.append(this._view);
   }

@@ -87,7 +87,7 @@ const config = {
       },
     },
     upload: {
-      url: `${API_URL}/upload/`,
+      url: `${API_URL}/upload/card`,
       method: 'POST',
       headers: {
         authorization: localJWT,

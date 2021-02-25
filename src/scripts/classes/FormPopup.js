@@ -7,8 +7,8 @@ export class FormPopup extends Popup {
     this._removeValidateListeners = removeValidateListeners;
   }
 
-  create = () => {
-    super.create();
+  _create = () => {
+    super._create();
     const form = this._view.querySelector('.popup__form')
     this._setValidateListeners(form);
   };

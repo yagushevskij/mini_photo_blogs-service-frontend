@@ -5,9 +5,9 @@ export class ImagePopup extends Popup {
         super(container, markup);
     }
 
-    create = (link) => {
-        super.create();
-        this._view.querySelector('.popup__image-content').setAttribute('src', link);
+    _create = (data) => {
+        super._create();
+        this._view.querySelector('.popup__image-content').setAttribute('src', data);
     };
 
     _close = () => {

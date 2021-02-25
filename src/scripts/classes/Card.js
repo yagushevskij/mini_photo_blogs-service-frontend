@@ -76,7 +76,7 @@ export class Card extends BaseComponent {
       this._view.likeIcon.classList.add('place-card__like-icon_liked');
     }
     this._view.querySelector('.place-card__name').textContent = this._item.name;
-    this._view.img.setAttribute('style', `background-image: url(${this._item.files.preview})`);
+    this._view.img.setAttribute('style', `background-image: url(${this._item.files.preview.link})`);
     this._view.dataset.id = this._item._id;
     this._changeLikesCount();
     this._setHandlers();
@@ -85,7 +85,7 @@ export class Card extends BaseComponent {
   };
 
   _open = () => {
-    this._openPopup(this._item.files.content);
+    this._openPopup(this._item.files.content.link);
   };
 
   _setHandlers = () => this._handlersArr = [
