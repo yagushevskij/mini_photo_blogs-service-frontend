@@ -1,0 +1,9 @@
+@import url(./_rounded/card__image_rounded.css);
+@import url(./_type/card__image_type_user-card.css);
+@import url(./_blackout/card__image_blackout.css);
+
+
+.card__image {
+  background-size: cover;
+  background-position: center;
+}

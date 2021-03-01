@@ -6,8 +6,8 @@
 @import url(../blocks/profile/profile.css);
 @import url(../blocks/user-info/user-info.css);
 @import url(../blocks/button/button.css);
-@import url(../blocks/places-list/places-list.css);
-@import url(../blocks/place-card/place-card.css);
+@import url(../blocks/cards-list/cards-list.css);
+@import url(../blocks/card/card.css);
 @import url(../blocks/popup/popup.css);
 @import url(../blocks/error-message/error-message.css);
 @import url(../blocks/image-popup/image-popup.css);

@@ -1,4 +1,4 @@
-const cardsContainer = document.querySelector('.places-list');
+const cardsContainer = document.querySelector('.cards-list');
 const popupContainer = document.querySelector('.popup');
 const cardTemplate = document.querySelector('#card');
 const userMenuTemplate = document.querySelector('#user-menu');
