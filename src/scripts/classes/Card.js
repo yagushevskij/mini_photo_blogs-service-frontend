@@ -17,14 +17,18 @@ export class Card extends BaseComponent {
       .then((res) => {
         this._item = res;
         this._changeLikesCount();
-        this._view.likeIcon.classList.toggle('place-card__like-icon_liked');
+        this._view.likeIcon.classList.toggle('card__like-icon_liked');
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  _changeLikesCount = () => this._view.likeCount.textContent = this._item.likes.length;
+  _changeLikesCount = () => {
+    if (this._view.likeCount) {
+      this._view.likeCount.textContent = this._item.likes.length
+    }
+  };
 
   _hasOwnLike = () => this._item.likes.some(item => item === this._userId);
 
@@ -65,18 +69,27 @@ export class Card extends BaseComponent {
     this._userId = userId;
     this._item = item;
     this._view = this._cardTemplate.content.cloneNode(true).children[0];
-    this._view.img = this._view.querySelector('.place-card__image');
-    this._view.likeIcon = this._view.querySelector('.place-card__like-icon');
-    this._view.likeCount = this._view.querySelector('.place-card__like-counter');
-    this._view.removeIcon = this._view.querySelector('.place-card__delete-icon');
-    if (!(this._isOwner())) {
+    try {
+      this._view.img = this._view.querySelector('.card__image');
+      this._view.likeIcon = this._view.querySelector('.card__like-icon');
+      this._view.likeCount = this._view.querySelector('.card__like-counter');
+      this._view.removeIcon = this._view.querySelector('.card__delete-icon');
+      this._view.name = this._view.querySelector('.card__name');
+    } catch (err) {
+      console.log(err);
+    }
+    if (!(this._isOwner()) && this._view.removeIcon) {
       this._view.removeIcon.style.display = 'none';
     }
-    if (this._hasOwnLike()) {
-      this._view.likeIcon.classList.add('place-card__like-icon_liked');
+    if (this._hasOwnLike() && this._view.likeIcon) {
+      this._view.likeIcon.classList.add('card__like-icon_liked');
     }
-    this._view.querySelector('.place-card__name').textContent = this._item.name;
-    this._view.img.setAttribute('style', `background-image: url(${this._item.files.preview.link})`);
+    if (this._view.name) {
+      this._view.name.textContent = this._item.name;
+    }
+    if (this._view.img) {
+      this._view.img.setAttribute('style', `background-image: url(${this._item.files.preview.link})`);
+    }
     this._view.dataset.id = this._item._id;
     this._changeLikesCount();
     this._setHandlers();
