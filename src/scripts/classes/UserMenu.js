@@ -14,14 +14,12 @@ export class UserMenu extends BaseComponent {
     this._userData = userData;
     if (this._isUserDataExist()) {
       this._view = this.userMenuTemplate.content.cloneNode(true).children[0];
-      // this._view.dataset.id = this._item._id;
       const usernameElem = this._view.querySelector('.dropdown__link_type_greeting');
       const myPageElem = this._view.querySelector('.dropdown__link_type_my-page');
       const signoutElem = this._view.querySelector('.dropdown__link_type_signout');
       const dropdownElem = this._view.querySelector('.dropdown__mainmenu');
       this._imgBtnElem = this._view.querySelector('.dropdown__mainmenubtn');
       this._menuElem = this._view.querySelector('.dropdown__child');
-      this._view.querySelector('.card__name').textContent = this._item.name;
       this._imgBtnElem.setAttribute('src', userData.avatar);
       usernameElem.textContent = userData.username;
       myPageElem.setAttribute('href', userpageUrl);

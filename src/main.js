@@ -6,6 +6,7 @@ import {
   userMenuTemplate, userLinksTemplate, profileTemplate,
 }
   from './scripts/constants/selectors';
+import { getElementFromTemp } from './scripts/utils';
 
 import config from './scripts/constants/data';
 import { Api } from './scripts/classes/Api';
@@ -49,8 +50,19 @@ const updateUserMenu = (...args) => userMenu.update(...args);
 
 const setValidateListeners = (...args) => formValidator.setEventListeners(...args);
 const removeValidateListeners = () => formValidator.removeEventListeners();
-const createCard = (...args) => new Card(openImagePopup, cardTemplate, addLikeRequest,
-  removeLikeRequest, removeCardRequest).create(user.data._id, ...args);
+const createCard = (...args) => new Card(openImagePopup, addLikeRequest,
+  removeLikeRequest, removeCardRequest).create({
+    view: getElementFromTemp(cardTemplate),
+    classNames: {
+      img: '.place-card__image',
+      likeIcon: '.place-card__like-icon',
+      likeCount: '.place-card__like-counter',
+      removeIcon: '.place-card__delete-icon',
+      name: '.place-card__name',
+      likedIcon: 'place-card__like-icon_liked',
+    },
+  },
+    user.data._id, ...args);
 const openCardPopup = () => new CardPopup(cardPopupTemplate, popupContainer, setValidateListeners,
   removeValidateListeners, sendCardToApi, uploadCard, cardList.addCard).open();
 const openAvatarPopup = () => new AvatarPopup(avatarPopupTemplate, popupContainer,

@@ -2,10 +2,9 @@ import { BaseComponent } from './BaseComponent';
 
 export class Card extends BaseComponent {
 
-  constructor(openPopup, cardTemplate, requestApiLike, requestApiDislike, requestApiRemoveCard) {
+  constructor(openPopup, requestApiLike, requestApiDislike, requestApiRemoveCard) {
     super();
     this._openPopup = openPopup;
-    this._cardTemplate = cardTemplate;
     this._requestApiLike = requestApiLike;
     this._requestApiDislike = requestApiDislike;
     this._requestApiRemoveCard = requestApiRemoveCard;
@@ -17,7 +16,7 @@ export class Card extends BaseComponent {
       .then((res) => {
         this._item = res;
         this._changeLikesCount();
-        this._view.likeIcon.classList.toggle('card__like-icon_liked');
+        this._view.likeIcon.classList.toggle(this._view.likedIconClassName);
       })
       .catch((err) => {
         console.log(err);
@@ -65,16 +64,18 @@ export class Card extends BaseComponent {
     }
   };
 
-  create = (userId, item) => {
+  create = (params, userId, item) => {
     this._userId = userId;
     this._item = item;
-    this._view = this._cardTemplate.content.cloneNode(true).children[0];
+    this._view = params.view;
     try {
-      this._view.img = this._view.querySelector('.card__image');
-      this._view.likeIcon = this._view.querySelector('.card__like-icon');
-      this._view.likeCount = this._view.querySelector('.card__like-counter');
-      this._view.removeIcon = this._view.querySelector('.card__delete-icon');
-      this._view.name = this._view.querySelector('.card__name');
+      const { img, likeIcon, likeCount, removeIcon, name, likedIcon} = params.classNames
+      this._view.likedIconClassName = likedIcon;
+      this._view.img = this._view.querySelector(img);
+      this._view.likeIcon = this._view.querySelector(likeIcon);
+      this._view.likeCount = this._view.querySelector(likeCount);
+      this._view.removeIcon = this._view.querySelector(removeIcon);
+      this._view.name = this._view.querySelector(name);
     } catch (err) {
       console.log(err);
     }
@@ -82,7 +83,7 @@ export class Card extends BaseComponent {
       this._view.removeIcon.style.display = 'none';
     }
     if (this._hasOwnLike() && this._view.likeIcon) {
-      this._view.likeIcon.classList.add('card__like-icon_liked');
+      this._view.likeIcon.classList.add(this._view.likedIconClassName);
     }
     if (this._view.name) {
       this._view.name.textContent = this._item.name;

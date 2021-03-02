@@ -1,6 +1,6 @@
 const cardsContainer = document.querySelector('.cards-list');
 const popupContainer = document.querySelector('.popup');
-const cardTemplate = document.querySelector('#card');
+const cardTemplate = document.querySelector('#user-card');
 const userMenuTemplate = document.querySelector('#user-menu');
 const userLinksTemplate = document.querySelector('#user-links');
 const cardsLoader = document.querySelector('#cards-loader');
