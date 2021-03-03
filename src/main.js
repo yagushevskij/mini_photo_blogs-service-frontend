@@ -1,9 +1,9 @@
 import './pages/index.css';
 import {
-  cardsContainer, popupContainer, cardTemplate, profileContainer, cardsLoader,
+  userCardsContainer, popupContainer, cardTemplate, profileContainer, cardsLoader,
   signupPopupTemplate, signinPopupTemplate, imagePopupTemplate,
   profilePopupTemplate, cardPopupTemplate, avatarPopupTemplate, userBlockContainer,
-  userMenuTemplate, userLinksTemplate, profileTemplate,
+  userMenuTemplate, userLinksTemplate, profileTemplate, userCardsWrapper
 }
   from './scripts/constants/selectors';
 import { getElementFromTemp } from './scripts/utils';
@@ -50,7 +50,7 @@ const updateUserMenu = (...args) => userMenu.update(...args);
 
 const setValidateListeners = (...args) => formValidator.setEventListeners(...args);
 const removeValidateListeners = () => formValidator.removeEventListeners();
-const createCard = (...args) => new Card(openImagePopup, addLikeRequest,
+const createUserCard = (...args) => new Card(openImagePopup, addLikeRequest,
   removeLikeRequest, removeCardRequest).create({
     view: getElementFromTemp(cardTemplate),
     classNames: {
@@ -64,7 +64,7 @@ const createCard = (...args) => new Card(openImagePopup, addLikeRequest,
   },
     user.data._id, ...args);
 const openCardPopup = () => new CardPopup(cardPopupTemplate, popupContainer, setValidateListeners,
-  removeValidateListeners, sendCardToApi, uploadCard, cardList.addCard).open();
+  removeValidateListeners, sendCardToApi, uploadCard, userCardList.addCard).open();
 const openAvatarPopup = () => new AvatarPopup(avatarPopupTemplate, popupContainer,
   setValidateListeners, removeValidateListeners, sendAvatarDataToApi, updateUserInfo,
   updateUserMenu).open();
@@ -89,7 +89,7 @@ const formValidator = new FormValidator(config.text, config.fileExtensions);
 const userInfo = new UserInfo(profileContainer, profileTemplate, openCardPopup, openAvatarPopup,
   openProfilePopup, ['name', 'about']);
 const imagePopup = new ImagePopup(imagePopupTemplate, popupContainer);
-const cardList = new CardList(cardsContainer, createCard);
+const userCardList = new CardList(userCardsContainer, userCardsWrapper, createUserCard);
 const userMenu = new UserMenu(userMenuTemplate, userLinksTemplate,
   openSignupPopup, openSigninPopup, signout);
 const loader = new Loader();
@@ -132,7 +132,7 @@ checkUserExist
             headers: config.reqApiParams.getUserCards.headers,
           })
             .then((cards) => {
-              cardList.render(cards);
+              userCardList.render(cards);
             })
             .catch((err) => console.log(err))
             .finally(() => loader.changeStatus(cardsLoader, false));
