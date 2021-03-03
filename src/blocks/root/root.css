@@ -1,4 +1,5 @@
 @import url(./__section/root__section.css);
+@import url(./__title/root__title.css);
 
 .root {
   background-color: black;
