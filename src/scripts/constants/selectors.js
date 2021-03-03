@@ -1,7 +1,10 @@
-const userCardsWrapper = document.querySelector('.user-cards-wrapper');
-const userCardsContainer = document.querySelector('.cards-list');
+const userCardsWrapper = document.querySelector('.cards-wrapper_type_user-cards');
+const userCardsContainer = document.querySelector('.cards-list_type_user-cards');
+const topCardsWrapper = document.querySelector('.cards-wrapper_type_top-cards');
+const topCardsContainer = document.querySelector('.cards-list_type_top-cards');
 const popupContainer = document.querySelector('.popup');
-const cardTemplate = document.querySelector('#user-card');
+const userCardTemplate = document.querySelector('#user-card');
+const imageCardTemplate = document.querySelector('#image-card');
 const userMenuTemplate = document.querySelector('#user-menu');
 const userLinksTemplate = document.querySelector('#user-links');
 const cardsLoader = document.querySelector('#cards-loader');
@@ -16,8 +19,9 @@ const avatarPopupTemplate = document.querySelector('#avatar-popup');
 const userBlockContainer = document.querySelector('.header__user-container');
 
 export {
-  userCardsWrapper, userCardsContainer, popupContainer, cardTemplate, profileContainer, cardsLoader,
-  signupPopupTemplate,
+  userCardsWrapper, userCardsContainer, popupContainer, userCardTemplate, profileContainer,
+  cardsLoader, signupPopupTemplate, imageCardTemplate,
   signinPopupTemplate, imagePopupTemplate, profilePopupTemplate, cardPopupTemplate,
   avatarPopupTemplate, userBlockContainer, userMenuTemplate, userLinksTemplate, profileTemplate,
+  topCardsWrapper, topCardsContainer,
 };

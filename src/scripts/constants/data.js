@@ -2,6 +2,11 @@ const API_URL = process.env.NODE_ENV === 'production' ? 'https://mesto-api.turbo
 const MAIN_URL = process.env.NODE_ENV === 'production' ? 'https://mesto.turbomegapro.ru' : 'http://localhost:8080';
 const localJWT = `Bearer ${localStorage.getItem('token')}`;
 const config = {
+  gallery: {
+    minFileSize: 200,
+    maxFileSize: 500,
+    cellSize: 10,
+  },
   userPageFeature: {
     // url() { return process.env.NODE_ENV === 'production' ? `${MAIN_URL}/${this.path}/` : `${MAIN_URL}?${this.path}=` }, //Фишка будет добавлена позже
     url() { return `${MAIN_URL}?${this.path}=` },
@@ -74,6 +79,13 @@ const config = {
     },
     getUserCards: {
       url: `${API_URL}/cards/user/`,
+      method: 'GET',
+      headers: {
+        authorization: localJWT,
+      },
+    },
+    getAllUsersCards: {
+      url: `${API_URL}/cards/`,
       method: 'GET',
       headers: {
         authorization: localJWT,

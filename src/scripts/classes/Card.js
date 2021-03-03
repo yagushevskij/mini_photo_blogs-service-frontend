@@ -2,12 +2,13 @@ import { BaseComponent } from './BaseComponent';
 
 export class Card extends BaseComponent {
 
-  constructor(openPopup, requestApiLike, requestApiDislike, requestApiRemoveCard) {
+  constructor(openPopup, requestApiLike, requestApiDislike, requestApiRemoveCard, setElementGridSize) {
     super();
     this._openPopup = openPopup;
     this._requestApiLike = requestApiLike;
     this._requestApiDislike = requestApiDislike;
     this._requestApiRemoveCard = requestApiRemoveCard;
+    this._setElementGridSize = setElementGridSize;
   };
 
   _like = () => {
@@ -90,6 +91,9 @@ export class Card extends BaseComponent {
     }
     if (this._view.img) {
       this._view.img.setAttribute('style', `background-image: url(${this._item.files.preview.link})`);
+    }
+    if (params.isGalleryItem && this._setElementGridSize) {
+      this._setElementGridSize(this._view, this._item)
     }
     this._view.dataset.id = this._item._id;
     this._changeLikesCount();
