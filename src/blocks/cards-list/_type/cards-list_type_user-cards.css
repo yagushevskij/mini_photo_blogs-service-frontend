@@ -1,0 +1,4 @@
+.cards-list_type_user-cards {
+  grid-template-columns: repeat(auto-fill, 282px);
+  grid-gap: 18px 18px;
+}

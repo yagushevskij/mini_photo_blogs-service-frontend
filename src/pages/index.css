@@ -15,6 +15,7 @@
 @import url(../blocks/profile-popup/profile-popup.css);
 @import url(../blocks/loader/loader.css);
 @import url(../blocks/dropdown/dropdown.css);
+@import url(../blocks/image-card/image-card.css);
 @import url(../blocks/hidden/hidden.css);
 
 body {

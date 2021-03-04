@@ -1,9 +1,10 @@
 import './pages/index.css';
 import {
-  userCardsContainer, popupContainer, cardTemplate, profileContainer, cardsLoader,
+  userCardsContainer, popupContainer, userCardTemplate, profileContainer, cardsLoader,
   signupPopupTemplate, signinPopupTemplate, imagePopupTemplate,
   profilePopupTemplate, cardPopupTemplate, avatarPopupTemplate, userBlockContainer,
-  userMenuTemplate, userLinksTemplate, profileTemplate, userCardsWrapper
+  userMenuTemplate, userLinksTemplate, profileTemplate, userCardsWrapper,
+  topCardsWrapper, topCardsContainer, imageCardTemplate,
 }
   from './scripts/constants/selectors';
 import { getElementFromTemp } from './scripts/utils';
@@ -24,6 +25,7 @@ import { FormValidator } from './scripts/classes/FormValidator';
 import { Header } from './scripts/classes/Header';
 import { UserMenu } from './scripts/classes/UserMenu';
 import { User } from './scripts/classes/User';
+import { PhotoGallery } from './scripts/classes/PhotoGallery';
 
 // Колбэки
 const openPopup = (popup, ...args) => popup.open(args);
@@ -52,7 +54,8 @@ const setValidateListeners = (...args) => formValidator.setEventListeners(...arg
 const removeValidateListeners = () => formValidator.removeEventListeners();
 const createUserCard = (...args) => new Card(openImagePopup, addLikeRequest,
   removeLikeRequest, removeCardRequest).create({
-    view: getElementFromTemp(cardTemplate),
+    isGalleryItem: false,
+    view: getElementFromTemp(userCardTemplate),
     classNames: {
       img: '.place-card__image',
       likeIcon: '.place-card__like-icon',
@@ -60,6 +63,19 @@ const createUserCard = (...args) => new Card(openImagePopup, addLikeRequest,
       removeIcon: '.place-card__delete-icon',
       name: '.place-card__name',
       likedIcon: 'place-card__like-icon_liked',
+    },
+  },
+    user.data._id, ...args);
+const createImageCard = (...args) => new Card(openImagePopup, addLikeRequest,
+  removeLikeRequest, removeCardRequest, setElementGridSize).create({
+    isGalleryItem: true,
+    view: getElementFromTemp(imageCardTemplate),
+    classNames: {
+      img: '.image-card__image',
+      likeIcon: '.image-card__like-icon',
+      likeCount: '.image-card__likes-count',
+      name: '.image-card__name',
+      likedIcon: 'image-card__like-icon_liked',
     },
   },
     user.data._id, ...args);
@@ -81,6 +97,7 @@ const signout = () => {
   localStorage.removeItem('token');
   document.location.href = '/';
 };
+const setElementGridSize = (...args) => photoGallery.setSize(...args);
 
 const api = new Api(config.headers);
 const user = new User(config.userPageFeature.url());
@@ -90,9 +107,11 @@ const userInfo = new UserInfo(profileContainer, profileTemplate, openCardPopup, 
   openProfilePopup, ['name', 'about']);
 const imagePopup = new ImagePopup(imagePopupTemplate, popupContainer);
 const userCardList = new CardList(userCardsContainer, userCardsWrapper, createUserCard);
+const topCardList = new CardList(topCardsContainer, topCardsWrapper, createImageCard);
 const userMenu = new UserMenu(userMenuTemplate, userLinksTemplate,
   openSignupPopup, openSigninPopup, signout);
 const loader = new Loader();
+const photoGallery = new PhotoGallery(config.gallery);
 
 const sendCardToApi = (...args) => api.sendRequest(config.reqApiParams.addCard, ...args);
 const uploadCard = (...args) => api.sendRequest(config.reqApiParams.upload, ...args);
@@ -139,7 +158,17 @@ checkUserExist
         })
         .catch((err) => console.log(err));
     } else {
-      console.log('Главная');
+      api.sendRequest({
+        url: config.reqApiParams.getAllUsersCards.url,
+        method: config.reqApiParams.getAllUsersCards.method,
+        headers: config.reqApiParams.getAllUsersCards.headers,
+      })
+        .then((cards) => {
+          photoGallery.create(topCardsContainer, cards);
+          topCardList.render(cards);
+        })
+        .catch((err) => console.log(err))
+        .finally(() => loader.changeStatus(cardsLoader, false));
     }
     document.addEventListener('keydown', (event) => { // Убираем срабатывание кнопок на странице по нажатию enter;
       if (event.keyCode === 13 && event.target.nodeName === 'BUTTON') {

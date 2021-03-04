@@ -3,9 +3,10 @@ const MAIN_URL = process.env.NODE_ENV === 'production' ? 'https://mesto.turbomeg
 const localJWT = `Bearer ${localStorage.getItem('token')}`;
 const config = {
   gallery: {
-    minFileSize: 200,
-    maxFileSize: 500,
-    cellSize: 10,
+    minFileSize: 100, // Размер минимальной стороны для фото с наименьшим рейтингом
+    maxFileSize: 400, // Размер минимальной стороны для фото с наибольшим рейтингом
+    cellSize: 100, // Размер сторон grid ячейки, px. Рекомендуется использовать
+    // значение равное minFileSize
   },
   userPageFeature: {
     // url() { return process.env.NODE_ENV === 'production' ? `${MAIN_URL}/${this.path}/` : `${MAIN_URL}?${this.path}=` }, //Фишка будет добавлена позже

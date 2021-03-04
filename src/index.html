@@ -19,9 +19,13 @@
     <div class="profile root__section">
     </div>
     <div class="loader" id="cards-loader">Loading...</div>
-    <div class="user-cards-wrapper root__section hidden">
+    <div class="cards-wrapper cards-wrapper_type_user-cards root__section hidden">
       <h2 class="root__title">Загруженные фото пользователя:</h2>
-      <div class="cards-list"></div>
+      <div class="cards-list cards-list_type_user-cards"></div>
+    </div>
+    <div class="cards-wrapper cards-wrapper_type_top-cards root__section hidden">
+      <h1 class="root__title">Лучшие фото:</h1>
+      <div class="cards-list cards-list_type_top-cards"></div>
     </div>
     <div class="popup"></div>
 
@@ -40,6 +44,16 @@
       </div>
     </template>
 
+    <template id="image-card">
+      <div class="image-card">
+        <div class="image-card__image">
+          <!-- <div class="image-card__likes-count">7</div>
+          <div class="image-card__username">Добавил:</div>
+          <div class="image-card__name">Суперфоточка</div> -->
+        </div>
+      </div>
+    </template>
+
     <template id="card-popup">
       <div class="popup__content">
         <img src="<%=require('./images/close.svg')%>" alt="" class="popup__close">
@@ -49,11 +63,13 @@
             required>
           <span class="error-message"></span>
           <div class="popup__group-elements">
-            <input type="url" name="link" class="popup__input popup__input_type_group popup__input_filetype_picture" placeholder="Ссылка на картинку">
+            <input type="url" name="link" class="popup__input popup__input_type_group popup__input_filetype_picture"
+              placeholder="Ссылка на картинку">
             <span class="error-message"></span>
             <div class="popup__group-message">Или</div>
             <span class="error-message error-message_type_group"></span>
-            <input type="file" name="picture" class="popup__input popup__input_type_group popup__input_filetype_picture" accept="image/x-png,image/gif,image/jpeg" placeholder="Выберите файл">
+            <input type="file" name="picture" class="popup__input popup__input_type_group popup__input_filetype_picture"
+              accept="image/x-png,image/gif,image/jpeg" placeholder="Выберите файл">
             <span class="error-message"></span>
           </div>
           <button type="submit" class="button popup__button popup__button_function_add" disabled>+</button>

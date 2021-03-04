@@ -1,6 +1,7 @@
+@import url('./_type/cards-list_type_user-cards.css');
+@import url('./_type/cards-list_type_top-cards.css');
+
 .cards-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, 282px);
-  grid-gap: 18px 18px;
   justify-content: center;
 }

@@ -5,7 +5,7 @@ export class PhotoGallery {
   }
 
   _init = () => {
-    this._container.setAttribute('style', `grid-template-columns: repeat(auto-fill, ${this._config.cellSize}px); grid-auto-rows: ${this._config.cellSize}px`)
+    this._container.setAttribute('style', `grid-template-columns: repeat(auto-fill, ${this._config.cellSize}px); grid-auto-rows: ${this._config.cellSize}px;`)
     this._setMinMaxLikesCount();
   };
 
@@ -19,13 +19,14 @@ export class PhotoGallery {
     this._cardObj = cardObj;
     this._likesCount = cardObj.likes.length;
     const increaseMultiplier = this._getIncreaseMultiplier();
-    let rowSpanSize = this._config.minFileSize / this._config.cellSize * increaseMultiplier;
-    let columnSpanSize = this._config.minFileSize / this._config.cellSize * increaseMultiplier;
+    let columnSpanSize;
+    let rowSpanSize = columnSpanSize = this._config.minFileSize / this._config.cellSize * increaseMultiplier;
     const aspectRatio = this._getAspectRatio();
+    const roundHalf = (num) => Math.round(num * 2) / 2;
     if (aspectRatio < 1) {
-      rowSpanSize = rowSpanSize * (aspectRatio + 1);
+      rowSpanSize = roundHalf(rowSpanSize * (aspectRatio + 1));
     } else if (aspectRatio > 1) {
-      columnSpanSize = columnSpanSize * aspectRatio;
+      columnSpanSize = roundHalf(columnSpanSize * aspectRatio);
     }
     element.setAttribute('style', `grid-column: span ${Math.ceil(columnSpanSize)}; grid-row: span ${Math.ceil(rowSpanSize)};`)
   };
