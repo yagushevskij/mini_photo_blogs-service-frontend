@@ -3,8 +3,9 @@ const MAIN_URL = process.env.NODE_ENV === 'production' ? 'https://mesto.turbomeg
 const localJWT = `Bearer ${localStorage.getItem('token')}`;
 const config = {
   gallery: {
-    minFileSize: 100, // Размер минимальной стороны для фото с наименьшим рейтингом
-    maxFileSize: 400, // Размер минимальной стороны для фото с наибольшим рейтингом
+    gapSize: 10, // Размер горизонтального и вертикального отступа между строками и столбцами, px
+    minFileSize: 100, // Размер минимальной стороны для фото с наименьшим рейтингом, px.
+    maxFileSize: 400, // Размер минимальной стороны для фото с наибольшим рейтингом, px.
     cellSize: 100, // Размер сторон grid ячейки, px. Рекомендуется использовать
     // значение равное minFileSize
   },

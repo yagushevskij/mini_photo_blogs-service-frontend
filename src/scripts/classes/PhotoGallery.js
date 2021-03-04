@@ -5,7 +5,8 @@ export class PhotoGallery {
   }
 
   _init = () => {
-    this._container.setAttribute('style', `grid-template-columns: repeat(auto-fill, ${this._config.cellSize}px); grid-auto-rows: ${this._config.cellSize}px;`)
+    this._container.setAttribute('style', `grid-template-columns:
+    repeat(auto-fill, ${this._config.cellSize}px); grid-auto-rows: ${this._config.cellSize}px; grid-gap: ${this._config.gapSize}px;`)
     this._setMinMaxLikesCount();
   };
 
