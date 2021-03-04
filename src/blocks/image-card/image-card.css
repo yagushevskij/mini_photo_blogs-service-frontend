@@ -1,6 +1,8 @@
-@import url('./__image/image-card__image.css');
-
-.image-card {
-  /* display: flex; */
-  /* height: 100%; */
-}
+@import url(./__like-counter/image-card__like-counter.css);
+@import url(./__like-icon/image-card__like-icon.css);
+@import url(./__like/image-card__like.css);
+@import url(./__info-wrapper/image-card__info-wrapper.css);
+@import url(./__image/image-card__image.css);
+@import url(./__name/image-card__name.css);
+@import url(./__username/image-card__username.css);
+@import url(./__username-link/image-card__username-link.css);

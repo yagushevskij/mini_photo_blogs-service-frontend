@@ -1,5 +1,26 @@
 .image-card__image {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     height: 100%;
     background-position: center;
     background-size: cover;
+    padding: 5%;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* .image-card__image:hover {
+  transform: scale(1.02);
+  transition: transform 0.3s;
+} */
+
+.image-card__image:hover > .image-card__like {
+  visibility: visible;
+}
+
+.image-card__image:hover > .image-card__info-wrapper {
+  visibility: visible;
+  transition: transform 1s;
+  transform: translateY(-50px);
 }

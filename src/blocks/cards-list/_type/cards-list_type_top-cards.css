@@ -1,4 +1,5 @@
 .cards-list_type_top-cards {
   grid-auto-flow: dense;
   grid-gap: auto;
+  box-sizing: content-box;
 }
