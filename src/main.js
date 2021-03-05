@@ -8,7 +8,7 @@ import {
 }
   from './scripts/constants/selectors';
 import {
-  getElementFromTemp, getUserPageUrl, getUserPageUrlRegExp, getExtractNameRegExp,
+  getElementFromTemp, getUserPageUrl,
 } from './scripts/utils';
 
 import { config, localJWT } from './scripts/constants/data';
@@ -126,8 +126,8 @@ const sendUserDataToApi = (...args) => api.sendRequest(config.reqApiParams.chang
   ...args);
 
 const isPageUserpage = () => {
-  const userPageUrlregExp = new RegExp(getUserPageUrlRegExp());
-  return (userPageUrlregExp.test(window.location.search));
+  const userPageUrlregExp = new RegExp(config.userPageFeature.getUserPageUrlRegExp());
+  return (userPageUrlregExp.test(config.userPageFeature.getUrlParams()));
 };
 // const getUserInfo = () => sendApiRequest(config.reqApiParams.checkUserExist)
 //   .then((res) => {
@@ -137,8 +137,8 @@ const isPageUserpage = () => {
 //   .catch((err) => console.log(err));
 
 const renderUserPage = () => {
-  const username = new RegExp(getExtractNameRegExp())
-    .exec(window.location.search)[1];
+  const username = new RegExp(config.userPageFeature.getExtractNameRegExp())
+    .exec(config.userPageFeature.getUrlParams())[1];
   loader.changeStatus(cardsLoader, true);
   api.sendRequest({
     url: config.reqApiParams.getUserInfo.url + username,

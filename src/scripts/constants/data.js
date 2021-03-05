@@ -10,6 +10,20 @@ const config = {
     // значение равное minFileSize
   },
   userPageFeature: {
+    getUrlParams() {
+      return process.env.NODE_ENV === 'production'
+        ? window.location.pathname : window.location.search;
+    },
+    getUserPageUrlRegExp() {
+      return process.env.NODE_ENV === 'production'
+        ? `\\${config.userPageFeature.path}\\/[a-zA-Z0-9]+`
+        : `\\?${config.userPageFeature.path}\\=[a-zA-Z0-9]+`;
+    },
+    getExtractNameRegExp() {
+      return process.env.NODE_ENV === 'production'
+        ? `\\${config.userPageFeature.path}\\/(.*)$`
+        : `\\?${config.userPageFeature.path}\\=(.*)$`;
+    },
     path: 'user',
   },
   reqApiParams: {
