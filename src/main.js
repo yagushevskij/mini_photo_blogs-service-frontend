@@ -7,9 +7,11 @@ import {
   topCardsWrapper, topCardsContainer, imageCardTemplate,
 }
   from './scripts/constants/selectors';
-import { getElementFromTemp } from './scripts/utils';
+import {
+  getElementFromTemp, getUserPageUrl, getUserPageUrlRegExp, getExtractNameRegExp,
+} from './scripts/utils';
 
-import config from './scripts/constants/data';
+import { config, localJWT } from './scripts/constants/data';
 import { Api } from './scripts/classes/Api';
 import { Loader } from './scripts/classes/Loader';
 import { UserInfo } from './scripts/classes/UserInfo';
@@ -47,6 +49,7 @@ const removeCardRequest = (cardId) => sendApiRequest({
   url: config.reqApiParams.deleteCard.url + cardId,
   headers: config.reqApiParams.deleteCard.headers,
 });
+const getUserInfoFromApi = () => sendApiRequest(config.reqApiParams.checkUserExist);
 const updateUserInfo = (...args) => userInfo.update(...args);
 const updateUserMenu = (...args) => userMenu.update(...args);
 
@@ -73,9 +76,11 @@ const createImageCard = (...args) => new Card(openImagePopup, addLikeRequest,
     classNames: {
       img: '.image-card__image',
       likeIcon: '.image-card__like-icon',
-      likeCount: '.image-card__likes-count',
+      likeCount: '.image-card__like-counter',
+      removeIcon: '.image-card__delete-icon',
       name: '.image-card__name',
       likedIcon: 'image-card__like-icon_liked',
+      userLink: '.image-card__username-link',
     },
   },
     user.data._id, ...args);
@@ -88,11 +93,9 @@ const openProfilePopup = () => new ProfilePopup(profilePopupTemplate, popupConta
   setValidateListeners, removeValidateListeners, sendUserDataToApi, updateUserInfo,
   updateUserMenu).open(user.data);
 const openSignupPopup = () => new SignupPopup(signupPopupTemplate, popupContainer,
-  setValidateListeners, removeValidateListeners, sendRegDataToApi,
-  config.userPageFeature.url()).open();
+  setValidateListeners, removeValidateListeners, sendRegDataToApi).open();
 const openSigninPopup = () => new SigninPopup(signinPopupTemplate, popupContainer,
-  setValidateListeners, removeValidateListeners, sendAuthDataToApi,
-  config.userPageFeature.url()).open();
+  setValidateListeners, removeValidateListeners, sendAuthDataToApi).open();
 const signout = () => {
   localStorage.removeItem('token');
   document.location.href = '/';
@@ -100,7 +103,7 @@ const signout = () => {
 const setElementGridSize = (...args) => photoGallery.setSize(...args);
 
 const api = new Api(config.headers);
-const user = new User(config.userPageFeature.url());
+const user = new User(getUserInfoFromApi, getUserPageUrl);
 const header = new Header(userBlockContainer);
 const formValidator = new FormValidator(config.text, config.fileExtensions);
 const userInfo = new UserInfo(profileContainer, profileTemplate, openCardPopup, openAvatarPopup,
@@ -122,57 +125,79 @@ const sendAvatarDataToApi = (...args) => api.sendRequest(config.reqApiParams.cha
 const sendUserDataToApi = (...args) => api.sendRequest(config.reqApiParams.changeUserInfo,
   ...args);
 
-const checkUserExist = sendApiRequest(config.reqApiParams.checkUserExist);
-checkUserExist
-  .then((res) => {
-    user.setData(res);
+const isPageUserpage = () => {
+  const userPageUrlregExp = new RegExp(getUserPageUrlRegExp());
+  return (userPageUrlregExp.test(window.location.search));
+};
+// const getUserInfo = () => sendApiRequest(config.reqApiParams.checkUserExist)
+//   .then((res) => {
+//     user.setData(res);
+//     return res;
+//   })
+//   .catch((err) => console.log(err));
+
+const renderUserPage = () => {
+  const username = new RegExp(getExtractNameRegExp())
+    .exec(window.location.search)[1];
+  loader.changeStatus(cardsLoader, true);
+  api.sendRequest({
+    url: config.reqApiParams.getUserInfo.url + username,
+    method: config.reqApiParams.getUserInfo.method,
+    headers: config.reqApiParams.getUserInfo.headers,
   })
-  .catch((err) => console.log(err))
-  .finally(() => {
-    const createdUserMenu = userMenu.create(user.data, user.pageUrl);
-    header.render(createdUserMenu);
-    const regExp = new RegExp(`\\?${config.userPageFeature.path}\\=[a-zA-Z0-9]+`);
-    if (regExp.test(config.userPageFeature.urlParams)) {
-      const username = config.userPageFeature.urlParams.replace(`?${config.userPageFeature.path}=`, '');
-      loader.changeStatus(cardsLoader, true);
+    .then((res) => {
+      userInfo.render(user.data, res);
+      return res;
+    })
+    .then((res) => {
       api.sendRequest({
-        url: config.reqApiParams.getUserInfo.url + username,
-        method: config.reqApiParams.getUserInfo.method,
-        headers: config.reqApiParams.getUserInfo.headers,
-      })
-        .then((res) => {
-          userInfo.render(user.data, res);
-          return res;
-        })
-        .then((res) => {
-          api.sendRequest({
-            url: config.reqApiParams.getUserCards.url + res._id,
-            method: config.reqApiParams.getUserCards.method,
-            headers: config.reqApiParams.getUserCards.headers,
-          })
-            .then((cards) => {
-              userCardList.render(cards);
-            })
-            .catch((err) => console.log(err))
-            .finally(() => loader.changeStatus(cardsLoader, false));
-        })
-        .catch((err) => console.log(err));
-    } else {
-      api.sendRequest({
-        url: config.reqApiParams.getAllUsersCards.url,
-        method: config.reqApiParams.getAllUsersCards.method,
-        headers: config.reqApiParams.getAllUsersCards.headers,
+        url: config.reqApiParams.getUserCards.url + res._id,
+        method: config.reqApiParams.getUserCards.method,
+        headers: config.reqApiParams.getUserCards.headers,
       })
         .then((cards) => {
-          photoGallery.create(topCardsContainer, cards);
-          topCardList.render(cards);
+          userCardList.render(cards);
         })
         .catch((err) => console.log(err))
         .finally(() => loader.changeStatus(cardsLoader, false));
-    }
-    document.addEventListener('keydown', (event) => { // Убираем срабатывание кнопок на странице по нажатию enter;
-      if (event.keyCode === 13 && event.target.nodeName === 'BUTTON') {
-        event.preventDefault();
-      }
-    });
-  });
+    })
+    .catch((err) => console.log(err));
+};
+
+const renderMainPage = () => {
+  api.sendRequest({
+    url: config.reqApiParams.getAllUsersCards.url,
+    method: config.reqApiParams.getAllUsersCards.method,
+    headers: config.reqApiParams.getAllUsersCards.headers,
+  })
+    .then((cards) => {
+      photoGallery.create(topCardsContainer, cards);
+      topCardList.render(cards);
+    })
+    .catch((err) => console.log(err))
+    .finally(() => loader.changeStatus(cardsLoader, false));
+};
+
+const renderPage = async () => {
+  if (localJWT) {
+    await user.create()
+      .then((res) => {
+        const createdUserMenu = userMenu.create(res);
+        header.render(createdUserMenu);
+      })
+      .catch((err) => console.log(err));
+  }
+  if (isPageUserpage()) {
+    renderUserPage();
+  } else {
+    renderMainPage();
+  }
+};
+
+renderPage();
+
+document.addEventListener('keydown', (event) => { // Убираем срабатывание кнопок на странице по нажатию enter;
+  if (event.keyCode === 13 && event.target.nodeName === 'BUTTON') {
+    event.preventDefault();
+  }
+});

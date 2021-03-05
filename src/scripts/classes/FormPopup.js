@@ -18,14 +18,13 @@ export class FormPopup extends Popup {
     this._removeValidateListeners();
   };
 
-  _getFormData = () => {
+  _setFormData() {
     this._formData = new FormData();
     const inputsArr = Array.from(this._view.querySelector('form').elements)
       .filter((elem) => (!elem.classList.contains('button') && (elem.value)));
     inputsArr.forEach((elem) => {
       (elem.type === 'file') ? this._formData.append(elem.name, elem.files[0]) : this._formData.append(elem.name, elem.value);
     })
-    return this._formData;
   }
 
   _changeButtonText = () => {

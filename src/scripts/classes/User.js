@@ -1,9 +1,23 @@
 export class User {
-  constructor(configPage) {
-    this.configPage = configPage;
+  constructor(getDataFromApi, getUserPageUrl) {
+    this._getUserPageUrl = getUserPageUrl;
+    this._getDataFromApi = getDataFromApi;
+
   }
-  setData = (data = {}) => {
-    this.data = data;
-    this.pageUrl = this.configPage + data.username;
-  };
+
+  create = () => {
+    return this._getDataFromApi()
+    .then((res) => {
+      this.data = res;
+      this._setPageUrl();
+      return this.data;
+    })
+  }
+
+  // setData = (data = {}) => {
+  // };
+
+  _setPageUrl = () => {
+    this.data.pageUrl = this._getUserPageUrl(this.data.username);
+  }
 }

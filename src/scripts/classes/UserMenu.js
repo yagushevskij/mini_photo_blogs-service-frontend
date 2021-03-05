@@ -10,7 +10,7 @@ export class UserMenu extends BaseComponent {
     this._signout = signout;
   }
 
-  create = (userData, userpageUrl) => {
+  create = (userData) => {
     this._userData = userData;
     if (this._isUserDataExist()) {
       this._view = this.userMenuTemplate.content.cloneNode(true).children[0];
@@ -22,7 +22,7 @@ export class UserMenu extends BaseComponent {
       this._menuElem = this._view.querySelector('.dropdown__child');
       this._imgBtnElem.setAttribute('src', userData.avatar);
       usernameElem.textContent = userData.username;
-      myPageElem.setAttribute('href', userpageUrl);
+      myPageElem.setAttribute('href', userData.pageUrl);
       this._handlersArr = [
         {
           element: dropdownElem,

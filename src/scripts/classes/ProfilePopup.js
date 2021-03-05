@@ -22,7 +22,7 @@ export class ProfilePopup extends FormPopup {
     _submit = () => {
       event.preventDefault();
       this._changeButtonText();
-      this._getFormData();
+      this._setFormData();
       super._submit();
     }
 }

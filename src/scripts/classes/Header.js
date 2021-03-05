@@ -3,6 +3,11 @@ export class Header {
     this.userBlockContainer = userBlockContainer;
   }
   render = ({ userMenu }) => {
-    this.userBlockContainer.append(userMenu);
+    this._userMenu = userMenu;
+    this._setUserMenu();
   };
+  _setUserMenu = () => {
+    this.userBlockContainer.textContent = '';
+    this.userBlockContainer.append(this._userMenu);
+  }
 }

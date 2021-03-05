@@ -70,13 +70,14 @@ export class Card extends BaseComponent {
     this._item = item;
     this._view = params.view;
     try {
-      const { img, likeIcon, likeCount, removeIcon, name, likedIcon} = params.classNames
+      const { img, likeIcon, likeCount, removeIcon, name, likedIcon, userLink} = params.classNames
       this._view.likedIconClassName = likedIcon;
-      this._view.img = this._view.querySelector(img);
+      this._view.img = this._view.querySelector(img); 
       this._view.likeIcon = this._view.querySelector(likeIcon);
       this._view.likeCount = this._view.querySelector(likeCount);
       this._view.removeIcon = this._view.querySelector(removeIcon);
       this._view.name = this._view.querySelector(name);
+      this._view.userLink = this._view.querySelector(userLink);
     } catch (err) {
       console.log(err);
     }
@@ -94,6 +95,10 @@ export class Card extends BaseComponent {
     }
     if (params.isGalleryItem && this._setElementGridSize) {
       this._setElementGridSize(this._view, this._item)
+    }
+    if (this._view.userLink) {
+      this._view.userLink.textContent = this._item.owner.name;
+      this._view.userLink.setAttribute('href', this._item.pageUrl)
     }
     this._view.dataset.id = this._item._id;
     this._changeLikesCount();

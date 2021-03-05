@@ -4,16 +4,13 @@ const localJWT = `Bearer ${localStorage.getItem('token')}`;
 const config = {
   gallery: {
     gapSize: 10, // Размер горизонтального и вертикального отступа между строками и столбцами, px
-    minFileSize: 100, // Размер минимальной стороны для фото с наименьшим рейтингом, px.
+    minFileSize: 150, // Размер минимальной стороны для фото с наименьшим рейтингом, px.
     maxFileSize: 400, // Размер минимальной стороны для фото с наибольшим рейтингом, px.
     cellSize: 100, // Размер сторон grid ячейки, px. Рекомендуется использовать
     // значение равное minFileSize
   },
   userPageFeature: {
-    // url() { return process.env.NODE_ENV === 'production' ? `${MAIN_URL}/${this.path}/` : `${MAIN_URL}?${this.path}=` }, //Фишка будет добавлена позже
-    url() { return `${MAIN_URL}?${this.path}=` },
     path: 'user',
-    urlParams: window.location.search,
   },
   reqApiParams: {
     signup: {
@@ -125,4 +122,4 @@ const config = {
     picture: ['.jpg', 'jpeg', '.png', '.gif'],
   },
 };
-export default config;
+export { config, localJWT, MAIN_URL };

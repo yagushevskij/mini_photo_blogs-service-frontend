@@ -47,9 +47,14 @@
     <template id="image-card">
       <div class="image-card">
         <div class="image-card__image">
-          <!-- <div class="image-card__likes-count">7</div>
-          <div class="image-card__username">Добавил:</div>
-          <div class="image-card__name">Суперфоточка</div> -->
+          <div class="image-card__like">
+            <button class="image-card__like-icon"></button>
+            <p class="image-card__like-counter"></p>
+          </div>
+          <div class="image-card__info-wrapper">
+            <p class="image-card__name"></p>
+            <p class="image-card__username">Автор: <a href="" class="image-card__username-link"></a></p>
+          </div>
         </div>
       </div>
     </template>
