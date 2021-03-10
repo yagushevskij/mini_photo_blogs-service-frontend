@@ -1,6 +1,5 @@
 const API_URL = process.env.NODE_ENV === 'production' ? 'https://mesto-api.turbomegapro.ru' : 'http://localhost:3001';
 const MAIN_URL = process.env.NODE_ENV === 'production' ? 'https://mesto.turbomegapro.ru' : 'http://localhost:8080';
-const localJWT = `Bearer ${localStorage.getItem('token')}`;
 const config = {
   gallery: {
     gapSize: 10, // Размер горизонтального и вертикального отступа между строками и столбцами, px
@@ -30,93 +29,79 @@ const config = {
     signup: {
       url: `${API_URL}/signup/`,
       method: 'POST',
-      headers: {
-        authorization: localJWT,
-      },
     },
     signin: {
       url: `${API_URL}/signin/`,
       method: 'POST',
-      headers: {
-        authorization: localJWT,
-      },
+    },
+    signout: {
+      url: `${API_URL}/signout/`,
+      method: 'get',
     },
     addCard: {
       url: `${API_URL}/cards/`,
       method: 'POST',
-      headers: {
-        authorization: localJWT,
-      },
     },
     changeUserInfo: {
       url: `${API_URL}/users/me/`,
       method: 'PATCH',
-      headers: {
-        authorization: localJWT,
-      },
     },
     changeAvatar: {
       url: `${API_URL}/users/me/avatar/`,
       method: 'PATCH',
-      headers: {
-        authorization: localJWT,
-      },
     },
     addLike: {
       url: `${API_URL}/cards/like/`,
       method: 'PUT',
       headers: {
-        authorization: localJWT,
+        'Content-Type': 'application/json',
       },
     },
     removeLike: {
       url: `${API_URL}/cards/like/`,
       method: 'DELETE',
       headers: {
-        authorization: localJWT,
+        'Content-Type': 'application/json',
       },
     },
     deleteCard: {
       url: `${API_URL}/cards/`,
       method: 'DELETE',
       headers: {
-        authorization: localJWT,
+        'Content-Type': 'application/json',
       },
     },
     getUserInfo: {
       url: `${API_URL}/users/`,
       method: 'GET',
       headers: {
-        authorization: localJWT,
+        'Content-Type': 'application/json',
       },
     },
     getUserCards: {
       url: `${API_URL}/cards/user/`,
       method: 'GET',
       headers: {
-        authorization: localJWT,
+        'Content-Type': 'application/json',
       },
     },
     getAllUsersCards: {
       url: `${API_URL}/cards/`,
       method: 'GET',
       headers: {
-        authorization: localJWT,
+        'Content-Type': 'application/json',
       },
     },
     checkUserExist: {
       url: `${API_URL}/users/me/`,
       method: 'GET',
       headers: {
-        authorization: localJWT,
+        'Content-Type': 'application/json',
       },
     },
     upload: {
       url: `${API_URL}/upload/card`,
       method: 'POST',
-      headers: {
-        authorization: localJWT,
-      },
     },
   },
   text: {
@@ -136,4 +121,4 @@ const config = {
     picture: ['.jpg', 'jpeg', '.png', '.gif'],
   },
 };
-export { config, localJWT, MAIN_URL };
+export { config, MAIN_URL };

@@ -5,7 +5,7 @@ export class User {
 
   }
 
-  create = () => {
+  setData = () => {
     return this._getDataFromApi()
     .then((res) => {
       this.data = res;
@@ -14,8 +14,12 @@ export class User {
     })
   }
 
-  // setData = (data = {}) => {
-  // };
+  updateData = (data) => {
+    this.data = data;
+    if (data) {
+      this._setPageUrl();
+    }
+  };
 
   _setPageUrl = () => {
     this.data.pageUrl = this._getUserPageUrl(this.data.username);

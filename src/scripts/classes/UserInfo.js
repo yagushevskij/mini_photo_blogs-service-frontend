@@ -27,6 +27,7 @@ export class UserInfo extends BaseComponent {
   };
 
   render = (userAuthData, userPageData) => {
+    console.log(userAuthData, userPageData)
     this._userPageData = userPageData;
     this._userAuthData = userAuthData;
     this._create()
@@ -40,7 +41,7 @@ export class UserInfo extends BaseComponent {
     const addCardBtn = this._view.querySelector('.user-info__button');
     const editProfileBtn = this._view.querySelector('.user-info__edit-button');
     this._avatarBtn = this._view.querySelector('.user-info__avatar');
-    if (this._isUserPageOwner()) {
+    if (this._userAuthData && this._isUserPageOwner()) {
       addCardBtn.classList.add('user-info__button_is-visible');
       editProfileBtn.classList.add('user-info__edit-button_is-visible');
       this._handlersArr = [
@@ -66,4 +67,5 @@ export class UserInfo extends BaseComponent {
   }
 
   _isUserPageOwner = () => this._userPageData._id === this._userAuthData._id;
+
 }

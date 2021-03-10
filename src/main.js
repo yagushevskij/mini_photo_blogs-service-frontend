@@ -11,7 +11,7 @@ import {
   getElementFromTemp, getUserPageUrl,
 } from './scripts/utils';
 
-import { config, localJWT } from './scripts/constants/data';
+import { config } from './scripts/constants/data';
 import { Api } from './scripts/classes/Api';
 import { Loader } from './scripts/classes/Loader';
 import { UserInfo } from './scripts/classes/UserInfo';
@@ -93,12 +93,18 @@ const openProfilePopup = () => new ProfilePopup(profilePopupTemplate, popupConta
   setValidateListeners, removeValidateListeners, sendUserDataToApi, updateUserInfo,
   updateUserMenu).open(user.data);
 const openSignupPopup = () => new SignupPopup(signupPopupTemplate, popupContainer,
-  setValidateListeners, removeValidateListeners, sendRegDataToApi).open();
+  setValidateListeners, removeValidateListeners, sendRegDataToApi, renderPage,
+  user.updateData).open();
 const openSigninPopup = () => new SigninPopup(signinPopupTemplate, popupContainer,
-  setValidateListeners, removeValidateListeners, sendAuthDataToApi).open();
+  setValidateListeners, removeValidateListeners, sendAuthDataToApi, renderPage,
+  user.updateData).open();
 const signout = () => {
-  localStorage.removeItem('token');
-  document.location.href = '/';
+  sendApiRequest(config.reqApiParams.signout)
+    .then(() => {
+      user.updateData(null);
+      renderPage();
+    })
+    .catch((err) => console.log(err));
 };
 const setElementGridSize = (...args) => photoGallery.setSize(...args);
 
@@ -129,12 +135,6 @@ const isPageUserpage = () => {
   const userPageUrlregExp = new RegExp(config.userPageFeature.getUserPageUrlRegExp());
   return (userPageUrlregExp.test(config.userPageFeature.getUrlParams()));
 };
-// const getUserInfo = () => sendApiRequest(config.reqApiParams.checkUserExist)
-//   .then((res) => {
-//     user.setData(res);
-//     return res;
-//   })
-//   .catch((err) => console.log(err));
 
 const renderUserPage = () => {
   const username = new RegExp(config.userPageFeature.getExtractNameRegExp())
@@ -168,7 +168,7 @@ const renderMainPage = () => {
   api.sendRequest({
     url: config.reqApiParams.getAllUsersCards.url,
     method: config.reqApiParams.getAllUsersCards.method,
-    headers: config.reqApiParams.getAllUsersCards.headers,
+    headers: config.reqApiParams.getUserCards.headers,
   })
     .then((cards) => {
       photoGallery.create(topCardsContainer, cards);
@@ -178,15 +178,9 @@ const renderMainPage = () => {
     .finally(() => loader.changeStatus(cardsLoader, false));
 };
 
-const renderPage = async () => {
-  if (localJWT) {
-    await user.create()
-      .then((res) => {
-        const createdUserMenu = userMenu.create(res);
-        header.render(createdUserMenu);
-      })
-      .catch((err) => console.log(err));
-  }
+const renderPage = () => {
+  const createdUserMenu = (user.data) ? userMenu.create(user.data) : userMenu.create();
+  header.render(createdUserMenu);
   if (isPageUserpage()) {
     renderUserPage();
   } else {
@@ -194,7 +188,11 @@ const renderPage = async () => {
   }
 };
 
-renderPage();
+user.setData()
+  .catch((err) => console.log(err))
+  .finally(() => {
+    renderPage();
+  });
 
 document.addEventListener('keydown', (event) => { // Убираем срабатывание кнопок на странице по нажатию enter;
   if (event.keyCode === 13 && event.target.nodeName === 'BUTTON') {
