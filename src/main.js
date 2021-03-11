@@ -27,6 +27,7 @@ import { FormValidator } from './scripts/classes/FormValidator';
 import { Header } from './scripts/classes/Header';
 import { UserMenu } from './scripts/classes/UserMenu';
 import { User } from './scripts/classes/User';
+import { CardsBlock } from './scripts/classes/CardsBlock';
 import { PhotoGallery } from './scripts/classes/PhotoGallery';
 
 // Колбэки
@@ -115,12 +116,15 @@ const formValidator = new FormValidator(config.text, config.fileExtensions);
 const userInfo = new UserInfo(profileContainer, profileTemplate, openCardPopup, openAvatarPopup,
   openProfilePopup, ['name', 'about']);
 const imagePopup = new ImagePopup(imagePopupTemplate, popupContainer);
-const userCardList = new CardList(userCardsContainer, userCardsWrapper, createUserCard);
-const topCardList = new CardList(topCardsContainer, topCardsWrapper, createImageCard);
+// const cardList = new CardList(createUserCard);
+const userCardList = new CardList(createUserCard);
+const topCardList = new CardList(createImageCard);
 const userMenu = new UserMenu(userMenuTemplate, userLinksTemplate,
   openSignupPopup, openSigninPopup, signout);
 const loader = new Loader();
-const photoGallery = new PhotoGallery(config.gallery);
+const userCardsBlock = new CardsBlock(userCardsWrapper, userCardsContainer, userCardList.render);
+const topCardsBlock = new CardsBlock(topCardsWrapper, topCardsContainer, topCardList.render);
+const photoGallery = new PhotoGallery(config.gallery, topCardsBlock.create);
 
 const sendCardToApi = (...args) => api.sendRequest(config.reqApiParams.addCard, ...args);
 const uploadCard = (...args) => api.sendRequest(config.reqApiParams.upload, ...args);
@@ -156,7 +160,7 @@ const renderUserPage = () => {
         headers: config.reqApiParams.getUserCards.headers,
       })
         .then((cards) => {
-          userCardList.render(cards);
+          userCardsBlock.create(cards);
         })
         .catch((err) => console.log(err))
         .finally(() => loader.changeStatus(cardsLoader, false));
@@ -172,7 +176,6 @@ const renderMainPage = () => {
   })
     .then((cards) => {
       photoGallery.create(topCardsContainer, cards);
-      topCardList.render(cards);
     })
     .catch((err) => console.log(err))
     .finally(() => loader.changeStatus(cardsLoader, false));

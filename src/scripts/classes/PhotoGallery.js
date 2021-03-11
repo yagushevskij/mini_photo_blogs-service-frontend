@@ -1,19 +1,21 @@
 export class PhotoGallery {
-  constructor(config) {
+  constructor(config, createCardsBlock) {
     this._config = config;
+    this._createCardsBlock = createCardsBlock;
     // this._init();
   }
 
-  _init = () => {
+  _setContainerStyle = () => {
     this._container.setAttribute('style', `grid-template-columns:
     repeat(auto-fill, ${this._config.cellSize}px); grid-auto-rows: ${this._config.cellSize}px; grid-gap: ${this._config.gapSize}px;`)
-    this._setMinMaxLikesCount();
   };
 
   create = (container, cardsArr) => {
     this._container = container;
     this._cardsArr = cardsArr;
-    this._init();
+    this._setContainerStyle();
+    this._setMinMaxLikesCount();
+    this._createCardsBlock(cardsArr);
   };
 
   setSize = (element, cardObj) => {
