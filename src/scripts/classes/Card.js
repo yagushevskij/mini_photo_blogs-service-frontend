@@ -15,7 +15,7 @@ export class Card extends BaseComponent {
   };
 
   _like = (event) => {
-    event.stopPropagation();
+    event.preventDefault();
     const changeLike = this._hasOwnLike() ? this._removeLikeRequest : this._addLikeRequest;
     changeLike(this._item._id)
       .then((res) => {
@@ -39,7 +39,7 @@ export class Card extends BaseComponent {
   _isOwner = () => (this._item.owner._id || this._item.owner) === this._userId; //В зависимости от типа запроса с сервера приходят данные владельца в разных свойствах;
 
   _remove = (event) => {
-    event.stopImmediatePropagation();
+    event.preventDefault();
     this._removeCardRequest(this._item._id)
       .then(() => {
         this._removeEventListeners();
@@ -51,7 +51,8 @@ export class Card extends BaseComponent {
       });
   };
 
-  _handleRemove = () => {
+  _handleRemove = (event) => {
+    event.preventDefault();
     if (confirm("Вы действительно хотите удалить эту карточку?")) {
       /*
         Можно лучше: event не передан в функцию.
@@ -59,14 +60,6 @@ export class Card extends BaseComponent {
         https://developer.mozilla.org/en-US/docs/Web/API/Window/event
        */
       this._remove(event);
-    }
-    else {
-      /*
-        Можно лучше: event не передан в функцию.
-        Использование window.event считается нежелательным, так как может привести к трудноотлавливаемым багам.
-        https://developer.mozilla.org/en-US/docs/Web/API/Window/event
-       */
-      event.stopImmediatePropagation();
     }
   };
 
@@ -113,7 +106,8 @@ export class Card extends BaseComponent {
     return this._view;
   };
 
-  _open = () => {
+  _open = (event) => {
+    if (event.defaultPrevented) return;
     this._openImagePopup(this._item.files.content.link);
   };
 
