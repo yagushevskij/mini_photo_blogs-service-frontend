@@ -1,7 +1,7 @@
 export class PhotoGallery {
-  constructor(config, createCardsBlock) {
+  constructor(config, createCardList) {
     this._config = config;
-    this._createCardsBlock = createCardsBlock;
+    this._createCardList = createCardList;
     // this._init();
   }
 
@@ -15,7 +15,7 @@ export class PhotoGallery {
     this._cardsArr = cardsArr;
     this._setContainerStyle();
     this._setMinMaxLikesCount();
-    this._createCardsBlock(cardsArr);
+    this._createCardList(cardsArr);
   };
 
   setSize = (element, cardObj) => {

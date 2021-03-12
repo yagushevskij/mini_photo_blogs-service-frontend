@@ -31,9 +31,6 @@ import { CardsBlock } from './scripts/classes/CardsBlock';
 import { PhotoGallery } from './scripts/classes/PhotoGallery';
 
 // Колбэки
-const openPopup = (popup, ...args) => popup.open(args);
-const openImagePopup = (...args) => openPopup(imagePopup, ...args);
-
 const sendApiRequest = (...args) => api.sendRequest(...args);
 const addLikeRequest = (cardId) => sendApiRequest({
   method: config.reqApiParams.addLike.method,
@@ -56,35 +53,39 @@ const updateUserMenu = (...args) => userMenu.update(...args);
 
 const setValidateListeners = (...args) => formValidator.setEventListeners(...args);
 const removeValidateListeners = () => formValidator.removeEventListeners();
-const createUserCard = (...args) => new Card(openImagePopup, addLikeRequest,
-  removeLikeRequest, removeCardRequest).create({
-    isGalleryItem: false,
-    view: getElementFromTemp(userCardTemplate),
-    classNames: {
-      img: '.place-card__image',
-      likeIcon: '.place-card__like-icon',
-      likeCount: '.place-card__like-counter',
-      removeIcon: '.place-card__delete-icon',
-      name: '.place-card__name',
-      likedIcon: 'place-card__like-icon_liked',
-    },
+const createUserCard = (...args) => new Card({
+  openImagePopup, addLikeRequest, removeLikeRequest, removeCardRequest,
+}).create({
+  isGalleryItem: false,
+  view: getElementFromTemp(userCardTemplate),
+  classNames: {
+    img: '.place-card__image',
+    likeIcon: '.place-card__like-icon',
+    likeCount: '.place-card__like-counter',
+    removeIcon: '.place-card__delete-icon',
+    name: '.place-card__name',
+    likedIcon: 'place-card__like-icon_liked',
   },
-    user.data._id, ...args);
-const createImageCard = (...args) => new Card(openImagePopup, addLikeRequest,
-  removeLikeRequest, removeCardRequest, setElementGridSize).create({
-    isGalleryItem: true,
-    view: getElementFromTemp(imageCardTemplate),
-    classNames: {
-      img: '.image-card__image',
-      likeIcon: '.image-card__like-icon',
-      likeCount: '.image-card__like-counter',
-      removeIcon: '.image-card__delete-icon',
-      name: '.image-card__name',
-      likedIcon: 'image-card__like-icon_liked',
-      userLink: '.image-card__username-link',
-    },
+},
+  user.data._id, ...args);
+const createImageCard = (...args) => new Card({
+  openImagePopup, addLikeRequest, removeLikeRequest, removeCardRequest, setElementGridSize,
+}).create({
+  isGalleryItem: true,
+  view: getElementFromTemp(imageCardTemplate),
+  classNames: {
+    img: '.image-card__image',
+    likeIcon: '.image-card__like-icon',
+    likeCount: '.image-card__like-counter',
+    removeIcon: '.image-card__delete-icon',
+    name: '.image-card__name',
+    likedIcon: 'image-card__like-icon_liked',
+    userLink: '.image-card__username-link',
   },
-    user.data._id, ...args);
+},
+  user.data._id, ...args);
+const openPopup = (popup, ...args) => popup.open(args);
+const openImagePopup = (...args) => openPopup(imagePopup, ...args);
 const openCardPopup = () => new CardPopup(cardPopupTemplate, popupContainer, setValidateListeners,
   removeValidateListeners, sendCardToApi, uploadCard, userCardList.addCard).open();
 const openAvatarPopup = () => new AvatarPopup(avatarPopupTemplate, popupContainer,
@@ -107,6 +108,15 @@ const signout = () => {
     })
     .catch((err) => console.log(err));
 };
+
+const sendCardToApi = (...args) => api.sendRequest(config.reqApiParams.addCard, ...args);
+const uploadCard = (...args) => api.sendRequest(config.reqApiParams.upload, ...args);
+const sendRegDataToApi = (...args) => api.sendRequest(config.reqApiParams.signup, ...args);
+const sendAuthDataToApi = (...args) => api.sendRequest(config.reqApiParams.signin, ...args);
+const sendAvatarDataToApi = (...args) => api.sendRequest(config.reqApiParams.changeAvatar,
+  ...args);
+const sendUserDataToApi = (...args) => api.sendRequest(config.reqApiParams.changeUserInfo,
+  ...args);
 const setElementGridSize = (...args) => photoGallery.setSize(...args);
 
 const api = new Api(config.headers);
@@ -117,23 +127,14 @@ const userInfo = new UserInfo(profileContainer, profileTemplate, openCardPopup, 
   openProfilePopup, ['name', 'about']);
 const imagePopup = new ImagePopup(imagePopupTemplate, popupContainer);
 // const cardList = new CardList(createUserCard);
-const userCardList = new CardList(createUserCard);
-const topCardList = new CardList(createImageCard);
+const userCardList = new CardList(createUserCard, userCardsContainer, userCardsWrapper);
+const topCardList = new CardList(createImageCard, topCardsContainer, topCardsWrapper);
 const userMenu = new UserMenu(userMenuTemplate, userLinksTemplate,
   openSignupPopup, openSigninPopup, signout);
 const loader = new Loader();
-const userCardsBlock = new CardsBlock(userCardsWrapper, userCardsContainer, userCardList.render);
-const topCardsBlock = new CardsBlock(topCardsWrapper, topCardsContainer, topCardList.render);
-const photoGallery = new PhotoGallery(config.gallery, topCardsBlock.create);
-
-const sendCardToApi = (...args) => api.sendRequest(config.reqApiParams.addCard, ...args);
-const uploadCard = (...args) => api.sendRequest(config.reqApiParams.upload, ...args);
-const sendRegDataToApi = (...args) => api.sendRequest(config.reqApiParams.signup, ...args);
-const sendAuthDataToApi = (...args) => api.sendRequest(config.reqApiParams.signin, ...args);
-const sendAvatarDataToApi = (...args) => api.sendRequest(config.reqApiParams.changeAvatar,
-  ...args);
-const sendUserDataToApi = (...args) => api.sendRequest(config.reqApiParams.changeUserInfo,
-  ...args);
+// const userCardsBlock = new CardsBlock(userCardsWrapper, userCardsContainer, userCardList.render);
+// const topCardsBlock = new CardsBlock(topCardsWrapper, topCardsContainer, topCardList.render);
+const photoGallery = new PhotoGallery(config.gallery, topCardList.render);
 
 const isPageUserpage = () => {
   const userPageUrlregExp = new RegExp(config.userPageFeature.getUserPageUrlRegExp());
@@ -160,7 +161,7 @@ const renderUserPage = () => {
         headers: config.reqApiParams.getUserCards.headers,
       })
         .then((cards) => {
-          userCardsBlock.create(cards);
+          userCardList.render(cards);
         })
         .catch((err) => console.log(err))
         .finally(() => loader.changeStatus(cardsLoader, false));

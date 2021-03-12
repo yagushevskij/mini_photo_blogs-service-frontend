@@ -2,17 +2,19 @@ import { BaseComponent } from './BaseComponent';
 
 export class Card extends BaseComponent {
 
-  constructor(openPopup, requestApiLike, requestApiDislike, requestApiRemoveCard, setElementGridSize) {
+  constructor(callbacks){
     super();
-    this._openPopup = openPopup;
-    this._requestApiLike = requestApiLike;
-    this._requestApiDislike = requestApiDislike;
-    this._requestApiRemoveCard = requestApiRemoveCard;
+    const { openImagePopup, addLikeRequest, removeLikeRequest, removeCardRequest, setElementGridSize } = callbacks;
+    this._openImagePopup = openImagePopup;
+    this._addLikeRequest = addLikeRequest;
+    this._removeLikeRequest = removeLikeRequest;
+    this._removeCardRequest = removeCardRequest;
     this._setElementGridSize = setElementGridSize;
+    // this._removeCard = removeCard;
   };
 
   _like = () => {
-    const changeLike = this._hasOwnLike() ? this._requestApiDislike : this._requestApiLike;
+    const changeLike = this._hasOwnLike() ? this._requestApiDislike : this._removeLikeRequest;
     changeLike(this._item._id)
       .then((res) => {
         this._item = res;
@@ -36,7 +38,7 @@ export class Card extends BaseComponent {
 
   _remove = (event) => {
     event.stopImmediatePropagation();
-    this._requestApiRemoveCard(this._item._id)
+    this._removeCardRequest(this._item._id)
       .then(() => {
         this._removeEventListeners()
         this._view.remove()
@@ -108,7 +110,7 @@ export class Card extends BaseComponent {
   };
 
   _open = () => {
-    this._openPopup(this._item.files.content.link);
+    this._openImagePopup(this._item.files.content.link);
   };
 
   _setHandlers = () => this._handlersArr = [

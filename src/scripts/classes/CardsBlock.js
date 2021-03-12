@@ -4,11 +4,12 @@ export class CardsBlock {
     this._container = container;
     this._renderCardList = renderCardList;
   };
-  create = (cards) => {
-    if (cards && Object.keys(cards).length != 0) {
-      this._renderCardList(cards, this._container)
+  create = (cardsArr) => {
+    this._cardsArr = cardsArr;
+    if (this._cardsArr && Object.keys(this._cardsArr).length != 0) {
+      this._renderCardList(this._cardsArr, this._container);
+      this.open();
     }
-    this.open();
   };
   open = () => {
     this._wrapper.classList.remove('hidden')
@@ -16,4 +17,7 @@ export class CardsBlock {
   close = () => {
     this._wrapper.classList.add('hidden')
   };
+  update = () => {
+    console.log(this._cardsArr)
+  }
 }
