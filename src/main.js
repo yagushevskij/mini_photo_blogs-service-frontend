@@ -70,6 +70,7 @@ const createUserCard = (...args) => new Card({
   user.data._id, ...args);
 const createImageCard = (...args) => new Card({
   openImagePopup, addLikeRequest, removeLikeRequest, removeCardRequest, setElementGridSize,
+  getUserPageUrl,
 }).create({
   isGalleryItem: true,
   view: getElementFromTemp(imageCardTemplate),

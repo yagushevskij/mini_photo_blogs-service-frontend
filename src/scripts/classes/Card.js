@@ -4,13 +4,14 @@ export class Card extends BaseComponent {
 
   constructor(callbacks){
     super();
-    const { openImagePopup, addLikeRequest, removeLikeRequest, removeCardRequest, setElementGridSize, updateCardList } = callbacks;
+    const { openImagePopup, addLikeRequest, removeLikeRequest, removeCardRequest, setElementGridSize, updateCardList, getUserPageUrl } = callbacks;
     this._openImagePopup = openImagePopup;
     this._addLikeRequest = addLikeRequest;
     this._removeLikeRequest = removeLikeRequest;
     this._removeCardRequest = removeCardRequest;
     this._setElementGridSize = setElementGridSize;
     this._updateCardList = updateCardList;
+    this._getUserPageUrl = getUserPageUrl;
   };
 
   _like = (event) => {
@@ -101,8 +102,9 @@ export class Card extends BaseComponent {
       this._setElementGridSize(this._view, this._item)
     }
     if (this._view.userLink) {
+      const userPageUrl = this._getUserPageUrl(this._item.owner.username);
       this._view.userLink.textContent = this._item.owner.name;
-      this._view.userLink.setAttribute('href', this._item.pageUrl)
+      this._view.userLink.setAttribute('href', userPageUrl)
     }
     this._view.dataset.id = this._item._id;
     this._changeLikesCount();
