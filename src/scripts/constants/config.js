@@ -72,7 +72,7 @@ const config = {
       },
     },
     getUserInfo: {
-      url: `${API_URL}/users/`,
+      url: `${API_URL}/users/username/`,
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
