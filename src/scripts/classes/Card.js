@@ -63,8 +63,8 @@ export class Card extends BaseComponent {
     }
   };
 
-  create = (params, userId, item) => {
-    this._userId = userId;
+  create = (params, userData, item) => {
+    this._userId = (typeof userData === 'object') ? userData._id : null;
     this._item = item;
     this._view = params.view;
     try {

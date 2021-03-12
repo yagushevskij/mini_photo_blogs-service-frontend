@@ -27,13 +27,17 @@ export class UserInfo extends BaseComponent {
   };
 
   render = (userAuthData, userPageData) => {
-
+    this._clearContainer();
     this._userPageData = userPageData;
     this._userAuthData = userAuthData;
     this._create()
     this._container.appendChild(this._view);
     this.setUserInfo();
     this.update();
+  }
+
+  _clearContainer = () => {
+    this._container.textContent = '';
   }
 
   _create = () => {
@@ -65,7 +69,6 @@ export class UserInfo extends BaseComponent {
     } else {
       addCardBtn.classList.remove('user-info__button_is-visible');
       editProfileBtn.classList.remove('user-info__edit-button_is-visible');
-      this._removeEventListeners();
     }
     return this._view;
   }

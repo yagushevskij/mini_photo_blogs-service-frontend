@@ -67,7 +67,7 @@ const createUserCard = (...args) => new Card({
     likedIcon: 'place-card__like-icon_liked',
   },
 },
-  user.data._id, ...args);
+  user.data, ...args);
 const createImageCard = (...args) => new Card({
   openImagePopup, addLikeRequest, removeLikeRequest, removeCardRequest, setElementGridSize,
   getUserPageUrl,
@@ -84,7 +84,7 @@ const createImageCard = (...args) => new Card({
     userLink: '.image-card__username-link',
   },
 },
-  user.data._id, ...args);
+  user.data, ...args);
 const openPopup = (popup, ...args) => popup.open(args);
 const openImagePopup = (...args) => openPopup(imagePopup, ...args);
 const openCardPopup = () => new CardPopup(cardPopupTemplate, popupContainer, setValidateListeners,
