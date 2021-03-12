@@ -4,13 +4,13 @@ export class Card extends BaseComponent {
 
   constructor(callbacks){
     super();
-    const { openImagePopup, addLikeRequest, removeLikeRequest, removeCardRequest, setElementGridSize } = callbacks;
+    const { openImagePopup, addLikeRequest, removeLikeRequest, removeCardRequest, setElementGridSize, updateCardList } = callbacks;
     this._openImagePopup = openImagePopup;
     this._addLikeRequest = addLikeRequest;
     this._removeLikeRequest = removeLikeRequest;
     this._removeCardRequest = removeCardRequest;
     this._setElementGridSize = setElementGridSize;
-    // this._removeCard = removeCard;
+    this._updateCardList = updateCardList;
   };
 
   _like = () => {
@@ -40,9 +40,12 @@ export class Card extends BaseComponent {
     event.stopImmediatePropagation();
     this._removeCardRequest(this._item._id)
       .then(() => {
-        this._removeEventListeners()
-        this._view.remove()
+        this._removeEventListeners();
+        this._view.remove();
+        this._updateCardList()
       })
+      // .then(() => {
+      // })
       .catch((err) => {
         console.log(err);
       });

@@ -27,7 +27,6 @@ import { FormValidator } from './scripts/classes/FormValidator';
 import { Header } from './scripts/classes/Header';
 import { UserMenu } from './scripts/classes/UserMenu';
 import { User } from './scripts/classes/User';
-import { CardsBlock } from './scripts/classes/CardsBlock';
 import { PhotoGallery } from './scripts/classes/PhotoGallery';
 
 // Колбэки
@@ -55,6 +54,7 @@ const setValidateListeners = (...args) => formValidator.setEventListeners(...arg
 const removeValidateListeners = () => formValidator.removeEventListeners();
 const createUserCard = (...args) => new Card({
   openImagePopup, addLikeRequest, removeLikeRequest, removeCardRequest,
+  updateCardList: userCardList.update,
 }).create({
   isGalleryItem: false,
   view: getElementFromTemp(userCardTemplate),
