@@ -11,7 +11,7 @@ import {
   getElementFromTemp, getUserPageUrl,
 } from './scripts/utils';
 
-import { config } from './scripts/constants/data';
+import { config } from './scripts/constants/config';
 import { Api } from './scripts/classes/Api';
 import { Loader } from './scripts/classes/Loader';
 import { UserInfo } from './scripts/classes/UserInfo';

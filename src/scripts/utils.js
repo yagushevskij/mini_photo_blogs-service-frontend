@@ -1,4 +1,4 @@
-import { config, MAIN_URL } from './constants/data';
+import { config, MAIN_URL } from './constants/config';
 
 const getElementFromTemp = (template) => template.content.cloneNode(true).children[0];
 

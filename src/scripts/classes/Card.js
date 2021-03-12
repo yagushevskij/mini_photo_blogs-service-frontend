@@ -13,8 +13,9 @@ export class Card extends BaseComponent {
     this._updateCardList = updateCardList;
   };
 
-  _like = () => {
-    const changeLike = this._hasOwnLike() ? this._requestApiDislike : this._removeLikeRequest;
+  _like = (event) => {
+    event.stopPropagation();
+    const changeLike = this._hasOwnLike() ? this._removeLikeRequest : this._addLikeRequest;
     changeLike(this._item._id)
       .then((res) => {
         this._item = res;
@@ -44,8 +45,6 @@ export class Card extends BaseComponent {
         this._view.remove();
         this._updateCardList()
       })
-      // .then(() => {
-      // })
       .catch((err) => {
         console.log(err);
       });
