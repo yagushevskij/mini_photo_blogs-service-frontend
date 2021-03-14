@@ -53,12 +53,7 @@ export class Card extends BaseComponent {
 
   _handleRemove = (event) => {
     event.preventDefault();
-    if (confirm("Вы действительно хотите удалить эту карточку?")) {
-      /*
-        Можно лучше: event не передан в функцию.
-        Использование window.event считается нежелательным, так как может привести к трудноотлавливаемым багам.
-        https://developer.mozilla.org/en-US/docs/Web/API/Window/event
-       */
+    if (confirm('Вы действительно хотите удалить эту карточку?')) {
       this._remove(event);
     }
   };
@@ -107,7 +102,7 @@ export class Card extends BaseComponent {
   };
 
   _open = (event) => {
-    if (event.defaultPrevented) return;
+    if (event.defaultPrevented || event.target !== this._view.img) return;
     this._openImagePopup(this._item.files.content.link);
   };
 

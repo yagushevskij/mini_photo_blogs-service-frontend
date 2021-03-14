@@ -1,6 +1,7 @@
 export class CardList {
 
-  constructor(createCard, container, wrapper) {
+  constructor(params) {
+    const { createCard, wrapper, container } = params;
     this._createCard = createCard;
     this._container = container;
     this._wrapper = wrapper;

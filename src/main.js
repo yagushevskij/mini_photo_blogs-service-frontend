@@ -127,14 +127,19 @@ const formValidator = new FormValidator(config.text, config.fileExtensions);
 const userInfo = new UserInfo(profileContainer, profileTemplate, openCardPopup, openAvatarPopup,
   openProfilePopup, ['name', 'about']);
 const imagePopup = new ImagePopup(imagePopupTemplate, popupContainer);
-// const cardList = new CardList(createUserCard);
-const userCardList = new CardList(createUserCard, userCardsContainer, userCardsWrapper);
-const topCardList = new CardList(createImageCard, topCardsContainer, topCardsWrapper);
+const userCardList = new CardList({
+  createCard: createUserCard,
+  container: userCardsContainer,
+  wrapper: userCardsWrapper,
+});
+const topCardList = new CardList({
+  createCard: createImageCard,
+  container: topCardsContainer,
+  wrapper: topCardsWrapper,
+});
 const userMenu = new UserMenu(userMenuTemplate, userLinksTemplate,
   openSignupPopup, openSigninPopup, signout);
 const loader = new Loader();
-// const userCardsBlock = new CardsBlock(userCardsWrapper, userCardsContainer, userCardList.render);
-// const topCardsBlock = new CardsBlock(topCardsWrapper, topCardsContainer, topCardList.render);
 const photoGallery = new PhotoGallery(config.gallery, topCardList.render);
 
 const isPageUserpage = () => {
