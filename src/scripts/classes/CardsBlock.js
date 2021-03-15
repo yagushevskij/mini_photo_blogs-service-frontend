@@ -48,10 +48,11 @@ export class CardsBlock {
     (this._cardsCollection && this._cardsCollection.length > 0) ? this.show() : this.hide();
   }
   _sort() {
-    const sortByLikes = (a, b) => {
-      return b.likes.length - a.likes.length;
-    }
-    this._cardsArr = (this._config.settings.sortBy = 'likes') ? this._cardsArr.sort(sortByLikes) : this._cardsArr;
+    const sortByLikes = (a, b) =>  b.likes.length - a.likes.length;
+    const sortByDate = (a, b) => new Date(b.createdAt).getTime() -  new Date(a.createdAt).getTime();
+    this._cardsArr =
+      (this._config.settings.sortBy === 'likes') ? this._cardsArr.sort(sortByLikes) :
+      (this._config.settings.sortBy === 'date') ? this._cardsArr.sort(sortByDate) : this._cardsArr;
   }
   _clearContainer = () => {
     this._container.textContent = '';

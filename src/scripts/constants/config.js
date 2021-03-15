@@ -26,7 +26,7 @@ const config = {
     },
     settings: {
       itemsOnPage: 5,
-      sortBy: 'default',
+      sortBy: 'date',
     },
   },
   topCards: {
