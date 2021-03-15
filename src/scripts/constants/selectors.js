@@ -16,6 +16,7 @@ const imagePopupTemplate = document.querySelector('#image-popup');
 const profilePopupTemplate = document.querySelector('#profile-popup');
 const cardPopupTemplate = document.querySelector('#card-popup');
 const avatarPopupTemplate = document.querySelector('#avatar-popup');
+const infoMessageTemplate = document.querySelector('#info-message');
 const userBlockContainer = document.querySelector('.header__user-container');
 
 export {
@@ -23,5 +24,5 @@ export {
   cardsLoader, signupPopupTemplate, imageCardTemplate,
   signinPopupTemplate, imagePopupTemplate, profilePopupTemplate, cardPopupTemplate,
   avatarPopupTemplate, userBlockContainer, userMenuTemplate, userLinksTemplate, profileTemplate,
-  topCardsWrapper, topCardsContainer,
+  topCardsWrapper, topCardsContainer, infoMessageTemplate,
 };

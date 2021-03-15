@@ -1,31 +1,24 @@
 export class CardList {
 
   constructor(params) {
-    const { createCard, wrapper, container } = params;
+    const { createCard, container, updateCardsBlock } = params;
     this._createCard = createCard;
     this._container = container;
-    this._wrapper = wrapper;
+    this._updateCardsBlock = updateCardsBlock;
   };
   addCard = (cardObj) => {
-    this._container.appendChild(this._createCard(cardObj));
-    this.update();
+    this._cardObj = cardObj;
+    this._insertCard();
+    this._updateCardsBlock({addedCard: this._cardObj});
+  };
+  _insertCard = () => {
+    this._container.appendChild(this._createCard(this._cardObj));
   };
   render = (cardsArr) => {
-    cardsArr.forEach((cardObj) => {
-      this.addCard(cardObj);
-    });
-  };
-  update = () => {
-    this.toggleVisibility()
-  }
-  toggleVisibility = () => {
-    const cardsCollection = this._container.childNodes;
-    (cardsCollection && cardsCollection.length>0) ? this.show() : this.hide();
-  }
-  show = () => {
-    this._wrapper.classList.remove('hidden')
-  };
-  hide = () => {
-    this._wrapper.classList.add('hidden')
+    this._cardsArr = cardsArr;
+      cardsArr.forEach((cardObj) => {
+        this._cardObj = cardObj;
+        this._insertCard();
+      });
   };
 }

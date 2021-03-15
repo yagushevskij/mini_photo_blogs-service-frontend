@@ -7,7 +7,10 @@ export class Header {
     this._setUserMenu();
   };
   _setUserMenu = () => {
-    this.userBlockContainer.textContent = '';
+    this._clearContainer();
     this.userBlockContainer.append(this._userMenu);
+  }
+  _clearContainer = () => {
+    this.userBlockContainer.textContent = '';
   }
 }

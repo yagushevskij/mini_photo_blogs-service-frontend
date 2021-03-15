@@ -4,7 +4,7 @@ import {
   signupPopupTemplate, signinPopupTemplate, imagePopupTemplate,
   profilePopupTemplate, cardPopupTemplate, avatarPopupTemplate, userBlockContainer,
   userMenuTemplate, userLinksTemplate, profileTemplate, userCardsWrapper,
-  topCardsWrapper, topCardsContainer, imageCardTemplate,
+  topCardsWrapper, topCardsContainer, imageCardTemplate, infoMessageTemplate,
 }
   from './scripts/constants/selectors';
 import {
@@ -27,7 +27,8 @@ import { FormValidator } from './scripts/classes/FormValidator';
 import { Header } from './scripts/classes/Header';
 import { UserMenu } from './scripts/classes/UserMenu';
 import { User } from './scripts/classes/User';
-import { PhotoGallery } from './scripts/classes/PhotoGallery';
+import { UserCardsBlock } from './scripts/classes/UserCardsBlock';
+import { TopCardsBlock } from './scripts/classes/TopCardsBlock';
 
 // Колбэки
 const sendApiRequest = (...args) => api.sendRequest(...args);
@@ -49,14 +50,14 @@ const removeCardRequest = (cardId) => sendApiRequest({
 const getUserInfoFromApi = () => sendApiRequest(config.reqApiParams.checkUserExist);
 const updateUserInfo = (...args) => userInfo.update(...args);
 const updateUserMenu = (...args) => userMenu.update(...args);
+const updateUserCardsBlock = (...args) => userCardsBlock.update(...args);
 
 const setValidateListeners = (...args) => formValidator.setEventListeners(...args);
 const removeValidateListeners = () => formValidator.removeEventListeners();
 const createUserCard = (...args) => new Card({
   openImagePopup, addLikeRequest, removeLikeRequest, removeCardRequest,
-  updateCardList: userCardList.update,
+  updateCardsBlock: updateUserCardsBlock,
 }).create({
-  isGalleryItem: false,
   view: getElementFromTemp(userCardTemplate),
   classNames: {
     img: '.place-card__image',
@@ -69,10 +70,9 @@ const createUserCard = (...args) => new Card({
 },
   user.data, ...args);
 const createImageCard = (...args) => new Card({
-  openImagePopup, addLikeRequest, removeLikeRequest, removeCardRequest, setElementGridSize,
+  openImagePopup, addLikeRequest, removeLikeRequest, removeCardRequest,
   getUserPageUrl,
 }).create({
-  isGalleryItem: true,
   view: getElementFromTemp(imageCardTemplate),
   classNames: {
     img: '.image-card__image',
@@ -118,7 +118,6 @@ const sendAvatarDataToApi = (...args) => api.sendRequest(config.reqApiParams.cha
   ...args);
 const sendUserDataToApi = (...args) => api.sendRequest(config.reqApiParams.changeUserInfo,
   ...args);
-const setElementGridSize = (...args) => photoGallery.setSize(...args);
 
 const api = new Api(config.headers);
 const user = new User(getUserInfoFromApi, getUserPageUrl);
@@ -129,19 +128,31 @@ const userInfo = new UserInfo(profileContainer, profileTemplate, openCardPopup, 
 const imagePopup = new ImagePopup(imagePopupTemplate, popupContainer);
 const userCardList = new CardList({
   createCard: createUserCard,
+  updateCardsBlock: updateUserCardsBlock,
   container: userCardsContainer,
-  wrapper: userCardsWrapper,
 });
 const topCardList = new CardList({
   createCard: createImageCard,
+  updateCardsBlock: updateUserCardsBlock,
+  container: topCardsContainer,
+});
+const userCardsBlock = new UserCardsBlock({
+  renderCardList: userCardList.render,
+  container: userCardsContainer,
+  wrapper: userCardsWrapper,
+  infoMessageElem: getElementFromTemp(infoMessageTemplate),
+  config: config.userCards,
+});
+const topCardsBlock = new TopCardsBlock({
+  renderCardList: topCardList.render,
   container: topCardsContainer,
   wrapper: topCardsWrapper,
+  infoMessageElem: getElementFromTemp(infoMessageTemplate),
+  config: config.topCards,
 });
 const userMenu = new UserMenu(userMenuTemplate, userLinksTemplate,
   openSignupPopup, openSigninPopup, signout);
 const loader = new Loader();
-const photoGallery = new PhotoGallery(config.gallery, topCardList.render);
-
 const isPageUserpage = () => {
   const userPageUrlregExp = new RegExp(config.userPageFeature.getUserPageUrlRegExp());
   return (userPageUrlregExp.test(config.userPageFeature.getUrlParams()));
@@ -167,7 +178,7 @@ const renderUserPage = () => {
         headers: config.reqApiParams.getUserCards.headers,
       })
         .then((cards) => {
-          userCardList.render(cards);
+          userCardsBlock.render(cards);
         })
         .catch((err) => console.log(err))
         .finally(() => loader.changeStatus(cardsLoader, false));
@@ -182,7 +193,7 @@ const renderMainPage = () => {
     headers: config.reqApiParams.getUserCards.headers,
   })
     .then((cards) => {
-      photoGallery.create(topCardsContainer, cards);
+      topCardsBlock.render(cards);
     })
     .catch((err) => console.log(err))
     .finally(() => loader.changeStatus(cardsLoader, false));

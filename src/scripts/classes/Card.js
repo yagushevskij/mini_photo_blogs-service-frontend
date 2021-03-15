@@ -4,13 +4,12 @@ export class Card extends BaseComponent {
 
   constructor(callbacks){
     super();
-    const { openImagePopup, addLikeRequest, removeLikeRequest, removeCardRequest, setElementGridSize, updateCardList, getUserPageUrl } = callbacks;
+    const { openImagePopup, addLikeRequest, removeLikeRequest, removeCardRequest, updateCardsBlock, getUserPageUrl } = callbacks;
     this._openImagePopup = openImagePopup;
     this._addLikeRequest = addLikeRequest;
     this._removeLikeRequest = removeLikeRequest;
     this._removeCardRequest = removeCardRequest;
-    this._setElementGridSize = setElementGridSize;
-    this._updateCardList = updateCardList;
+    this._updateCardsBlock = updateCardsBlock;
     this._getUserPageUrl = getUserPageUrl;
   };
 
@@ -30,7 +29,9 @@ export class Card extends BaseComponent {
 
   _changeLikesCount = () => {
     if (this._view.likeCount) {
-      this._view.likeCount.textContent = this._item.likes.length
+      const likesCount = this._item.likes.length;
+      this._view.likeCount.textContent = likesCount;
+      this._view.dataset.likes = likesCount;
     }
   };
 
@@ -44,7 +45,7 @@ export class Card extends BaseComponent {
       .then(() => {
         this._removeEventListeners();
         this._view.remove();
-        this._updateCardList()
+        this._updateCardsBlock({removedCard: this._item})
       })
       .catch((err) => {
         console.log(err);
@@ -86,15 +87,14 @@ export class Card extends BaseComponent {
     if (this._view.img) {
       this._view.img.setAttribute('style', `background-image: url(${this._item.files.preview.link})`);
     }
-    if (params.isGalleryItem && this._setElementGridSize) {
-      this._setElementGridSize(this._view, this._item)
-    }
     if (this._view.userLink) {
       const userPageUrl = this._getUserPageUrl(this._item.owner.username);
       this._view.userLink.textContent = this._item.owner.name;
       this._view.userLink.setAttribute('href', userPageUrl)
     }
     this._view.dataset.id = this._item._id;
+    this._view.dataset.width = this._item.files.content.dimension.width;
+    this._view.dataset.height = this._item.files.content.dimension.height;
     this._changeLikesCount();
     this._setHandlers();
     this._setEventListeners();

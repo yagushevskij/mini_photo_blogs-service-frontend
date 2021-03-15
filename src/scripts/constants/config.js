@@ -1,13 +1,6 @@
 const API_URL = process.env.NODE_ENV === 'production' ? 'https://mesto-api.turbomegapro.ru' : 'http://localhost:3001';
 const MAIN_URL = process.env.NODE_ENV === 'production' ? 'https://mesto.turbomegapro.ru' : 'http://localhost:8080';
 const config = {
-  gallery: {
-    gapSize: 10, // Размер горизонтального и вертикального отступа между строками и столбцами, px
-    minFileSize: 150, // Размер минимальной стороны для фото с наименьшим рейтингом, px.
-    maxFileSize: 400, // Размер минимальной стороны для фото с наибольшим рейтингом, px.
-    cellSize: 100, // Размер сторон grid ячейки, px. Рекомендуется использовать
-    // значение равное minFileSize
-  },
   userPageFeature: {
     getUrlParams() {
       return process.env.NODE_ENV === 'production'
@@ -24,6 +17,36 @@ const config = {
         : `\\?${config.userPageFeature.path}\\=(.*)$`;
     },
     path: 'user',
+  },
+  userCards: {
+    title: {
+      regular(count) { return `У вас ${count} фото`; },
+      empty: 'Загруженных фото нет',
+      srvErr: 'Ошибка сервера при загрузке',
+    },
+    settings: {
+      itemsOnPage: 5,
+      sortBy: 'default',
+    },
+  },
+  topCards: {
+    title: {
+      regular(count) { return `Топ ${count} фото`; },
+      empty: 'Загруженных фото нет',
+      srvErr: 'Ошибка сервера при загрузке',
+    },
+    settings: {
+      itemsOnPage: 50,
+      total: 30,
+      sortBy: 'likes',
+    },
+    gallery: {
+      gapSize: 10, // Размер горизонтального и вертикального отступа между строками и столбцами, px
+      minFileSize: 150, // Размер минимальной стороны для фото с наименьшим рейтингом, px.
+      maxFileSize: 400, // Размер минимальной стороны для фото с наибольшим рейтингом, px.
+      cellSize: 100, // Размер сторон grid ячейки, px. Рекомендуется использовать
+      // значение равное minFileSize
+    },
   },
   reqApiParams: {
     signup: {
