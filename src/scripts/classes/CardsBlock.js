@@ -3,7 +3,10 @@ export class CardsBlock {
   constructor() {
   };
   render = (cardsArr) => {
-    this._cardsArr = cardsArr;
+    this._clearContainer();
+    if (cardsArr) {
+      this._cardsArr = cardsArr;
+    }
     if (Object.keys(this._cardsArr).length != 0) {
       this._create();
     }
@@ -28,19 +31,17 @@ export class CardsBlock {
     (this._totalItems > this._curentItem) ? this._curentItem++ : this._curentItem;
   }
   update = (params) => {
-    let newArr = [];
     if (params) {
       const { removedCard, addedCard } = params;
       if (removedCard) {
         const index = this._cardsArr.indexOf(removedCard);
-        newArr = this._cardsArr.splice(index, 1);
+        this._cardsArr.splice(index, 1);
       }
       if (addedCard) {
-        newArr = this._cardsArr.push(addedCard);
+        const newArr = this._cardsArr.push(addedCard);
       }
     }
-    console.log(this._cardsArr)
-    this.render(newArr);
+    this.render();
   }
   toggleVisibility = () => {
     this._cardsCollection = this._container.childNodes;
@@ -51,6 +52,9 @@ export class CardsBlock {
       return b.likes.length - a.likes.length;
     }
     this._cardsArr = (this._config.settings.sortBy = 'likes') ? this._cardsArr.sort(sortByLikes) : this._cardsArr;
+  }
+  _clearContainer = () => {
+    this._container.textContent = '';
   }
   show = () => {
     this._wrapper.classList.remove('hidden')
