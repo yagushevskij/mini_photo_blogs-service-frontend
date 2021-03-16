@@ -178,7 +178,11 @@ const renderUserPage = () => {
         headers: config.reqApiParams.getUserCards.headers,
       })
         .then((cards) => {
-          userCardsBlock.render(cards);
+          userCardsBlock.render({
+            authUser: user.data,
+            cardsOwner: res,
+            cardsArr: cards,
+          });
         })
         .catch((err) => console.log(err))
         .finally(() => loader.hide());
@@ -194,7 +198,10 @@ const renderMainPage = () => {
     headers: config.reqApiParams.getUserCards.headers,
   })
     .then((cards) => {
-      topCardsBlock.render(cards);
+      topCardsBlock.render({
+        authUser: user.data,
+        cardsArr: cards,
+      });
     })
     .catch((err) => console.log(err))
     .finally(() => loader.hide());

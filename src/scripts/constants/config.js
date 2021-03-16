@@ -20,8 +20,14 @@ const config = {
   },
   userCards: {
     title: {
-      regular(count) { return `У вас ${count} фото`; },
-      empty: 'Загруженных фото нет',
+      authorized: {
+        regular(count) { return `У вас ${count} фото`; },
+        empty: 'У вас нет загруженных фото',
+      },
+      unAuthorized: {
+        regular(count, name) { return `У пользователя ${name} загружно ${count} фото`; },
+        empty(name) { return `Пользователь ${name} еще ничего не загрузил`; },
+      },
       srvErr: 'Ошибка сервера при загрузке',
     },
     settings: {

@@ -2,8 +2,12 @@ export class CardsBlock {
 
   constructor() {
   };
-  render = (cardsArr = []) => {
+  render = (params) => {
+    const { authUser = {}, cardsOwner = {}, cardsArr = []} = params
     this._cardsArr = cardsArr;
+    this._authUser = (Object.keys(authUser).length != 0) ? authUser : null;
+    this._cardsOwner = (Object.keys(cardsOwner).length != 0) ? cardsOwner : null;
+    this._isCardsOwner = Boolean((this._authUser && this._cardsOwner) && (this._authUser._id === this._cardsOwner._id));
     this._clearContainer();
     if (this._cardsArr.length > 0) {
       this._create();
@@ -27,19 +31,6 @@ export class CardsBlock {
     this._curentItem = 0;
     this._renderCardList(splittedArray[this._curentItem]);
     (this._totalItems > this._curentItem) ? this._curentItem++ : this._curentItem;
-  }
-  update = (params) => {
-    if (params) {
-      const { removedCard, addedCard } = params;
-      if (removedCard) {
-        const index = this._cardsArr.indexOf(removedCard);
-        this._cardsArr.splice(index, 1);
-      }
-      if (addedCard) {
-        const newArr = this._cardsArr.push(addedCard);
-      }
-    }
-    this.render(this._cardsArr);
   }
   toggleVisibility = () => {
     this._cardsCollection = this._container.childNodes;

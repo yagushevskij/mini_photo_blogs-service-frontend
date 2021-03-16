@@ -12,12 +12,35 @@ export class UserCardsBlock extends CardsBlock {
   };
   _setTitle = () => {
     super._setTitle();
-    (this._cardsArr && this._cardsArr.length > 0) ?
-      this._title.textContent = this._config.title.regular(this._cardsArr.length) :
-      this._title.textContent = this._config.title.empty;
-  }
+    if (this._cardsArr && this._cardsArr.length > 0) {
+      this._title.textContent = (this._isCardsOwner) ?
+      this._config.title.authorized.regular(this._cardsArr.length) : this._config.title.unAuthorized.regular(this._cardsArr.length, this._cardsOwner.name);
+    } else {
+      this._title.textContent = (this._isCardsOwner) ?
+      this._config.title.authorized.empty : this._config.title.unAuthorized.empty(this._cardsOwner.name);
+    }
+  };
+
   _create = () => {
     super._create();
     this._renderCards();
+  }
+
+  update = (params) => {
+    if (params) {
+      const { removedCard, addedCard } = params;
+      if (removedCard) {
+        const index = this._cardsArr.indexOf(removedCard);
+        this._cardsArr.splice(index, 1);
+      }
+      if (addedCard) {
+        const newArr = this._cardsArr.push(addedCard);
+      }
+    }
+    this.render({
+      authUser: this._authUser,
+      cardsOwner: this._cardsOwner,
+      cardsArr: this._cardsArr,
+    });
   }
 }
