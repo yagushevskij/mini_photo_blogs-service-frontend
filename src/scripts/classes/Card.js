@@ -35,7 +35,12 @@ export class Card extends BaseComponent {
     }
   };
 
-  _hasOwnLike = () => this._item.likes.some(item => item === this._userId);
+  _hasOwnLike = () => {
+    if (this._userId) {
+      return this._item.likes.some(item => item === this._userId);
+    }
+    return false;
+  };
 
   _isOwner = () => (this._item.owner._id || this._item.owner) === this._userId; //В зависимости от типа запроса с сервера приходят данные владельца в разных свойствах;
 
@@ -59,8 +64,8 @@ export class Card extends BaseComponent {
     }
   };
 
-  create = (params, userData, item) => {
-    this._userId = (typeof userData === 'object') ? userData._id : null;
+  create = (params, userData = {}, item) => {
+    this._userId = (Object.keys(userData).length != 0) ? userData._id : null;
     this._item = item;
     this._view = params.view;
     try {

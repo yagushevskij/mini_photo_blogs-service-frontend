@@ -14,9 +14,9 @@ export class User {
     })
   }
 
-  updateData = (data) => {
+  updateData = (data = {}) => {
     this.data = data;
-    if (data) {
+    if (Object.keys(this.data).length != 0) {
       this._setPageUrl();
     }
   };

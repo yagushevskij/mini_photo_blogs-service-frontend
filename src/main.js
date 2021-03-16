@@ -104,7 +104,7 @@ const openSigninPopup = () => new SigninPopup(signinPopupTemplate, popupContaine
 const signout = () => {
   sendApiRequest(config.reqApiParams.signout)
     .then(() => {
-      user.updateData(null);
+      user.updateData();
       renderPage();
     })
     .catch((err) => console.log(err));

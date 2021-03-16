@@ -25,7 +25,7 @@ const config = {
       srvErr: 'Ошибка сервера при загрузке',
     },
     settings: {
-      itemsOnPage: 5,
+      itemsOnPage: 10,
       sortBy: 'date',
     },
   },
@@ -36,15 +36,15 @@ const config = {
       srvErr: 'Ошибка сервера при загрузке',
     },
     settings: {
-      itemsOnPage: 50,
-      total: 30,
+      itemsOnPage: 20,
+      total: 20,
       sortBy: 'likes',
     },
     gallery: {
       gapSize: 10, // Размер горизонтального и вертикального отступа между строками и столбцами, px
       minFileSize: 150, // Размер минимальной стороны для фото с наименьшим рейтингом, px.
       maxFileSize: 400, // Размер минимальной стороны для фото с наибольшим рейтингом, px.
-      cellSize: 100, // Размер сторон grid ячейки, px. Рекомендуется использовать
+      cellSize: 150, // Размер сторон grid ячейки, px. Рекомендуется использовать
       // значение равное minFileSize
     },
   },
