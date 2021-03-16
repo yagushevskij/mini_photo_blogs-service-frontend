@@ -1,9 +1,14 @@
 export class Loader {
-    constructor() {
+    constructor(element) {
+      this._element = element;
     }
 
-    changeStatus = (loader, status) => {
-        this._loader = loader;
-        this._loader.style.display = status ? 'block' : 'none';
+    show = (container) => {
+      container.append(this._element)
+      this._element.classList.remove('hidden')
+    };
+    
+    hide = () => {
+      this._element.classList.add('hidden')
     };
 }

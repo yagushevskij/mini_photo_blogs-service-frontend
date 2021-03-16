@@ -2,12 +2,12 @@ export class CardsBlock {
 
   constructor() {
   };
-  render = (cardsArr = {}) => {
+  render = (cardsArr = []) => {
+    this._cardsArr = cardsArr;
     this._clearContainer();
-    if (Object.keys(cardsArr).length != 0) {
-      this._cardsArr = cardsArr;
+    if (this._cardsArr.length > 0) {
       this._create();
-    }
+    };
     this._setTitle();
     this.show();
   };
@@ -39,7 +39,7 @@ export class CardsBlock {
         const newArr = this._cardsArr.push(addedCard);
       }
     }
-    this.render();
+    this.render(this._cardsArr);
   }
   toggleVisibility = () => {
     this._cardsCollection = this._container.childNodes;

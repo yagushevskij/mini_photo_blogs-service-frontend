@@ -1,6 +1,6 @@
 import './pages/index.css';
 import {
-  userCardsContainer, popupContainer, userCardTemplate, profileContainer, cardsLoader,
+  userCardsContainer, popupContainer, userCardTemplate, profileContainer, loaderTemplate,
   signupPopupTemplate, signinPopupTemplate, imagePopupTemplate,
   profilePopupTemplate, cardPopupTemplate, avatarPopupTemplate, userBlockContainer,
   userMenuTemplate, userLinksTemplate, profileTemplate, userCardsWrapper,
@@ -152,7 +152,7 @@ const topCardsBlock = new TopCardsBlock({
 });
 const userMenu = new UserMenu(userMenuTemplate, userLinksTemplate,
   openSignupPopup, openSigninPopup, signout);
-const loader = new Loader();
+const loader = new Loader(getElementFromTemp(loaderTemplate));
 const isPageUserpage = () => {
   const userPageUrlregExp = new RegExp(config.userPageFeature.getUserPageUrlRegExp());
   return (userPageUrlregExp.test(config.userPageFeature.getUrlParams()));
@@ -161,7 +161,7 @@ const isPageUserpage = () => {
 const renderUserPage = () => {
   const username = new RegExp(config.userPageFeature.getExtractNameRegExp())
     .exec(config.userPageFeature.getUrlParams())[1];
-  loader.changeStatus(cardsLoader, true);
+  loader.show(userCardsWrapper);
   api.sendRequest({
     url: config.reqApiParams.getUserInfo.url + username,
     method: config.reqApiParams.getUserInfo.method,
@@ -181,12 +181,13 @@ const renderUserPage = () => {
           userCardsBlock.render(cards);
         })
         .catch((err) => console.log(err))
-        .finally(() => loader.changeStatus(cardsLoader, false));
+        .finally(() => loader.hide());
     })
     .catch((err) => console.log(err));
 };
 
 const renderMainPage = () => {
+  loader.show(topCardsWrapper);
   api.sendRequest({
     url: config.reqApiParams.getAllUsersCards.url,
     method: config.reqApiParams.getAllUsersCards.method,
@@ -196,7 +197,7 @@ const renderMainPage = () => {
       topCardsBlock.render(cards);
     })
     .catch((err) => console.log(err))
-    .finally(() => loader.changeStatus(cardsLoader, false));
+    .finally(() => loader.hide());
 };
 
 const renderPage = () => {
