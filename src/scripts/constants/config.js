@@ -135,7 +135,6 @@ const config = {
   },
   text: {
     inputClassName: '.popup__input',
-    userNotFound: 'Пользователь не найден',
     validationMessages: {
       tooShort: 'Минимум символов:',
       tooLong: 'Максимум символов',
@@ -144,6 +143,9 @@ const config = {
       requiredLink: 'Здесь должна быть ссылка',
       groupRequired: 'Заполните хотя бы одно поле',
       requiredPicture: 'Допустимые форматы:',
+    },
+    errors: {
+      srvErr: 'Ошибка получения данных с API. Сообщите нам и мы всё отремонтируем :)',
     },
   },
   fileExtensions: {

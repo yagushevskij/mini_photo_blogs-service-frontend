@@ -4,7 +4,7 @@ import {
   signupPopupTemplate, signinPopupTemplate, imagePopupTemplate,
   profilePopupTemplate, cardPopupTemplate, avatarPopupTemplate, userBlockContainer,
   userMenuTemplate, userLinksTemplate, profileTemplate, userCardsWrapper,
-  topCardsWrapper, topCardsContainer, imageCardTemplate, infoMessageTemplate,
+  topCardsWrapper, topCardsContainer, imageCardTemplate, serverErrorPopupTemplate,
 }
   from './scripts/constants/selectors';
 import {
@@ -29,6 +29,7 @@ import { UserMenu } from './scripts/classes/UserMenu';
 import { User } from './scripts/classes/User';
 import { UserCardsBlock } from './scripts/classes/UserCardsBlock';
 import { TopCardsBlock } from './scripts/classes/TopCardsBlock';
+import { ErrorPopup } from './scripts/classes/ErrorPopup';
 
 // Колбэки
 const sendApiRequest = (...args) => api.sendRequest(...args);
@@ -68,8 +69,10 @@ const createImageCard = (...args) => new Card({
   view: getElementFromTemp(imageCardTemplate),
   userData: user.data,
 }, ...args);
-const openPopup = (popup, ...args) => popup.open(args);
-const openImagePopup = (...args) => openPopup(imagePopup, ...args);
+const openErrorPopup = (...args) => new ErrorPopup(serverErrorPopupTemplate, popupContainer)
+  .open(...args);
+const openImagePopup = (...args) => new ImagePopup(imagePopupTemplate, popupContainer)
+  .open(...args);
 const openCardPopup = () => new CardPopup(cardPopupTemplate, popupContainer, setValidateListeners,
   removeValidateListeners, sendCardToApi, uploadCard, userCardList.addCard).open();
 const openAvatarPopup = () => new AvatarPopup(avatarPopupTemplate, popupContainer,
@@ -108,7 +111,6 @@ const header = new Header(userBlockContainer);
 const formValidator = new FormValidator(config.text, config.fileExtensions);
 const userInfo = new UserInfo(profileContainer, profileTemplate, openCardPopup, openAvatarPopup,
   openProfilePopup, ['name', 'about']);
-const imagePopup = new ImagePopup(imagePopupTemplate, popupContainer);
 const userCardList = new CardList({
   createCard: createUserCard,
   updateCardsBlock: updateUserCardsBlock,
@@ -123,14 +125,12 @@ const userCardsBlock = new UserCardsBlock({
   renderCardList: userCardList.render,
   container: userCardsContainer,
   wrapper: userCardsWrapper,
-  infoMessageElem: getElementFromTemp(infoMessageTemplate),
   config: config.userCards,
 });
 const topCardsBlock = new TopCardsBlock({
   renderCardList: topCardList.render,
   container: topCardsContainer,
   wrapper: topCardsWrapper,
-  infoMessageElem: getElementFromTemp(infoMessageTemplate),
   config: config.topCards,
 });
 const userMenu = new UserMenu(userMenuTemplate, userLinksTemplate,
@@ -170,7 +170,10 @@ const renderUserPage = () => {
         .catch((err) => console.log(err))
         .finally(() => loader.hide());
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      openErrorPopup(config.text.errors.srvErr);
+      console.log(err);
+    });
 };
 
 const renderMainPage = () => {
@@ -186,7 +189,10 @@ const renderMainPage = () => {
         cardsArr: cards,
       });
     })
-    .catch((err) => console.log(err))
+    .catch((err) => {
+      openErrorPopup(config.text.errors.srvErr);
+      console.log(err);
+    })
     .finally(() => loader.hide());
 };
 

@@ -7,8 +7,10 @@
 @import url(./_is-opened/popup_is-opened.css);
 @import url(./__image/popup__image.css);
 @import url(./__image-content/popup__image-content.css);
-@import url('./__group-message/popup__group-message.css');
-@import url('./__group-elements/popup__group-elements.css');
+@import url(./__group-message/popup__group-message.css);
+@import url(./__group-elements/popup__group-elements.css);
+@import url(./__description/popup__description.css);
+@import url(./__image/popup__image.css);
 
 .popup {
   position: fixed;

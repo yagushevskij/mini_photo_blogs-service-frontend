@@ -1,5 +1,5 @@
 import {Popup} from './Popup';
-export class ImagePopup extends Popup {
+export class ErrorPopup extends Popup {
 
     constructor(markup, container) {
         super(container, markup);
@@ -7,7 +7,7 @@ export class ImagePopup extends Popup {
 
     _create = () => {
         super._create();
-        this._view.querySelector('.popup__image-content').setAttribute('src', this._data);
+        this._view.querySelector('.popup__description').textContent = this._data;
     };
 
     _close = () => {

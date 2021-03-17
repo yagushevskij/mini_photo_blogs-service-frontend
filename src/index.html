@@ -152,6 +152,15 @@
       </div>
     </template>
 
+    <template id="server-error-popup">
+      <div class="popup__content">
+        <img src="<%=require('./images/close.svg')%>" alt="" class="popup__close">
+        <h3 class="popup__title">Ошибка</h3>
+        <img src="<%=require('./images/important.svg')%>" alt="" class="popup__image">
+        <p class="popup__description"></p>
+      </div>
+    </template>
+
     <template id="user-menu">
       <div class="dropdown">
         <div class="dropdown__mainmenu">
@@ -182,13 +191,6 @@
           <button class="button user-info__edit-button">Edit</button>
         </div>
         <button class="button user-info__button">+</button>
-      </div>
-    </template>
-
-    <template id="info-message">
-      <div class="info-message">
-        <p class="root__title"></p>
-        <img src="images/important.svg" class="info-message__image">
       </div>
     </template>
 

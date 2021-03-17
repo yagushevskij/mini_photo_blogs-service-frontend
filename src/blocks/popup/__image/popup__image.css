@@ -1,11 +1,7 @@
 .popup__image {
-    max-width: 80vw;
-    max-height: 80vh;
-    position: relative;
+    width: 150px;
+    height: 150px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    align-self: center;
   }
-  
-  /* @media screen and (max-width: 540px) {
-    .popup__image {
-      width: calc(100% - 60px);
-    }
-  } */

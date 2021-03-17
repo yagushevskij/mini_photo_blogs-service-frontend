@@ -7,7 +7,6 @@
 @import url(../blocks/user-info/user-info.css);
 @import url(../blocks/button/button.css);
 @import url(../blocks/cards-list/cards-list.css);
-@import url(../blocks/place-card/place-card.css);
 @import url(../blocks/card/card.css);
 @import url(../blocks/popup/popup.css);
 @import url(../blocks/error-message/error-message.css);
@@ -16,7 +15,6 @@
 @import url(../blocks/profile-popup/profile-popup.css);
 @import url(../blocks/loader/loader.css);
 @import url(../blocks/dropdown/dropdown.css);
-@import url(../blocks/image-card/image-card.css);
 @import url(../blocks/info-message/info-message.css);
 @import url(../blocks/hidden/hidden.css);
 
