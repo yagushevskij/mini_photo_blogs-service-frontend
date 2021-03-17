@@ -10,7 +10,7 @@
 @import url(./__group-message/popup__group-message.css);
 @import url(./__group-elements/popup__group-elements.css);
 @import url(./__description/popup__description.css);
-@import url(./__image/popup__image.css);
+@import url(./__info-image/popup__info-image.css);
 
 .popup {
   position: fixed;
