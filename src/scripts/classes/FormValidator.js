@@ -36,15 +36,19 @@ export class FormValidator extends BaseComponent {
 
   _validateGroupInputs = () => {
     const inputsArr = Array.from(this._form.querySelectorAll('.popup__input_type_group'));
-    const isFullInputExist = inputsArr.some(el => (el.value));
-    if (isFullInputExist) {
+    const isInputedElemExist = inputsArr.some(el => (el.value));
+    if (isInputedElemExist) {
       inputsArr.forEach((el) => {
-        (!el.value) ? el.setAttribute('disabled', 'disabled') : false;
+        if (!el.value) {
+          el.setAttribute('disabled', 'disabled');
+        }
         el.setCustomValidity('');
       });
     } else {
       inputsArr.forEach((el) => {
-        (!el.value) ? el.removeAttribute('disabled', 'disabled') : false
+        if (!el.value) {
+          el.removeAttribute('disabled', 'disabled');
+        }
         el.setCustomValidity(this.validationMessages.groupRequired);
       });
     }
@@ -56,15 +60,27 @@ export class FormValidator extends BaseComponent {
       this._validateGroupInputs();
       this._validateByExtension();
       this._setValidationError();
+      this._checkForm();
       this._setSubmitButtonState();
     };
     return;
   };
+  
+  _checkForm = () => {
+    this._isFormValid = this._form.checkValidity();
+    if (this._isFormValid) {
+      this._resetClientErrors();
+    }
+  }
+
+  _resetClientErrors = () => {
+    const errorsArr = Array.from(this._form.querySelectorAll('.error-message_type_client'));
+    errorsArr.forEach(el => el.textContent = '');
+  }
 
   _setSubmitButtonState = () => {
     const submitButton = this._form.querySelector('button');
-    const isFormValid = this._form.checkValidity();
-    submitButton.disabled = !isFormValid;
+    submitButton.disabled = !this._isFormValid;
   };
 
   // _setHandlers = () => {
