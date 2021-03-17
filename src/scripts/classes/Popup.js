@@ -1,41 +1,32 @@
 import { BaseComponent } from './BaseComponent';
 
 export class Popup extends BaseComponent {
-
-  constructor(container, markup) {
-    super();
-    this._container = container;
-    this._markup = markup;
-    // this._sendDataToApi = sendCardToApi;
-    // this._setHandlers = this._setHandlers.bind(this);
-  };
-
   open = (data) => {
     this._data = data;
     this._create();
-    //Если у попапа есть свойство для обновления данных в полях и эти данные пришли
-    (this.hasOwnProperty('updateInformation') && (data)) ? this.updateInformation(data) : false;
+    if (Object.prototype.hasOwnProperty.call(this, 'updateInformation') && (data)) {
+      // Если у попапа есть свойство для обновления данных в полях и эти данные пришли;
+      this.updateInformation(data);
+    }
     this._container.classList.add('popup_is-opened');
     this._setHandlers();
     this._setEventListeners();
-    // this._formValidator.setEventListeners();
-  };
+  }
 
   _close() {
     this._container.classList.remove('popup_is-opened');
     this._removeEventListeners();
-    // this._formValidator.removeEventListeners();
     this._view.remove();
-  };
+  }
 
   _create() {
-    this._view = this._markup.content.cloneNode(true).children[0];
+    this._view = this._template.content.cloneNode(true).children[0];
     this._container.append(this._view);
   }
 
   _setHandlers() {
     const closeBtn = this._view.querySelector('.popup__close');
-    return this._handlersArr = [
+    this._handlersArr = [
       {
         element: closeBtn,
         event: 'click',
@@ -52,10 +43,11 @@ export class Popup extends BaseComponent {
         callbacks: [this._closeByOverlay],
       },
     ];
-  };
+    return this._handlersArr;
+  }
 
   _closeByEsc = (event) => {
-    if (event.keyCode == 27) {
+    if (event.keyCode === 27) {
       this._close();
     }
   };
@@ -65,5 +57,4 @@ export class Popup extends BaseComponent {
       this._close();
     }
   };
-
 }

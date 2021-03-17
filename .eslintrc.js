@@ -6,7 +6,7 @@ module.exports = {
   extends: [
     'airbnb-base',
   ],
-  // parser: 'babel-eslint',
+  parser: 'babel-eslint',
   parserOptions: {
     ecmaVersion: 11,
     sourceType: 'module',
@@ -16,5 +16,7 @@ module.exports = {
     'no-underscore-dangle': 'off',
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     'linebreak-style': ['error', 'windows'],
+    'no-use-before-define': 'off',
+    'import/prefer-default-export': 'off',
   },
 };

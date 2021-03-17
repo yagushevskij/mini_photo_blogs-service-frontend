@@ -1,28 +1,28 @@
 import { FormPopup } from './FormPopup';
 
 export class SignupPopup extends FormPopup {
-  constructor(markup, container, setValidateListeners, removeValidateListeners, setServerError, sendRegDataToApi, renderPage, updateUserData) {
-    super(container, markup, setValidateListeners, removeValidateListeners, setServerError);
-    // this._getUserPageUrl = getUserPageUrl;
-    this._sendDataToApi = sendRegDataToApi;
-    this._renderPage = renderPage;
+  constructor(params) {
+    super();
+    const {
+      template, container, sendDataToApi, updateUserData, setValidateListeners,
+      removeValidateListeners, setServerError, renderPage,
+    } = params;
+    this._template = template;
+    this._container = container;
+    this._sendDataToApi = sendDataToApi;
     this._updateUserData = updateUserData;
+    this._setValidateListeners = setValidateListeners;
+    this._removeValidateListeners = removeValidateListeners;
+    this._setServerError = setServerError;
+    this._renderPage = renderPage;
   }
-  // _setFormData = () => {
-  //   super._setFormData();
-  //   const username = this._formData.get('username')
-  //   this._formData.append('pageUrl', this._getUserPageUrl(username));
-  // };
 
   _submitAction = () => {
     this._updateUserData(this._result);
     this._renderPage();
-    // localStorage.setItem('userId', data.user._id);
-    // localStorage.setItem('username', data.user.username);
-    // document.location.href = this._userPageUrl + this._result.user.username;
-  };
+  }
 
-  _submit = () => {
+  _submit = (event) => {
     event.preventDefault();
     this._changeButtonText();
     this._setFormData();

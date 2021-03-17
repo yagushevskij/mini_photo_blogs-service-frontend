@@ -57,37 +57,85 @@ const setValidateListeners = (...args) => formValidator.setEventListeners(...arg
 const removeValidateListeners = () => formValidator.removeEventListeners();
 const setServerError = (message) => formValidator.setServerError(message);
 const createUserCard = (...args) => new Card({
-  openImagePopup, addLikeRequest, removeLikeRequest, removeCardRequest,
+  openImagePopup,
+  addLikeRequest,
+  removeLikeRequest,
+  removeCardRequest,
   updateCardsBlock: updateUserCardsBlock,
 }).create({
   view: getElementFromTemp(userCardTemplate),
   userData: user.data,
 }, ...args);
 const createImageCard = (...args) => new Card({
-  openImagePopup, addLikeRequest, removeLikeRequest, removeCardRequest,
+  openImagePopup,
+  addLikeRequest,
+  removeLikeRequest,
+  removeCardRequest,
   getUserPageUrl,
 }).create({
   view: getElementFromTemp(imageCardTemplate),
   userData: user.data,
 }, ...args);
-const openErrorPopup = (...args) => new ErrorPopup(serverErrorPopupTemplate, popupContainer)
+const openErrorPopup = (...args) => new ErrorPopup({
+  template: serverErrorPopupTemplate,
+  container: popupContainer,
+})
   .open(...args);
-const openImagePopup = (...args) => new ImagePopup(imagePopupTemplate, popupContainer)
+const openImagePopup = (...args) => new ImagePopup({
+  template: imagePopupTemplate,
+  container: popupContainer,
+})
   .open(...args);
-const openCardPopup = () => new CardPopup(cardPopupTemplate, popupContainer, setValidateListeners,
-  removeValidateListeners, sendCardToApi, uploadCard, userCardList.addCard).open();
-const openAvatarPopup = () => new AvatarPopup(avatarPopupTemplate, popupContainer,
-  setValidateListeners, removeValidateListeners, sendAvatarDataToApi, updateUserInfo,
-  updateUserMenu).open();
-const openProfilePopup = () => new ProfilePopup(profilePopupTemplate, popupContainer,
-  setValidateListeners, removeValidateListeners, sendUserDataToApi, updateUserInfo,
-  updateUserMenu).open(user.data);
-const openSignupPopup = () => new SignupPopup(signupPopupTemplate, popupContainer,
-  setValidateListeners, removeValidateListeners, setServerError, sendRegDataToApi, renderPage,
-  user.updateData).open();
-const openSigninPopup = () => new SigninPopup(signinPopupTemplate, popupContainer,
-  setValidateListeners, removeValidateListeners, sendAuthDataToApi, renderPage,
-  user.updateData).open();
+const openCardPopup = () => new CardPopup({
+  template: cardPopupTemplate,
+  container: popupContainer,
+  addCard: userCardList.addCard,
+  setValidateListeners,
+  removeValidateListeners,
+  setServerError,
+  sendCardToApi,
+  uploadCard,
+}).open();
+const openAvatarPopup = () => new AvatarPopup({
+  template: avatarPopupTemplate,
+  container: popupContainer,
+  sendDataToApi: sendAvatarDataToApi,
+  setValidateListeners,
+  removeValidateListeners,
+  setServerError,
+  updateUserInfo,
+  updateUserMenu,
+}).open();
+const openProfilePopup = () => new ProfilePopup({
+  template: profilePopupTemplate,
+  container: popupContainer,
+  sendDataToApi: sendUserDataToApi,
+  setValidateListeners,
+  removeValidateListeners,
+  setServerError,
+  updateUserInfo,
+  updateUserMenu,
+}).open(user.data);
+const openSignupPopup = () => new SignupPopup({
+  template: signupPopupTemplate,
+  container: popupContainer,
+  sendDataToApi: sendRegDataToApi,
+  updateUserData: user.updateData,
+  setValidateListeners,
+  removeValidateListeners,
+  setServerError,
+  renderPage,
+}).open();
+const openSigninPopup = () => new SigninPopup({
+  template: signinPopupTemplate,
+  container: popupContainer,
+  sendDataToApi: sendAuthDataToApi,
+  updateUserData: user.updateData,
+  setValidateListeners,
+  removeValidateListeners,
+  setServerError,
+  renderPage,
+}).open();
 const signout = () => {
   sendApiRequest(config.reqApiParams.signout)
     .then(() => {
