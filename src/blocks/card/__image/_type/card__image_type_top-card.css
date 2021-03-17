@@ -1,0 +1,21 @@
+.card__image_type_top-card  {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+    padding: 5%;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.card__image_type_top-card:hover > .card__like {
+  visibility: visible;
+}
+
+.card__image_type_top-card:hover > .card__description {
+  visibility: visible;
+  transition: transform 1s;
+  transform: translateY(-50px);
+}

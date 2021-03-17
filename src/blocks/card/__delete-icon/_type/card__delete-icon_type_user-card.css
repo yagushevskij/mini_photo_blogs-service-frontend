@@ -1,0 +1,13 @@
+.card__delete-icon_type_user-card {
+  background: url(../../../../images/trash-icon.svg) center no-repeat;
+  background-color: transparent;
+  border: none;
+  width: 18px;
+  height: 20px;
+  position: absolute;
+  top: 18px;
+  right: 15px;
+  cursor: pointer;
+  display: block;
+  z-index: 5;
+}

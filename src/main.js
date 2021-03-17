@@ -59,32 +59,15 @@ const createUserCard = (...args) => new Card({
   updateCardsBlock: updateUserCardsBlock,
 }).create({
   view: getElementFromTemp(userCardTemplate),
-  classNames: {
-    img: '.place-card__image',
-    likeIcon: '.place-card__like-icon',
-    likeCount: '.place-card__like-counter',
-    removeIcon: '.place-card__delete-icon',
-    name: '.place-card__name',
-    likedIcon: 'place-card__like-icon_liked',
-  },
-},
-  user.data, ...args);
+  userData: user.data,
+}, ...args);
 const createImageCard = (...args) => new Card({
   openImagePopup, addLikeRequest, removeLikeRequest, removeCardRequest,
   getUserPageUrl,
 }).create({
   view: getElementFromTemp(imageCardTemplate),
-  classNames: {
-    img: '.image-card__image',
-    likeIcon: '.image-card__like-icon',
-    likeCount: '.image-card__like-counter',
-    removeIcon: '.image-card__delete-icon',
-    name: '.image-card__name',
-    likedIcon: 'image-card__like-icon_liked',
-    userLink: '.image-card__username-link',
-  },
-},
-  user.data, ...args);
+  userData: user.data,
+}, ...args);
 const openPopup = (popup, ...args) => popup.open(args);
 const openImagePopup = (...args) => openPopup(imagePopup, ...args);
 const openCardPopup = () => new CardPopup(cardPopupTemplate, popupContainer, setValidateListeners,

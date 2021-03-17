@@ -1,0 +1,7 @@
+.card_type_user-card {
+  position: relative;
+  width: 282px;
+  background-color: #fff;
+  border-radius: 10px;
+  min-height: 360px;
+}

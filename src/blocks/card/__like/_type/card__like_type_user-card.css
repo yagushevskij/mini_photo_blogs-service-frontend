@@ -1,0 +1,4 @@
+.card__like_type_user-card {
+  flex-direction: column;
+  align-items: center;
+}

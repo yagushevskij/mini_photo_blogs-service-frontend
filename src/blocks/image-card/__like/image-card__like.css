@@ -1,7 +1,0 @@
-.image-card__like {
-    display: flex;
-    align-self: flex-end;
-    visibility: hidden;
-    background-color: rgba(255, 255, 255, 0.6);
-    box-shadow: 0 0 5px 5px rgba(255, 255, 255, 0.6);
-}

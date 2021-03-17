@@ -1,0 +1,6 @@
+@import url(./_type/card__name_type_top-card.css);
+@import url(./_type/card__name_type_user-card.css);
+
+.card__name {
+  font-size: 24px;
+}

@@ -64,19 +64,19 @@ export class Card extends BaseComponent {
     }
   };
 
-  create = (params, userData = {}, item) => {
+  create = (params, item) => {
+    const { view, userData } = params;
     this._userId = (Object.keys(userData).length != 0) ? userData._id : null;
     this._item = item;
-    this._view = params.view;
+    this._view = view;
     try {
-      const { img, likeIcon, likeCount, removeIcon, name, likedIcon, userLink} = params.classNames
-      this._view.likedIconClassName = likedIcon;
-      this._view.img = this._view.querySelector(img); 
-      this._view.likeIcon = this._view.querySelector(likeIcon);
-      this._view.likeCount = this._view.querySelector(likeCount);
-      this._view.removeIcon = this._view.querySelector(removeIcon);
-      this._view.name = this._view.querySelector(name);
-      this._view.userLink = this._view.querySelector(userLink);
+      this._view.likedIconClassName = 'card__like-icon_liked';
+      this._view.img = this._view.querySelector('.card__image'); 
+      this._view.likeIcon = this._view.querySelector('.card__like-icon');
+      this._view.likeCount = this._view.querySelector('.card__like-counter');
+      this._view.removeIcon = this._view.querySelector('.card__delete-icon');
+      this._view.name = this._view.querySelector('.card__name');
+      this._view.userLink = this._view.querySelector('.card__username-link');
     } catch (err) {
       console.log(err);
     }
