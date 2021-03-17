@@ -51,11 +51,14 @@ export class FormValidator extends BaseComponent {
   };
 
   _checkInputValidity = (event) => {
-    this._input = event.target
-    this._validateGroupInputs();
-    this._validateByExtension();
-    this._setValidationError();
-    this._setSubmitButtonState();
+    if (event.target.classList.contains('popup__input')) { // Привязываемся к классу для исключения валидации радиокнопок и прочих ненужных вещей;
+      this._input = event.target;
+      this._validateGroupInputs();
+      this._validateByExtension();
+      this._setValidationError();
+      this._setSubmitButtonState();
+    };
+    return;
   };
 
   _setSubmitButtonState = () => {
@@ -64,24 +67,24 @@ export class FormValidator extends BaseComponent {
     submitButton.disabled = !isFormValid;
   };
 
-  _setHandlers = () => {
-    this._handlersArr = [];
-    Array.from(this._form.querySelectorAll(this.inputClassName)).forEach((elem) => {
-      this._handlersArr.push({
-        element: elem,
-        event: 'input',
-        callbacks: [this._checkInputValidity],
-      });
-    });
-  }
+  // _setHandlers = () => {
+  //   this._handlersArr = [];
+  //   Array.from(this._form.querySelectorAll(this.inputClassName)).forEach((elem) => {
+  //     this._handlersArr.push({
+  //       element: elem,
+  //       event: 'input',
+  //       callbacks: [this._checkInputValidity],
+  //     });
+  //   });
+  // }
 
   setEventListeners = (form) => {
     this._form = form;
-    this._setHandlers()
-    this._setEventListeners();
+    this._form.addEventListener('input', this._checkInputValidity);
   };
 
   removeEventListeners = () => {
-    this._removeEventListeners();
+    this._form.removeEventListener('input', this._checkInputValidity);
+    // this._removeEventListeners();
   };
 }
