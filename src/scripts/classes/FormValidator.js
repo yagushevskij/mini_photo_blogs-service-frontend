@@ -21,7 +21,7 @@ export class FormValidator extends BaseComponent {
 
   _isDataFormatValid = () => {
     const regExp = (ext) => new RegExp(`\\.*${ext}`);
-    const result = this._extArray.some(ext => regExp(ext).test(this._input.value));
+    const result = this._extArray.some(ext => regExp(ext.toLowerCase()).test(this._input.value.toLowerCase()));
     return result;
   }
 
