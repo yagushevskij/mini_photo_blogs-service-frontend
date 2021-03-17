@@ -66,7 +66,7 @@ export class Card extends BaseComponent {
 
   create = (params, item) => {
     const { view, userData } = params;
-    this._userId = (Object.keys(userData).length != 0) ? userData._id : null;
+    this._userId = (userData && Object.keys(userData).length != 0) ? userData._id : null;
     this._item = item;
     this._view = view;
     try {

@@ -19,6 +19,12 @@ export class FormValidator extends BaseComponent {
     (this._input.validity.customError) ? this._input.validationMessage : '';
   }
 
+  setServerError = (message) => {
+    const errorEl = this._form.querySelector('.error-message_type_server')
+    console.log(this._form)
+    errorEl.textContent = message;
+  };
+
   _isDataFormatValid = () => {
     const regExp = (ext) => new RegExp(`\\.*${ext}`);
     const result = this._extArray.some(ext => regExp(ext.toLowerCase()).test(this._input.value.toLowerCase()));

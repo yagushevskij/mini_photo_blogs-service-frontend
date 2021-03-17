@@ -55,6 +55,7 @@ const updateUserCardsBlock = (...args) => userCardsBlock.update(...args);
 
 const setValidateListeners = (...args) => formValidator.setEventListeners(...args);
 const removeValidateListeners = () => formValidator.removeEventListeners();
+const setServerError = (message) => formValidator.setServerError(message);
 const createUserCard = (...args) => new Card({
   openImagePopup, addLikeRequest, removeLikeRequest, removeCardRequest,
   updateCardsBlock: updateUserCardsBlock,
@@ -82,7 +83,7 @@ const openProfilePopup = () => new ProfilePopup(profilePopupTemplate, popupConta
   setValidateListeners, removeValidateListeners, sendUserDataToApi, updateUserInfo,
   updateUserMenu).open(user.data);
 const openSignupPopup = () => new SignupPopup(signupPopupTemplate, popupContainer,
-  setValidateListeners, removeValidateListeners, sendRegDataToApi, renderPage,
+  setValidateListeners, removeValidateListeners, setServerError, sendRegDataToApi, renderPage,
   user.updateData).open();
 const openSigninPopup = () => new SigninPopup(signinPopupTemplate, popupContainer,
   setValidateListeners, removeValidateListeners, sendAuthDataToApi, renderPage,
@@ -105,7 +106,7 @@ const sendAvatarDataToApi = (...args) => api.sendRequest(config.reqApiParams.cha
 const sendUserDataToApi = (...args) => api.sendRequest(config.reqApiParams.changeUserInfo,
   ...args);
 
-const api = new Api(config.headers);
+const api = new Api(config);
 const user = new User(getUserInfoFromApi, getUserPageUrl);
 const header = new Header(userBlockContainer);
 const formValidator = new FormValidator(config.text, config.fileExtensions);
@@ -171,7 +172,7 @@ const renderUserPage = () => {
         .finally(() => loader.hide());
     })
     .catch((err) => {
-      openErrorPopup(config.text.errors.srvErr);
+      openErrorPopup(config.text.errors.apiErr);
       console.log(err);
     });
 };
@@ -190,7 +191,7 @@ const renderMainPage = () => {
       });
     })
     .catch((err) => {
-      openErrorPopup(config.text.errors.srvErr);
+      openErrorPopup(config.text.errors.apiErr);
       console.log(err);
     })
     .finally(() => loader.hide());

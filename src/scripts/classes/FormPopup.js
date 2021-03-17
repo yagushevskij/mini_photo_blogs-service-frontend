@@ -1,10 +1,11 @@
 import { Popup } from './Popup.js';
 export class FormPopup extends Popup {
 
-  constructor(container, markup, setValidateListeners, removeValidateListeners) {
+  constructor(container, markup, setValidateListeners, removeValidateListeners, setServerError) {
     super(container, markup)
     this._setValidateListeners = setValidateListeners;
     this._removeValidateListeners = removeValidateListeners;
+    this._setServerError = setServerError;
   }
 
   _create = () => {
@@ -40,6 +41,7 @@ export class FormPopup extends Popup {
       .then(() => this._close())
       .catch((err) => {
         console.log(err);
+        this._setServerError(err);
       });
   };
 

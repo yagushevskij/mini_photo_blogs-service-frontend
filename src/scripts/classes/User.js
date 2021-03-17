@@ -16,7 +16,7 @@ export class User {
 
   updateData = (data = {}) => {
     this.data = data;
-    if (Object.keys(this.data).length != 0) {
+    if ( Object.keys(this.data).length != 0) {
       this._setPageUrl();
     }
   };
