@@ -261,6 +261,13 @@ user.setData()
     renderPage();
   });
 
+// Наполнение массива карточек для теста новых фич.
+// const formData = new FormData();
+// formData.append('name', 'ololo');
+// formData.append('link', 'https://sebweo.com/wp-content/uploads/2019/06/landshaft-bernskikh-alp-v-yasniy-den_thumb.jpg');
+// const timerId = () => setInterval(() => sendCardToApi(formData), 7000);
+// timerId();
+
 document.addEventListener('keydown', (event) => { // Убираем срабатывание кнопок на странице по нажатию enter;
   if (event.keyCode === 13 && event.target.nodeName === 'BUTTON') {
     event.preventDefault();
