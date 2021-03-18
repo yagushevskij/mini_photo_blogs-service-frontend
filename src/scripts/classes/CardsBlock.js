@@ -11,6 +11,7 @@ export class CardsBlock {
       this._create();
     }
     this._setTitle();
+    this._setEventListeners();
     this.show();
   };
 
@@ -29,10 +30,12 @@ export class CardsBlock {
     for (let i = 0; i < Math.ceil(this._cardsArr.length / arraySize); i++) {
       splittedArray[i] = this._cardsArr.slice((i * arraySize), (i * arraySize) + arraySize);
     }
-    this._totalItems = splittedArray.length;
-    this._curentItem = 0;
-    this._renderCardList(splittedArray[this._curentItem]);
-    (this._totalItems > this._curentItem) ? this._curentItem++ : this._curentItem;
+    this._totalPages = splittedArray.length;
+    // При первом запуске функции начнем загружать с первой "страницы" (0 элемент в массиве)
+    this._currentPage = this._currentPage || 1;
+    this._renderCardList(splittedArray[this._currentPage - 1]);
+    (this._totalPages > this._currentPage) ? this._currentPage++ : this._currentPage;
+    this._pagesRendered = this._currentPage;
   }
 
   toggleVisibility = () => {
@@ -52,6 +55,22 @@ export class CardsBlock {
 
   _clearContainer = () => {
     this._container.textContent = '';
+  }
+
+  _setEventListeners = () => {
+    if (this._config.settings.loadBy === 'scroll') {
+      window.addEventListener('scroll', this._loadMoreByScroll);
+    }
+  };
+
+  _loadMoreByScroll = () => {
+    const containerRelativeBottom = this._container.getBoundingClientRect().bottom;
+    const windowHeight = document.documentElement.clientHeight;
+    if (containerRelativeBottom < windowHeight + 100) {
+      if (this._totalPages > this._pagesRendered) {
+        this._renderCards();
+      }
+    }
   }
 
   show = () => {

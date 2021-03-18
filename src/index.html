@@ -68,8 +68,8 @@
           <span class="error-message error-message_type_client"></span>
           <div class="popup__group-elements">
             <input type="url" name="link" class="popup__input popup__input_type_group popup__input_filetype_picture"
-            placeholder="Ссылка на картинку">
-          <span class="error-message error-message_type_client"></span>
+              placeholder="Ссылка на картинку">
+            <span class="error-message error-message_type_client"></span>
             <div class="popup__group-message">Или</div>
             <span class="error-message error-message_type_client error-message_type_group"></span>
             <input type="file" name="picture" class="popup__input popup__input_type_group popup__input_filetype_picture"
@@ -205,6 +205,9 @@
 
   </div>
   <script type="module" src="<%= htmlWebpackPlugin.files.js %>"></script>
+  <!--Блок для теста загрузки карточек по скролу-->
+  <div style="height: 500px"></div>
+  <!--Конец блока-->
 </body>
 
 </html>

@@ -33,6 +33,7 @@ const config = {
     settings: {
       itemsOnPage: 10,
       sortBy: 'date',
+      loadBy: 'scroll',
     },
   },
   topCards: {
