@@ -14,8 +14,12 @@ export class TopCardsBlock extends CardsBlock {
     super._create();
     this._renderCards();
     this._setContainerStyle();
-    this._setElemsSize();
   };
+
+  _renderCards = () => {
+    super._renderCards();
+    this._setElemsSize();
+  }
 
   _setTitle = () => {
     super._setTitle();

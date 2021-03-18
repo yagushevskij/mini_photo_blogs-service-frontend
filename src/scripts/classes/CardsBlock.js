@@ -23,7 +23,7 @@ export class CardsBlock {
     this._title = this._wrapper.querySelector('.root__title');
   }
 
-  _renderCards = () => { // Режем массив карточек на подмассивы и рендерим
+  _renderCards() { // Режем массив карточек на подмассивы и рендерим
     // каждый при обращении к методу;
     const splittedArray = [];
     const arraySize = this._config.settings.itemsOnPage;
