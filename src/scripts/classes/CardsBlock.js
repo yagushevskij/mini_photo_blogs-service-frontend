@@ -1,21 +1,24 @@
 export class CardsBlock {
-  render = (params) => {
+  create = (params) => {
     const { authUser = {}, cardsOwner = {}, cardsArr = [] } = params;
     this._cardsArr = cardsArr;
     this._authUser = (Object.keys(authUser).length !== 0) ? authUser : null;
     this._cardsOwner = (Object.keys(cardsOwner).length !== 0) ? cardsOwner : null;
     this._isCardsOwner = Boolean((this._authUser && this._cardsOwner)
       && (this._authUser._id === this._cardsOwner._id));
+    this._loadMoreBtn = this._wrapper.querySelector('.cards-wrapper__button');
     this._clearContainer();
     if (this._cardsArr.length > 0) {
-      this._create();
+      this._sort();
+      this._setPagination();
+      this._render();
     }
     this._setTitle();
     this._setEventListeners();
     this.show();
   };
 
-  _create() {
+  _render() {
     this._sort();
   }
 
@@ -23,19 +26,8 @@ export class CardsBlock {
     this._title = this._wrapper.querySelector('.root__title');
   }
 
-  _renderCards() { // Режем массив карточек на подмассивы и рендерим
-    // каждый при обращении к методу;
-    const splittedArray = [];
-    const arraySize = this._config.settings.itemsOnPage;
-    for (let i = 0; i < Math.ceil(this._cardsArr.length / arraySize); i++) {
-      splittedArray[i] = this._cardsArr.slice((i * arraySize), (i * arraySize) + arraySize);
-    }
-    this._totalPages = splittedArray.length;
-    // При первом запуске функции начнем загружать с первой "страницы" (0 элемент в массиве)
-    this._currentPage = this._currentPage || 1;
-    this._renderCardList(splittedArray[this._currentPage - 1]);
-    (this._totalPages > this._currentPage) ? this._currentPage++ : this._currentPage;
-    this._pagesRendered = this._currentPage;
+  _renderCards() {
+    this._renderCardList(this._splittedArray[this._currentPage - 1]);
   }
 
   toggleVisibility = () => {
@@ -57,9 +49,21 @@ export class CardsBlock {
     this._container.textContent = '';
   }
 
-  _setEventListeners = () => {
-    if (this._config.settings.loadBy === 'scroll') {
-      window.addEventListener('scroll', this._loadMoreByScroll);
+  _setPagination = () => {
+    this._splittedArray = [];
+    const arraySize = this._config.settings.itemsOnPage;
+    for (let i = 0; i < Math.ceil(this._cardsArr.length / arraySize); i++) {
+      this._splittedArray[i] = this._cardsArr.slice((i * arraySize), (i * arraySize) + arraySize);
+    }
+    this._totalPages = this._splittedArray.length;
+    this._currentPage = 1;
+    if (this._totalPages > this._currentPage) {
+      if (this._config.settings.loadBy === 'scroll') {
+        window.addEventListener('scroll', this._loadMoreByScroll);
+      }
+      if (this._config.settings.loadBy === 'button') {
+        this._loadMoreBtn.classList.remove('hidden');
+      }
     }
   };
 
@@ -67,17 +71,33 @@ export class CardsBlock {
     const containerRelativeBottom = this._container.getBoundingClientRect().bottom;
     const windowHeight = document.documentElement.clientHeight;
     if (containerRelativeBottom < windowHeight + 100) {
-      if (this._totalPages > this._pagesRendered) {
+      if (this._totalPages >= this._currentPage) {
         this._renderCards();
+        this._currentPage++;
       }
+    }
+  }
+
+  _loadMoreByBtn = () => {
+    this._currentPage++;
+    if (this._totalPages === this._currentPage) {
+      this._renderCards();
+      this._loadMoreBtn.classList.add('hidden');
+    }
+    if (this._totalPages > this._currentPage) {
+      this._renderCards();
     }
   }
 
   show = () => {
     this._wrapper.classList.remove('hidden');
-  };
+  }
 
   hide = () => {
     this._wrapper.classList.add('hidden');
-  };
+  }
+
+  _setEventListeners = () => {
+    this._loadMoreBtn.addEventListener('click', this._loadMoreByBtn);
+  }
 }

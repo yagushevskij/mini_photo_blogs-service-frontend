@@ -43,9 +43,10 @@ const config = {
       srvErr: 'Ошибка сервера при загрузке',
     },
     settings: {
-      itemsOnPage: 20,
-      total: 20,
+      itemsOnPage: 15,
+      total: 60,
       sortBy: 'likes',
+      loadBy: 'button',
     },
     gallery: {
       gapSize: 10, // Размер горизонтального и вертикального отступа между строками и столбцами, px

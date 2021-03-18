@@ -21,8 +21,8 @@ export class UserCardsBlock extends CardsBlock {
     }
   };
 
-  _create = () => {
-    super._create();
+  _render = () => {
+    super._render();
     this._renderCards();
   }
 
@@ -37,7 +37,7 @@ export class UserCardsBlock extends CardsBlock {
         const newArr = this._cardsArr.push(addedCard);
       }
     }
-    this.render({
+    this.create({
       authUser: this._authUser,
       cardsOwner: this._cardsOwner,
       cardsArr: this._cardsArr,

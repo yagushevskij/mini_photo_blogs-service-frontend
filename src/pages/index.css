@@ -16,6 +16,7 @@
 @import url(../blocks/loader/loader.css);
 @import url(../blocks/dropdown/dropdown.css);
 @import url(../blocks/info-message/info-message.css);
+@import url(../blocks/cards-wrapper/cards-wrapper.css);
 @import url(../blocks/hidden/hidden.css);
 
 body {

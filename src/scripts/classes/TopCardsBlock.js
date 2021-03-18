@@ -10,8 +10,8 @@ export class TopCardsBlock extends CardsBlock {
     this._renderCardList = renderCardList;
   }
 
-  _create = () => {
-    super._create();
+  _render = () => {
+    super._render();
     this._renderCards();
     this._setContainerStyle();
   };

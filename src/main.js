@@ -210,7 +210,7 @@ const renderUserPage = () => {
         headers: config.reqApiParams.getUserCards.headers,
       })
         .then((cards) => {
-          userCardsBlock.render({
+          userCardsBlock.create({
             authUser: user.data,
             cardsOwner: res,
             cardsArr: cards,
@@ -233,7 +233,7 @@ const renderMainPage = () => {
     headers: config.reqApiParams.getUserCards.headers,
   })
     .then((cards) => {
-      topCardsBlock.render({
+      topCardsBlock.create({
         authUser: user.data,
         cardsArr: cards,
       });
