@@ -11,12 +11,31 @@ export class Popup extends BaseComponent {
     this._container.classList.add('popup_is-opened');
     this._setHandlers();
     this._setEventListeners();
+    this._blockScroll();
   }
 
   _close() {
     this._container.classList.remove('popup_is-opened');
     this._removeEventListeners();
     this._view.remove();
+    this._unBlockScroll();
+  }
+
+  _blockScroll = () => {
+    const div = document.createElement('div');
+    div.style.overflowY = 'scroll';
+    div.style.width = '50px';
+    div.style.height = '50px';
+    document.body.append(div);
+    this._scrollWidth = div.offsetWidth - div.clientWidth;
+    div.remove();
+    document.body.setAttribute('style', `padding-right: ${this._scrollWidth}px`);
+    document.body.style.overflow = 'hidden';
+  }
+
+  _unBlockScroll = () => {
+    document.body.removeAttribute('style', `padding-right: ${this._scrollWidth}px`);
+    document.body.style.overflow = '';
   }
 
   _create() {
