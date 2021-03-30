@@ -5,6 +5,7 @@ import {
   profilePopupTemplate, cardPopupTemplate, avatarPopupTemplate, userBlockContainer,
   userMenuTemplate, userLinksTemplate, profileTemplate, userCardsWrapper,
   topCardsWrapper, topCardsContainer, imageCardTemplate, serverErrorPopupTemplate,
+  topUpTriangle,
 }
   from './scripts/constants/selectors';
 import {
@@ -30,6 +31,7 @@ import { User } from './scripts/classes/User';
 import { UserCardsBlock } from './scripts/classes/UserCardsBlock';
 import { TopCardsBlock } from './scripts/classes/TopCardsBlock';
 import { ErrorPopup } from './scripts/classes/ErrorPopup';
+import { TopUpBtn } from './scripts/classes/TopUpBtn';
 
 // Колбэки
 const sendApiRequest = (...args) => api.sendRequest(...args);
@@ -189,6 +191,7 @@ const isPageUserpage = () => {
   const userPageUrlregExp = new RegExp(config.userPageFeature.getUserPageUrlRegExp());
   return (userPageUrlregExp.test(config.userPageFeature.getUrlParams()));
 };
+const topUpBtn = new TopUpBtn(topUpTriangle);
 
 const renderUserPage = () => {
   const username = new RegExp(config.userPageFeature.getExtractNameRegExp())
@@ -260,11 +263,12 @@ user.setData()
   .finally(() => {
     renderPage();
   });
+topUpBtn.setEventListener();
 
 // Наполнение массива карточек для теста новых фич.
 // const formData = new FormData();
 // formData.append('name', 'ololo');
-// formData.append('link', 'https://sebweo.com/wp-content/uploads/2019/06/landshaft-bernskikh-alp-v-yasniy-den_thumb.jpg');
+// formData.append('link', 'https://www.imgonline.com.ua/examples/bee-on-daisy.jpg');
 // const timerId = () => setInterval(() => sendCardToApi(formData), 7000);
 // timerId();
 

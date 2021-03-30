@@ -18,11 +18,12 @@ const cardPopupTemplate = document.querySelector('#card-popup');
 const avatarPopupTemplate = document.querySelector('#avatar-popup');
 const serverErrorPopupTemplate = document.querySelector('#server-error-popup');
 const userBlockContainer = document.querySelector('.header__user-container');
+const topUpTriangle = document.querySelector('.top-up-triangle');
 
 export {
   userCardsWrapper, userCardsContainer, popupContainer, userCardTemplate, profileContainer,
   loaderTemplate, signupPopupTemplate, imageCardTemplate,
   signinPopupTemplate, imagePopupTemplate, profilePopupTemplate, cardPopupTemplate,
   avatarPopupTemplate, userBlockContainer, userMenuTemplate, userLinksTemplate, profileTemplate,
-  topCardsWrapper, topCardsContainer, serverErrorPopupTemplate,
+  topCardsWrapper, topCardsContainer, serverErrorPopupTemplate, topUpTriangle,
 };

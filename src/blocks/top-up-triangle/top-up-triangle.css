@@ -1,0 +1,7 @@
+.top-up-triangle {
+  position: fixed;
+  right: 50px;
+  bottom: 50px;
+  border: 15px solid transparent;
+  border-bottom: 20px solid blue;
+ }
