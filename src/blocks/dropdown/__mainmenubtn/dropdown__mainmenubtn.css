@@ -1,10 +1,5 @@
 .dropdown__mainmenubtn {
   position: relative;
-  width: 60px;
-  height: 60px;
-  object-fit: cover;
-  cursor: pointer;
-  border-radius: 50%;
 }
 
 .dropdown__mainmenubtn::after {

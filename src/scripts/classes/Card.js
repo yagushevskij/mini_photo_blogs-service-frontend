@@ -41,7 +41,7 @@ export class Card extends BaseComponent {
 
   _hasOwnLike = () => {
     if (this._userId) {
-      return this._item.likes.some(item => item === this._userId);
+      return this._item.likes.some((item) => item === this._userId);
     }
     return false;
   };

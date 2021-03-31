@@ -7,7 +7,8 @@ export class Api {
     const { url, method, headers } = objParams;
     try {
       const res = await fetch(url, {
-        method, headers,
+        method,
+        headers,
         body: formData,
         credentials: 'include',
       });
@@ -19,10 +20,10 @@ export class Api {
         const errMessage = data.message;
         return Promise.reject(errMessage);
       }
-      return Promise.reject(this._errMessages.srvErr)
+      return Promise.reject(this._errMessages.srvErr);
     } catch (err) {
       console.log(err);
-      return Promise.reject(this._errMessages.srvConnectErr)
+      return Promise.reject(this._errMessages.srvConnectErr);
     }
   }
 }

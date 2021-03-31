@@ -77,7 +77,6 @@ export class UserInfo extends BaseComponent {
       ];
       this._setEventListeners();
     }
-    return this._view;
   }
 
   _hideLoader = () => {

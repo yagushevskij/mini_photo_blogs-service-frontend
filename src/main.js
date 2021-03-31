@@ -199,8 +199,14 @@ const topCardsBlock = new TopCardsBlock({
   wrapper: topCardsWrapper,
   config: config.topCards,
 });
-const userMenu = new UserMenu(userMenuTemplate, userLinksTemplate,
-  openSignupPopup, openSigninPopup, signout);
+const userMenu = new UserMenu({
+  userMenuTemplate,
+  userLinksTemplate,
+  openSignupPopup,
+  openSigninPopup,
+  signout,
+  renderAsyncImage,
+});
 const loader = new Loader(getElementFromTemp(loaderTemplate));
 const isPageUserpage = () => {
   const userPageUrlregExp = new RegExp(config.userPageFeature.getUserPageUrlRegExp());
