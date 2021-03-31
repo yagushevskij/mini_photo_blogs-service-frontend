@@ -72,7 +72,6 @@ export class UserMenu extends BaseComponent {
   };
 
   _updateAvatar = () => {
-    // this._imgBtnElem.src = this._userData.avatar;
     this._renderAsyncImage({
       url: this._userData.avatar,
       element: this._imgBtnElem,
