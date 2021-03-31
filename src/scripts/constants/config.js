@@ -35,6 +35,10 @@ const config = {
       sortBy: 'date',
       loadBy: 'scroll',
     },
+    card: {
+      errThumbUrl: 'http://placehold.it/200x400',
+      errLoadMsg(url) { return `Невозможно загрузить картинку по адресу: ${url}`; },
+    },
   },
   topCards: {
     title: {
@@ -47,6 +51,10 @@ const config = {
       total: 60,
       sortBy: 'likes',
       loadBy: 'button',
+    },
+    card: {
+      errThumbUrl: 'http://placehold.it/200x400',
+      errLoadMsg(url) { return `Невозможно загрузить картинку по адресу: ${url}`; },
     },
     gallery: {
       gapSize: 10, // Размер горизонтального и вертикального отступа между строками и столбцами, px

@@ -1,17 +1,20 @@
 import { BaseComponent } from './BaseComponent';
 
 export class Card extends BaseComponent {
-
-  constructor(callbacks){
+  constructor(callbacks) {
     super();
-    const { openImagePopup, addLikeRequest, removeLikeRequest, removeCardRequest, updateCardsBlock, getUserPageUrl } = callbacks;
+    const {
+      openImagePopup, addLikeRequest, removeLikeRequest, removeCardRequest, updateCardsBlock,
+      getUserPageUrl, config,
+    } = callbacks;
     this._openImagePopup = openImagePopup;
     this._addLikeRequest = addLikeRequest;
     this._removeLikeRequest = removeLikeRequest;
     this._removeCardRequest = removeCardRequest;
     this._updateCardsBlock = updateCardsBlock;
     this._getUserPageUrl = getUserPageUrl;
-  };
+    this._config = config;
+  }
 
   _like = (event) => {
     event.preventDefault();
@@ -42,7 +45,8 @@ export class Card extends BaseComponent {
     return false;
   };
 
-  _isOwner = () => (this._item.owner._id || this._item.owner) === this._userId; //В зависимости от типа запроса с сервера приходят данные владельца в разных свойствах;
+  // В зависимости от типа запроса с сервера приходят данные владельца в разных свойствах;
+  _isOwner = () => (this._item.owner._id || this._item.owner) === this._userId;
 
   _remove = (event) => {
     event.preventDefault();
@@ -50,7 +54,7 @@ export class Card extends BaseComponent {
       .then(() => {
         this._removeEventListeners();
         this._view.remove();
-        this._updateCardsBlock({removedCard: this._item})
+        this._updateCardsBlock({ removedCard: this._item });
       })
       .catch((err) => {
         console.log(err);
@@ -66,7 +70,7 @@ export class Card extends BaseComponent {
 
   create = (params, item) => {
     const { view, userData } = params;
-    this._userId = (userData && Object.keys(userData).length != 0) ? userData._id : null;
+    this._userId = (userData && Object.keys(userData).length !== 0) ? userData._id : null;
     this._item = item;
     this._view = view;
     try {
@@ -91,8 +95,12 @@ export class Card extends BaseComponent {
       this._view.name.textContent = this._item.name;
     }
     if (this._view.imgContent) {
-      this._view.imgContent.src = this._item.files.preview.link;
-      this._view.imgContent.onload = this._imageLoadCallback;
+      this._createAsyncImage()
+        .then(() => {
+          this._isImageLoaded() ? this._setBackgroundImage() : this._setDefaultImage();
+        })
+        .catch(() => this._setDefaultImage())
+        .finally(() => this._hideLoadWrapper());
     }
     if (this._view.userLink) {
       const userPageUrl = this._getUserPageUrl(this._item.owner.username);
@@ -108,9 +116,36 @@ export class Card extends BaseComponent {
     return this._view;
   };
 
-  _imageLoadCallback = () => {
+  _createAsyncImage = () => new Promise((resolve, reject) => {
+    this._img = new Image();
+    this._img.onload = () => resolve(this._img);
+    this._img.onerror = () => reject(
+      new Error(this._config.errLoadMsg(this._item.files.preview.link)),
+    );
+    this._img.src = this._item.files.preview.link;
+  });
+
+  _isImageLoaded = () => {
+    if (!this._img.complete) {
+      return false;
+    }
+    if (this._img.naturalWidth + this._img.naturalHeight === 0) {
+      return false;
+    }
+    return true;
+  }
+
+  _hideLoadWrapper = () => {
     const loadWrapper = this._view.querySelector('.load-wraper');
     loadWrapper.classList.add('hidden');
+  }
+
+  _setDefaultImage = () => {
+    this._view.imgContent.src = this._config.errThumbUrl;
+  }
+
+  _setBackgroundImage = () => {
+    this._view.imgContent.src = this._item.files.preview.link;
   }
 
   _open = (event) => {
@@ -118,21 +153,23 @@ export class Card extends BaseComponent {
       || event.target === this._view.img)) this._openImagePopup(this._item.files.content.link);
   };
 
-  _setHandlers = () => this._handlersArr = [
-    {
-      element: this._view.img,
-      event: 'click',
-      callbacks: [this._open],
-    },
-    {
-      element: this._view.likeIcon,
-      event: 'click',
-      callbacks: [this._like],
-    },
-    {
-      element: this._view.removeIcon,
-      event: 'click',
-      callbacks: [this._handleRemove],
-    },
-  ]
+  _setHandlers = () => {
+    this._handlersArr = [
+      {
+        element: this._view.img,
+        event: 'click',
+        callbacks: [this._open],
+      },
+      {
+        element: this._view.likeIcon,
+        event: 'click',
+        callbacks: [this._like],
+      },
+      {
+        element: this._view.removeIcon,
+        event: 'click',
+        callbacks: [this._handleRemove],
+      },
+    ];
+  }
 }
