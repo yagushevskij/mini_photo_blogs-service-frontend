@@ -2,7 +2,7 @@ import { BaseComponent } from './BaseComponent';
 
 export class UserMenu extends BaseComponent {
   constructor({
-    userMenuTemplate, userLinksTemplate, signup, signin, signout, renderAsyncImage,
+    userMenuTemplate, userLinksTemplate, signup, signin, signout, renderAsyncImage, config,
   }) {
     super();
     this.userMenuTemplate = userMenuTemplate;
@@ -11,6 +11,7 @@ export class UserMenu extends BaseComponent {
     this._signin = signin;
     this._signout = signout;
     this._renderAsyncImage = renderAsyncImage;
+    this._config = config;
   }
 
   create = (userData) => {
@@ -71,7 +72,13 @@ export class UserMenu extends BaseComponent {
   };
 
   _updateAvatar = () => {
-    this._imgBtnElem.src = this._userData.avatar;
+    // this._imgBtnElem.src = this._userData.avatar;
+    this._renderAsyncImage({
+      url: this._userData.avatar,
+      element: this._imgBtnElem,
+      config: this._config,
+      callbacks: [this._hideLoader],
+    });
   };
 
   _isUserDataExist = () => ((this._userData) ? Object.keys(this._userData).length !== 0 : false);
@@ -83,4 +90,9 @@ export class UserMenu extends BaseComponent {
   _close = () => {
     this._menuElem.classList.remove('dropdown__child_is-visible');
   };
+
+  _hideLoader = () => {
+    const loader = this._view.querySelector('.load-wraper');
+    loader.classList.add('hidden');
+  }
 }

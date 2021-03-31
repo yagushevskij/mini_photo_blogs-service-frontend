@@ -206,6 +206,7 @@ const userMenu = new UserMenu({
   openSigninPopup,
   signout,
   renderAsyncImage,
+  config: config.userMenu,
 });
 const loader = new Loader(getElementFromTemp(loaderTemplate));
 const isPageUserpage = () => {
