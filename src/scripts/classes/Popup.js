@@ -4,9 +4,9 @@ export class Popup extends BaseComponent {
   open = (data) => {
     this._data = data;
     this._create();
-    if (Object.prototype.hasOwnProperty.call(this, 'updateInformation') && (data)) {
+    if (Object.prototype.hasOwnProperty.call(this, '_updateInformation') && (data)) {
       // Если у попапа есть свойство для обновления данных в полях и эти данные пришли;
-      this.updateInformation(data);
+      this._updateInformation();
     }
     this._setHandlers();
     this._setEventListeners();

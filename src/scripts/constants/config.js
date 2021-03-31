@@ -167,5 +167,9 @@ const config = {
     errThumbUrl: 'http://placehold.it/640x480',
     errLoadMsg(url) { return `Невозможно загрузить картинку по адресу: ${url}`; },
   },
+  avatar: {
+    errThumbUrl: 'http://placehold.it/100x100',
+    errLoadMsg(url) { return `Невозможно загрузить картинку по адресу: ${url}`; },
+  },
 };
 export { config, MAIN_URL };

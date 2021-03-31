@@ -20,13 +20,13 @@ export class ImagePopup extends Popup {
       url: this._data,
       element: imgElem,
       config: this._config,
-      callbacks: [this._render, this._hideLoader],
+      callbacks: [this._render, this._toggleLoader],
     });
   }
 
-  _hideLoader = () => {
+  _toggleLoader = () => {
     const loader = this._container.querySelector('.loader');
-    loader.classList.add('hidden');
+    loader.classList.toggle('hidden');
   }
 
   _render = () => {

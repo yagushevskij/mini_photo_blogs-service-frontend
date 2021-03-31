@@ -1,4 +1,5 @@
 @import url(./__avatar/user-info__avatar.css);
+@import url(./__avatar-content/user-info__avatar-content.css);
 @import url(./__data/user-info__data.css);
 @import url(./__name/user-info__name.css);
 @import url(./__job/user-info__job.css);

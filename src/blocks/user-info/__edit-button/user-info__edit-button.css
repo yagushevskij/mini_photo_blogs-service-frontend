@@ -1,7 +1,4 @@
-@import url('./_is-visible/user-info__edit-button_is-visible.css');
-
 .user-info__edit-button {
-  display: none;
   font-size: 12px;
   line-height: 15px;
   width: 38px;

@@ -202,13 +202,18 @@
 
     <template id="user-profile">
       <div class="user-info">
-        <div class="user-info__avatar"></div>
+        <div class="user-info__avatar">
+          <div class="load-wraper">
+            <div class="load-wraper__activity"></div>
+          </div>
+          <img src="" class="user-info__avatar-content">
+        </div>
         <div class="user-info__data">
           <h1 class="user-info__name"></h1>
           <p class="user-info__about"></p>
-          <button class="button user-info__edit-button">Edit</button>
+          <button class="button user-info__edit-button hidden">Edit</button>
         </div>
-        <button class="button user-info__button">+</button>
+        <button class="button user-info__button hidden">+</button>
       </div>
     </template>
 

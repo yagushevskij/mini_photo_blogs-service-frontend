@@ -18,10 +18,10 @@ export class ProfilePopup extends FormPopup {
     this._updateUserMenu = updateUserMenu;
   }
 
-  updateInformation = (userData) => {
+  _updateInformation = () => {
     Array.from(this._view.querySelectorAll('.popup__input')).forEach((elem) => {
       const input = elem;
-      input.value = userData[elem.name];
+      input.value = this._data[elem.name];
     });
   }
 

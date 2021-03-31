@@ -124,7 +124,7 @@ const openProfilePopup = () => new ProfilePopup({
   setServerError,
   updateUserInfo,
   updateUserMenu,
-}).open(user.data);
+}).open(userInfo.data);
 const openSignupPopup = () => new SignupPopup({
   template: signupPopupTemplate,
   container: popupContainer,
@@ -168,8 +168,15 @@ const api = new Api(config);
 const user = new User(getUserInfoFromApi, getUserPageUrl);
 const header = new Header(userBlockContainer);
 const formValidator = new FormValidator(config.text, config.fileExtensions);
-const userInfo = new UserInfo(profileContainer, profileTemplate, openCardPopup, openAvatarPopup,
-  openProfilePopup, ['name', 'about'], renderAsyncImage);
+const userInfo = new UserInfo({
+  container: profileContainer,
+  template: profileTemplate,
+  config: config.avatar,
+  openCardPopup,
+  openAvatarPopup,
+  openProfilePopup,
+  renderAsyncImage,
+});
 const userCardList = new CardList({
   createCard: createUserCard,
   updateCardsBlock: updateUserCardsBlock,
@@ -211,7 +218,10 @@ const renderUserPage = () => {
     headers: config.reqApiParams.getUserInfo.headers,
   })
     .then((res) => {
-      userInfo.render(user.data, res);
+      userInfo.render({
+        data: res,
+        isUserPageOwner: res._id === user.data._id,
+      });
       return res;
     })
     .then((res) => {

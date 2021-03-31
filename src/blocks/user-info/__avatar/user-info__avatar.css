@@ -3,8 +3,9 @@
   height: 150px;
   min-width: 150px;
   border-radius: 50%;
-  background-size: cover;
-  background-position: center;
+  object-fit: cover;
+  object-position: center;
+  overflow: hidden;
 }
 
 @media screen and (max-width: 980px) {
