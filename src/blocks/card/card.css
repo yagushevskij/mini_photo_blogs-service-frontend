@@ -1,4 +1,5 @@
 @import url(./_type/card_type_user-card.css);
+@import url(./_type/card_type_top-card.css);
 @import url(./__image/card__image.css);
 @import url(./__delete-icon/card__delete-icon.css);
 @import url(./__description/card__description.css);
@@ -8,6 +9,7 @@
 @import url(./__like-counter/card__like-counter.css);
 @import url(./__username/card__username.css);
 @import url(./__username-link/card__username-link.css);
+@import url(./__image-content/card__image-content.css);
 
 .card {
     

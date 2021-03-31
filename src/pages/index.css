@@ -18,6 +18,7 @@
 @import url(../blocks/info-message/info-message.css);
 @import url(../blocks/cards-wrapper/cards-wrapper.css);
 @import url(../blocks/top-up-triangle/top-up-triangle.css);
+@import url(../blocks/load-wraper/load-wraper.css);
 @import url(../blocks/hidden/hidden.css);
 
 body {

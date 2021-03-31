@@ -71,7 +71,8 @@ export class Card extends BaseComponent {
     this._view = view;
     try {
       this._view.likedIconClassName = 'card__like-icon_liked';
-      this._view.img = this._view.querySelector('.card__image'); 
+      this._view.img = this._view.querySelector('.card__image');
+      this._view.imgContent = this._view.querySelector('.card__image-content');
       this._view.likeIcon = this._view.querySelector('.card__like-icon');
       this._view.likeCount = this._view.querySelector('.card__like-counter');
       this._view.removeIcon = this._view.querySelector('.card__delete-icon');
@@ -89,13 +90,14 @@ export class Card extends BaseComponent {
     if (this._view.name) {
       this._view.name.textContent = this._item.name;
     }
-    if (this._view.img) {
-      this._view.img.setAttribute('style', `background-image: url(${this._item.files.preview.link})`);
+    if (this._view.imgContent) {
+      this._view.imgContent.src = this._item.files.preview.link;
+      this._view.imgContent.onload = this._imageLoadCallback;
     }
     if (this._view.userLink) {
       const userPageUrl = this._getUserPageUrl(this._item.owner.username);
       this._view.userLink.textContent = this._item.owner.name;
-      this._view.userLink.setAttribute('href', userPageUrl)
+      this._view.userLink.setAttribute('href', userPageUrl);
     }
     this._view.dataset.id = this._item._id;
     this._view.dataset.width = this._item.files.content.dimension.width;
@@ -106,9 +108,14 @@ export class Card extends BaseComponent {
     return this._view;
   };
 
+  _imageLoadCallback = () => {
+    const loadWrapper = this._view.querySelector('.load-wraper');
+    loadWrapper.classList.add('hidden');
+  }
+
   _open = (event) => {
-    if (event.defaultPrevented || event.target !== this._view.img) return;
-    this._openImagePopup(this._item.files.content.link);
+    if (!event.defaultPrevented && (event.target === this._view.imgContent
+      || event.target === this._view.img)) this._openImagePopup(this._item.files.content.link);
   };
 
   _setHandlers = () => this._handlersArr = [
