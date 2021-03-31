@@ -5,7 +5,7 @@ export class Card extends BaseComponent {
     super();
     const {
       openImagePopup, addLikeRequest, removeLikeRequest, removeCardRequest, updateCardsBlock,
-      getUserPageUrl, config,
+      getUserPageUrl, config, renderAsyncImage,
     } = callbacks;
     this._openImagePopup = openImagePopup;
     this._addLikeRequest = addLikeRequest;
@@ -14,6 +14,7 @@ export class Card extends BaseComponent {
     this._updateCardsBlock = updateCardsBlock;
     this._getUserPageUrl = getUserPageUrl;
     this._config = config;
+    this._renderAsyncImage = renderAsyncImage;
   }
 
   _like = (event) => {
@@ -76,7 +77,7 @@ export class Card extends BaseComponent {
     try {
       this._view.likedIconClassName = 'card__like-icon_liked';
       this._view.img = this._view.querySelector('.card__image');
-      this._view.imgContent = this._view.querySelector('.card__image-content');
+      this._view.imgElem = this._view.querySelector('.card__image-content');
       this._view.likeIcon = this._view.querySelector('.card__like-icon');
       this._view.likeCount = this._view.querySelector('.card__like-counter');
       this._view.removeIcon = this._view.querySelector('.card__delete-icon');
@@ -94,13 +95,13 @@ export class Card extends BaseComponent {
     if (this._view.name) {
       this._view.name.textContent = this._item.name;
     }
-    if (this._view.imgContent) {
-      this._createAsyncImage()
-        .then(() => {
-          this._isImageLoaded() ? this._setBackgroundImage() : this._setDefaultImage();
-        })
-        .catch(() => this._setDefaultImage())
-        .finally(() => this._hideLoadWrapper());
+    if (this._view.imgElem) {
+      this._renderAsyncImage({
+        url: this._item.files.preview.link,
+        element: this._view.imgElem,
+        config: this._config,
+        callbacks: [this._hideLoader],
+      });
     }
     if (this._view.userLink) {
       const userPageUrl = this._getUserPageUrl(this._item.owner.username);
@@ -116,42 +117,15 @@ export class Card extends BaseComponent {
     return this._view;
   };
 
-  _createAsyncImage = () => new Promise((resolve, reject) => {
-    this._img = new Image();
-    this._img.onload = () => resolve(this._img);
-    this._img.onerror = () => reject(
-      new Error(this._config.errLoadMsg(this._item.files.preview.link)),
-    );
-    this._img.src = this._item.files.preview.link;
-  });
-
-  _isImageLoaded = () => {
-    if (!this._img.complete) {
-      return false;
-    }
-    if (this._img.naturalWidth + this._img.naturalHeight === 0) {
-      return false;
-    }
-    return true;
-  }
-
-  _hideLoadWrapper = () => {
-    const loadWrapper = this._view.querySelector('.load-wraper');
-    loadWrapper.classList.add('hidden');
-  }
-
-  _setDefaultImage = () => {
-    this._view.imgContent.src = this._config.errThumbUrl;
-  }
-
-  _setBackgroundImage = () => {
-    this._view.imgContent.src = this._item.files.preview.link;
-  }
-
   _open = (event) => {
-    if (!event.defaultPrevented && (event.target === this._view.imgContent
+    if (!event.defaultPrevented && (event.target === this._view.imgElem
       || event.target === this._view.img)) this._openImagePopup(this._item.files.content.link);
   };
+
+  _hideLoader = () => {
+    const loader = this._view.querySelector('.load-wraper');
+    loader.classList.add('hidden');
+  }
 
   _setHandlers = () => {
     this._handlersArr = [

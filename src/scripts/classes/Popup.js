@@ -40,7 +40,6 @@ export class Popup extends BaseComponent {
 
   _create() {
     this._view = this._template.content.cloneNode(true).children[0];
-    // this._container.append(this._view);
   }
 
   _setHandlers() {

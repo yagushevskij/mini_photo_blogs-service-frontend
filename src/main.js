@@ -32,6 +32,7 @@ import { UserCardsBlock } from './scripts/classes/UserCardsBlock';
 import { TopCardsBlock } from './scripts/classes/TopCardsBlock';
 import { ErrorPopup } from './scripts/classes/ErrorPopup';
 import { TopUpBtn } from './scripts/classes/TopUpBtn';
+import { AsyncImage } from './scripts/classes/AsyncImage';
 
 // Колбэки
 const sendApiRequest = (...args) => api.sendRequest(...args);
@@ -63,6 +64,7 @@ const createUserCard = (...args) => new Card({
   addLikeRequest,
   removeLikeRequest,
   removeCardRequest,
+  renderAsyncImage,
   updateCardsBlock: updateUserCardsBlock,
   config: config.userCards.card,
 }).create({
@@ -75,6 +77,7 @@ const createImageCard = (...args) => new Card({
   removeLikeRequest,
   removeCardRequest,
   getUserPageUrl,
+  renderAsyncImage,
   config: config.topCards.card,
 }).create({
   view: getElementFromTemp(imageCardTemplate),
@@ -89,6 +92,7 @@ const openImagePopup = (...args) => new ImagePopup({
   template: imagePopupTemplate,
   container: popupContainer,
   config: config.imagePopup,
+  renderAsyncImage,
 })
   .open(...args);
 const openCardPopup = () => new CardPopup({
@@ -149,6 +153,7 @@ const signout = () => {
     })
     .catch((err) => console.log(err));
 };
+const renderAsyncImage = (...args) => new AsyncImage().render(...args);
 
 const sendCardToApi = (...args) => api.sendRequest(config.reqApiParams.addCard, ...args);
 const uploadCard = (...args) => api.sendRequest(config.reqApiParams.upload, ...args);
@@ -164,7 +169,7 @@ const user = new User(getUserInfoFromApi, getUserPageUrl);
 const header = new Header(userBlockContainer);
 const formValidator = new FormValidator(config.text, config.fileExtensions);
 const userInfo = new UserInfo(profileContainer, profileTemplate, openCardPopup, openAvatarPopup,
-  openProfilePopup, ['name', 'about']);
+  openProfilePopup, ['name', 'about'], renderAsyncImage);
 const userCardList = new CardList({
   createCard: createUserCard,
   updateCardsBlock: updateUserCardsBlock,
