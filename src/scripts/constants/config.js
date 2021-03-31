@@ -163,5 +163,9 @@ const config = {
   fileExtensions: {
     picture: ['.jpg', 'jpeg', '.png', '.gif'],
   },
+  imagePopup: {
+    errThumbUrl: 'http://placehold.it/640x480',
+    errLoadMsg(url) { return `Невозможно загрузить картинку по адресу: ${url}`; },
+  },
 };
 export { config, MAIN_URL };

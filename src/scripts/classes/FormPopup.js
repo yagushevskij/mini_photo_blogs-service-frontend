@@ -5,6 +5,7 @@ export class FormPopup extends Popup {
     super._create();
     const form = this._view.querySelector('.popup__form');
     this._setValidateListeners(form);
+    this._container.append(this._view);
   }
 
   _close = () => {

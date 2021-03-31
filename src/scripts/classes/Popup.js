@@ -8,10 +8,10 @@ export class Popup extends BaseComponent {
       // Если у попапа есть свойство для обновления данных в полях и эти данные пришли;
       this.updateInformation(data);
     }
-    this._container.classList.add('popup_is-opened');
     this._setHandlers();
     this._setEventListeners();
     this._blockScroll();
+    this._container.classList.add('popup_is-opened');
   }
 
   _close() {
@@ -40,7 +40,7 @@ export class Popup extends BaseComponent {
 
   _create() {
     this._view = this._template.content.cloneNode(true).children[0];
-    this._container.append(this._view);
+    // this._container.append(this._view);
   }
 
   _setHandlers() {

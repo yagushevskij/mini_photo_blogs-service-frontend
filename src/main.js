@@ -64,6 +64,7 @@ const createUserCard = (...args) => new Card({
   removeLikeRequest,
   removeCardRequest,
   updateCardsBlock: updateUserCardsBlock,
+  config: config.userCards.card,
 }).create({
   view: getElementFromTemp(userCardTemplate),
   userData: user.data,
@@ -74,6 +75,7 @@ const createImageCard = (...args) => new Card({
   removeLikeRequest,
   removeCardRequest,
   getUserPageUrl,
+  config: config.topCards.card,
 }).create({
   view: getElementFromTemp(imageCardTemplate),
   userData: user.data,
@@ -86,6 +88,7 @@ const openErrorPopup = (...args) => new ErrorPopup({
 const openImagePopup = (...args) => new ImagePopup({
   template: imagePopupTemplate,
   container: popupContainer,
+  config: config.imagePopup,
 })
   .open(...args);
 const openCardPopup = () => new CardPopup({
