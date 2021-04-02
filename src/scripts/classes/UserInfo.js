@@ -38,15 +38,10 @@ export class UserInfo extends BaseComponent {
   render = (params) => {
     const { data, isUserPageOwner } = params;
     this.isUserPageOwner = isUserPageOwner;
-    this._clearContainer();
     this.data = data;
     this._create();
     this._setUserInfo();
     this._container.appendChild(this._view);
-  }
-
-  _clearContainer = () => {
-    this._container.textContent = '';
   }
 
   _create = () => {

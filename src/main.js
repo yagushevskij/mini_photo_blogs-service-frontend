@@ -1,15 +1,14 @@
 import './pages/index.css';
 import {
-  userCardsContainer, popupContainer, userCardTemplate, profileContainer, loaderTemplate,
-  signupPopupTemplate, signinPopupTemplate, imagePopupTemplate,
+  popupContainer, userCardTemplate, circleLoaderTemplate, headerContainer,
+  signupPopupTemplate, signinPopupTemplate, imagePopupTemplate, mainContentContainer,
   profilePopupTemplate, cardPopupTemplate, avatarPopupTemplate, userBlockContainer,
-  userMenuTemplate, userLinksTemplate, profileTemplate, userCardsWrapper,
-  topCardsWrapper, topCardsContainer, imageCardTemplate, serverErrorPopupTemplate,
+  userMenuTemplate, userLinksTemplate, profileTemplate, imageCardTemplate, serverErrorPopupTemplate,
   topUpTriangle,
 }
   from './scripts/constants/selectors';
 import {
-  getElementFromTemp, getUserPageUrl,
+  getElementFromTemp, getUserPageUrl, clearContainer,
 } from './scripts/utils';
 
 import { config } from './scripts/constants/config';
@@ -155,70 +154,9 @@ const signout = () => {
 };
 const renderAsyncImage = (...args) => new AsyncImage().render(...args);
 
-const sendCardToApi = (...args) => api.sendRequest(config.reqApiParams.addCard, ...args);
-const uploadCard = (...args) => api.sendRequest(config.reqApiParams.upload, ...args);
-const sendRegDataToApi = (...args) => api.sendRequest(config.reqApiParams.signup, ...args);
-const sendAuthDataToApi = (...args) => api.sendRequest(config.reqApiParams.signin, ...args);
-const sendAvatarDataToApi = (...args) => api.sendRequest(config.reqApiParams.changeAvatar,
-  ...args);
-const sendUserDataToApi = (...args) => api.sendRequest(config.reqApiParams.changeUserInfo,
-  ...args);
-
-const api = new Api(config);
-const user = new User(getUserInfoFromApi, getUserPageUrl);
-const header = new Header(userBlockContainer);
-const formValidator = new FormValidator(config.text, config.fileExtensions);
-const userInfo = new UserInfo({
-  container: profileContainer,
-  template: profileTemplate,
-  config: config.avatar,
-  openCardPopup,
-  openAvatarPopup,
-  openProfilePopup,
-  renderAsyncImage,
-});
-const userCardList = new CardList({
-  createCard: createUserCard,
-  updateCardsBlock: updateUserCardsBlock,
-  container: userCardsContainer,
-});
-const topCardList = new CardList({
-  createCard: createImageCard,
-  updateCardsBlock: updateUserCardsBlock,
-  container: topCardsContainer,
-});
-const userCardsBlock = new UserCardsBlock({
-  renderCardList: userCardList.render,
-  container: userCardsContainer,
-  wrapper: userCardsWrapper,
-  config: config.userCards,
-});
-const topCardsBlock = new TopCardsBlock({
-  renderCardList: topCardList.render,
-  container: topCardsContainer,
-  wrapper: topCardsWrapper,
-  config: config.topCards,
-});
-const userMenu = new UserMenu({
-  userMenuTemplate,
-  userLinksTemplate,
-  openSignupPopup,
-  openSigninPopup,
-  signout,
-  renderAsyncImage,
-  config: config.userMenu,
-});
-const loader = new Loader(getElementFromTemp(loaderTemplate));
-const isPageUserpage = () => {
-  const userPageUrlregExp = new RegExp(config.userPageFeature.getUserPageUrlRegExp());
-  return (userPageUrlregExp.test(config.userPageFeature.getUrlParams()));
-};
-const topUpBtn = new TopUpBtn(topUpTriangle);
-
-const renderUserPage = () => {
-  const username = new RegExp(config.userPageFeature.getExtractNameRegExp())
-    .exec(config.userPageFeature.getUrlParams())[1];
-  loader.show(userCardsWrapper);
+const renderUserPage = (username) => {
+  clearContainer(mainContentContainer);
+  circleLoader.show(mainContentContainer);
   api.sendRequest({
     url: config.reqApiParams.getUserInfo.url + username,
     method: config.reqApiParams.getUserInfo.method,
@@ -245,7 +183,7 @@ const renderUserPage = () => {
           });
         })
         .catch((err) => console.log(err))
-        .finally(() => loader.hide());
+        .finally(() => circleLoader.hide());
     })
     .catch((err) => {
       openErrorPopup(config.text.errors.apiErr);
@@ -254,7 +192,8 @@ const renderUserPage = () => {
 };
 
 const renderMainPage = () => {
-  loader.show(topCardsWrapper);
+  clearContainer(mainContentContainer);
+  circleLoader.show(mainContentContainer);
   api.sendRequest({
     url: config.reqApiParams.getAllUsersCards.url,
     method: config.reqApiParams.getAllUsersCards.method,
@@ -270,22 +209,90 @@ const renderMainPage = () => {
       openErrorPopup(config.text.errors.apiErr);
       console.log(err);
     })
-    .finally(() => loader.hide());
+    .finally(() => circleLoader.hide());
 };
+
+const sendCardToApi = (...args) => api.sendRequest(config.reqApiParams.addCard, ...args);
+const uploadCard = (...args) => api.sendRequest(config.reqApiParams.upload, ...args);
+const sendRegDataToApi = (...args) => api.sendRequest(config.reqApiParams.signup, ...args);
+const sendAuthDataToApi = (...args) => api.sendRequest(config.reqApiParams.signin, ...args);
+const sendAvatarDataToApi = (...args) => api.sendRequest(config.reqApiParams.changeAvatar,
+  ...args);
+const sendUserDataToApi = (...args) => api.sendRequest(config.reqApiParams.changeUserInfo,
+  ...args);
+
+const api = new Api(config);
+const user = new User(getUserInfoFromApi, getUserPageUrl);
+const header = new Header({
+  container: headerContainer,
+  userBlockContainer,
+  renderMainPage,
+});
+const formValidator = new FormValidator(config.text, config.fileExtensions);
+const userInfo = new UserInfo({
+  container: mainContentContainer,
+  template: profileTemplate,
+  config: config.avatar,
+  openCardPopup,
+  openAvatarPopup,
+  openProfilePopup,
+  renderAsyncImage,
+});
+const userCardList = new CardList({
+  createCard: createUserCard,
+  updateCardsBlock: updateUserCardsBlock,
+});
+const topCardList = new CardList({
+  createCard: createImageCard,
+  updateCardsBlock: updateUserCardsBlock,
+});
+const userCardsBlock = new UserCardsBlock({
+  renderCardList: userCardList.render,
+  container: mainContentContainer,
+  config: config.userCards,
+});
+const topCardsBlock = new TopCardsBlock({
+  renderCardList: topCardList.render,
+  container: mainContentContainer,
+  config: config.topCards,
+});
+const userMenu = new UserMenu({
+  userMenuTemplate,
+  userLinksTemplate,
+  openSignupPopup,
+  openSigninPopup,
+  signout,
+  renderAsyncImage,
+  config: config.userMenu,
+  renderUserPage,
+});
+const circleLoader = new Loader(getElementFromTemp(circleLoaderTemplate));
+
+const isPageUserpage = () => {
+  const userPageUrlregExp = new RegExp(config.userPageFeature.getUserPageUrlRegExp());
+  return (userPageUrlregExp.test(config.userPageFeature.getUrlParams()));
+};
+const topUpBtn = new TopUpBtn(topUpTriangle);
 
 const renderPage = () => {
   const createdUserMenu = (user.data) ? userMenu.create(user.data) : userMenu.create();
   header.render(createdUserMenu);
   if (isPageUserpage()) {
-    renderUserPage();
+    const username = new RegExp(config.userPageFeature.getExtractNameRegExp())
+      .exec(config.userPageFeature.getUrlParams())[1];
+    renderUserPage(username);
   } else {
     renderMainPage();
   }
 };
 
+circleLoader.show(mainContentContainer);
 user.setData()
-  .catch((err) => console.log(err))
+  .catch((err) => {
+    console.log(err);
+  })
   .finally(() => {
+    circleLoader.hide();
     renderPage();
   });
 topUpBtn.setEventListener();

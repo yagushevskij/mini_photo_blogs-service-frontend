@@ -1,8 +1,7 @@
 export class CardList {
   constructor(params) {
-    const { createCard, container, updateCardsBlock } = params;
+    const { createCard, updateCardsBlock } = params;
     this._createCard = createCard;
-    this._container = container;
     this._updateCardsBlock = updateCardsBlock;
   }
 
@@ -16,7 +15,8 @@ export class CardList {
     this._container.appendChild(this._createCard(this._cardObj));
   }
 
-  render = (cardsArr) => {
+  render = ({ cards: cardsArr, container }) => {
+    this._container = container;
     this._cardsArr = cardsArr;
     cardsArr.forEach((cardObj) => {
       this._cardObj = cardObj;

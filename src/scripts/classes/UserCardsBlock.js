@@ -4,12 +4,16 @@ export class UserCardsBlock extends CardsBlock {
   constructor(params) {
     super();
     const {
-      wrapper, container, config, renderCardList,
+      container, config, renderCardList,
     } = params;
     this._container = container;
-    this._wrapper = wrapper;
     this._config = config;
     this._renderCardList = renderCardList;
+    this._markup = `<div class="cards-wrapper cards-wrapper_type_user-cards root__section">
+    <h2 class="root__title"></h2>
+    <div class="cards-list cards-list_type_user-cards"></div>
+    <button class="button cards-wrapper__button hidden">Показать еще</button>
+  </div>`;
   }
 
   _setTitle = () => {
@@ -24,8 +28,8 @@ export class UserCardsBlock extends CardsBlock {
   };
 
   _render = () => {
-    super._render();
     this._renderCards();
+    this._container.append(this._view);
   }
 
   update = (params) => {
@@ -36,9 +40,10 @@ export class UserCardsBlock extends CardsBlock {
         this._cardsArr.splice(index, 1);
       }
       if (addedCard) {
-        const newArr = this._cardsArr.push(addedCard);
+        this._cardsArr.push(addedCard);
       }
     }
+    this._view.remove();
     this.create({
       authUser: this._authUser,
       cardsOwner: this._cardsOwner,

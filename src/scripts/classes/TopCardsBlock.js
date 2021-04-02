@@ -4,18 +4,22 @@ export class TopCardsBlock extends CardsBlock {
   constructor(params) {
     super();
     const {
-      wrapper, container, config, renderCardList,
+      container, config, renderCardList,
     } = params;
     this._container = container;
-    this._wrapper = wrapper;
     this._config = config;
     this._renderCardList = renderCardList;
+    this._markup = `<div class="cards-wrapper cards-wrapper_type_top-cards root__section">
+    <h1 class="root__title"></h1>
+    <div class="cards-list cards-list_type_top-cards"></div>
+    <button class="button cards-wrapper__button hidden">Показать еще</button>
+  </div>`;
   }
 
   _render = () => {
-    super._render();
     this._renderCards();
     this._setContainerStyle();
+    this._container.append(this._view);
   };
 
   _renderCards = () => {
@@ -31,12 +35,12 @@ export class TopCardsBlock extends CardsBlock {
   }
 
   _setContainerStyle = () => {
-    this._container.setAttribute('style', `grid-template-columns:
+    this._cardsContainer.setAttribute('style', `grid-template-columns:
     repeat(auto-fill, ${this._config.gallery.cellSize}px); grid-auto-rows: ${this._config.gallery.cellSize}px; grid-gap: ${this._config.gallery.gapSize}px;`);
   };
 
   _setElemsSize = () => {
-    this._cardsCollection = this._container.childNodes;
+    this._cardsCollection = this._cardsContainer.childNodes;
     this._cardsCollection.forEach((domElement) => {
       this._domElement = domElement;
       this._likesCount = this._domElement.dataset.likes;

@@ -5,7 +5,6 @@ export class Loader {
 
     show = (container) => {
       container.append(this._element);
-      this._element.classList.remove('hidden');
     };
 
     hide = () => {

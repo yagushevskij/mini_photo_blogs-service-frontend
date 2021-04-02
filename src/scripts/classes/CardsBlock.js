@@ -6,28 +6,30 @@ export class CardsBlock {
     this._cardsOwner = (Object.keys(cardsOwner).length !== 0) ? cardsOwner : null;
     this._isCardsOwner = Boolean((this._authUser && this._cardsOwner)
       && (this._authUser._id === this._cardsOwner._id));
-    this._loadMoreBtn = this._wrapper.querySelector('.cards-wrapper__button');
-    this._clearContainer();
-    if (this._cardsArr.length > 0) {
-      this._sort();
-      this._setPagination();
-      this._render();
-    }
+    this._view = document.createElement('div');
+    this._view.insertAdjacentHTML('afterbegin', this._markup);
+    this._view = this._view.firstChild;
+    this._loadMoreBtn = this._view.querySelector('.cards-wrapper__button');
+    this._sort();
+    this._setPagination();
     this._setTitle();
     this._setEventListeners();
-    this.show();
+    this._render();
   };
 
-  _render() {
-    this._sort();
-  }
-
   _setTitle() {
-    this._title = this._wrapper.querySelector('.root__title');
+    this._title = this._view.querySelector('.root__title');
   }
 
   _renderCards() {
-    this._renderCardList(this._splittedArray[this._currentPage - 1]);
+    this._sort();
+    this._cardsContainer = this._view.querySelector('.cards-list');
+    if (this._splittedArray.length > 0) {
+      this._renderCardList({
+        cards: this._splittedArray[this._currentPage - 1],
+        container: this._cardsContainer,
+      });
+    }
   }
 
   toggleVisibility = () => {
@@ -43,10 +45,6 @@ export class CardsBlock {
     } else if (this._config.settings.sortBy === 'date') {
       this._cardsArr = this._cardsArr.sort(sortByDate);
     }
-  }
-
-  _clearContainer = () => {
-    this._container.textContent = '';
   }
 
   _setPagination = () => {
@@ -89,12 +87,8 @@ export class CardsBlock {
     }
   }
 
-  show = () => {
-    this._wrapper.classList.remove('hidden');
-  }
-
-  hide = () => {
-    this._wrapper.classList.add('hidden');
+  _clearCardsContainer = () => {
+    this._cardsContainer.textContent = '';
   }
 
   _setEventListeners = () => {

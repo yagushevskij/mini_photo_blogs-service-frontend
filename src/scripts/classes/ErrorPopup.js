@@ -11,6 +11,7 @@ export class ErrorPopup extends Popup {
   _create = () => {
     super._create();
     this._view.querySelector('.popup__description').textContent = this._data;
+    this._container.append(this._view);
   };
 
   _close = () => {

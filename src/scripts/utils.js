@@ -6,6 +6,10 @@ const getUserPageUrl = (userName) => (process.env.NODE_ENV === 'production'
   ? `${MAIN_URL}/${config.userPageFeature.path}/${userName}`
   : `${MAIN_URL}?${config.userPageFeature.path}=${userName}`);
 
+const clearContainer = (container) => {
+  container.textContent = '';
+};
+
 export {
-  getElementFromTemp, getUserPageUrl,
+  getElementFromTemp, getUserPageUrl, clearContainer,
 };

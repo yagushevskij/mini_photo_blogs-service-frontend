@@ -2,16 +2,18 @@ import { BaseComponent } from './BaseComponent';
 
 export class UserMenu extends BaseComponent {
   constructor({
-    userMenuTemplate, userLinksTemplate, signup, signin, signout, renderAsyncImage, config,
+    userMenuTemplate, userLinksTemplate, openSignupPopup, openSigninPopup, signout,
+    renderAsyncImage, config, renderUserPage,
   }) {
     super();
     this.userMenuTemplate = userMenuTemplate;
     this.userLinksTemplate = userLinksTemplate;
-    this._signup = signup;
-    this._signin = signin;
+    this._openSignupPopup = openSignupPopup;
+    this._openSigninPopup = openSigninPopup;
     this._signout = signout;
     this._renderAsyncImage = renderAsyncImage;
     this._config = config;
+    this._renderUserPage = renderUserPage;
   }
 
   create = (userData) => {
@@ -25,7 +27,6 @@ export class UserMenu extends BaseComponent {
       this._imgBtnElem = this._view.querySelector('.dropdown__mainmenubtn');
       this._menuElem = this._view.querySelector('.dropdown__child');
       usernameElem.textContent = this._userData.username;
-      myPageElem.setAttribute('href', this._userData.pageUrl);
       this._handlersArr = [
         {
           element: dropdownElem,
@@ -42,6 +43,11 @@ export class UserMenu extends BaseComponent {
           event: 'click',
           callbacks: [this._close],
         },
+        {
+          element: myPageElem,
+          event: 'click',
+          callbacks: [() => this._renderUserPage(this._userData.username)],
+        },
       ];
       this._updateAvatar();
       this._setEventListeners();
@@ -54,12 +60,12 @@ export class UserMenu extends BaseComponent {
       {
         element: signinButton,
         event: 'click',
-        callbacks: [this._signin],
+        callbacks: [this._openSigninPopup],
       },
       {
         element: signupButton,
         event: 'click',
-        callbacks: [this._signup],
+        callbacks: [this._openSignupPopup],
       },
     ];
     this._setEventListeners();
