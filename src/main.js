@@ -1,6 +1,6 @@
 import './pages/index.css';
 import {
-  popupContainer, userCardTemplate, circleLoaderTemplate, headerContainer,
+  popupContainer, userCardTemplate, circleLoaderTemplate, headerContainer, blockLoaderTemplate,
   signupPopupTemplate, signinPopupTemplate, imagePopupTemplate, mainContentContainer,
   profilePopupTemplate, cardPopupTemplate, avatarPopupTemplate, userBlockContainer,
   userMenuTemplate, userLinksTemplate, profileTemplate, imageCardTemplate, serverErrorPopupTemplate,
@@ -66,6 +66,7 @@ const createUserCard = (...args) => new Card({
   renderAsyncImage,
   updateCardsBlock: updateUserCardsBlock,
   config: config.userCards.card,
+  loader: createLoader(blockLoaderTemplate),
 }).create({
   view: getElementFromTemp(userCardTemplate),
   userData: user.data,
@@ -78,6 +79,7 @@ const createImageCard = (...args) => new Card({
   getUserPageUrl,
   renderAsyncImage,
   config: config.topCards.card,
+  loader: createLoader(blockLoaderTemplate),
 }).create({
   view: getElementFromTemp(imageCardTemplate),
   userData: user.data,
@@ -92,6 +94,7 @@ const openImagePopup = (...args) => new ImagePopup({
   container: popupContainer,
   config: config.imagePopup,
   renderAsyncImage,
+  loader: createLoader(circleLoaderTemplate),
 })
   .open(...args);
 const openCardPopup = () => new CardPopup({
@@ -153,10 +156,12 @@ const signout = () => {
     .catch((err) => console.log(err));
 };
 const renderAsyncImage = (...args) => new AsyncImage().render(...args);
+const createLoader = (loaderElem) => new Loader(loaderElem);
 
 const renderUserPage = (username) => {
   clearContainer(mainContentContainer);
-  circleLoader.show(mainContentContainer);
+  const apiResponseLoader = createLoader(circleLoaderTemplate);
+  apiResponseLoader.show({ container: mainContentContainer });
   api.sendRequest({
     url: config.reqApiParams.getUserInfo.url + username,
     method: config.reqApiParams.getUserInfo.method,
@@ -183,7 +188,7 @@ const renderUserPage = (username) => {
           });
         })
         .catch((err) => console.log(err))
-        .finally(() => circleLoader.hide());
+        .finally(() => apiResponseLoader.remove());
     })
     .catch((err) => {
       openErrorPopup(config.text.errors.apiErr);
@@ -193,7 +198,8 @@ const renderUserPage = (username) => {
 
 const renderMainPage = () => {
   clearContainer(mainContentContainer);
-  circleLoader.show(mainContentContainer);
+  const apiResponseLoader = createLoader(circleLoaderTemplate);
+  apiResponseLoader.show({ container: mainContentContainer });
   api.sendRequest({
     url: config.reqApiParams.getAllUsersCards.url,
     method: config.reqApiParams.getAllUsersCards.method,
@@ -209,7 +215,7 @@ const renderMainPage = () => {
       openErrorPopup(config.text.errors.apiErr);
       console.log(err);
     })
-    .finally(() => circleLoader.hide());
+    .finally(() => apiResponseLoader.remove());
 };
 
 const sendCardToApi = (...args) => api.sendRequest(config.reqApiParams.addCard, ...args);
@@ -233,6 +239,7 @@ const userInfo = new UserInfo({
   container: mainContentContainer,
   template: profileTemplate,
   config: config.avatar,
+  loader: createLoader(blockLoaderTemplate),
   openCardPopup,
   openAvatarPopup,
   openProfilePopup,
@@ -257,16 +264,16 @@ const topCardsBlock = new TopCardsBlock({
   config: config.topCards,
 });
 const userMenu = new UserMenu({
+  config: config.userMenu,
+  loader: createLoader(blockLoaderTemplate),
   userMenuTemplate,
   userLinksTemplate,
   openSignupPopup,
   openSigninPopup,
   signout,
   renderAsyncImage,
-  config: config.userMenu,
   renderUserPage,
 });
-const circleLoader = new Loader(getElementFromTemp(circleLoaderTemplate));
 
 const isPageUserpage = () => {
   const userPageUrlregExp = new RegExp(config.userPageFeature.getUserPageUrlRegExp());
@@ -286,13 +293,14 @@ const renderPage = () => {
   }
 };
 
-circleLoader.show(mainContentContainer);
+const apiResponseLoader = createLoader(circleLoaderTemplate);
+apiResponseLoader.show({ container: mainContentContainer });
 user.setData()
   .catch((err) => {
     console.log(err);
   })
   .finally(() => {
-    circleLoader.hide();
+    apiResponseLoader.remove();
     renderPage();
   });
 topUpBtn.setEventListener();

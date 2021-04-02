@@ -4,6 +4,7 @@ const imageCardTemplate = document.querySelector('#image-card');
 const userMenuTemplate = document.querySelector('#user-menu');
 const userLinksTemplate = document.querySelector('#user-links');
 const circleLoaderTemplate = document.querySelector('#circle-loader');
+const blockLoaderTemplate = document.querySelector('#block-loader');
 const profileContainer = document.querySelector('.profile');
 const profileTemplate = document.querySelector('#user-profile');
 const signupPopupTemplate = document.querySelector('#signup-popup');
@@ -19,7 +20,7 @@ const mainContentContainer = document.querySelector('.main-container');
 const headerContainer = document.querySelector('.header');
 
 export {
-  popupContainer, userCardTemplate, profileContainer, headerContainer,
+  popupContainer, userCardTemplate, profileContainer, headerContainer, blockLoaderTemplate,
   circleLoaderTemplate, signupPopupTemplate, imageCardTemplate,
   signinPopupTemplate, imagePopupTemplate, profilePopupTemplate, cardPopupTemplate,
   avatarPopupTemplate, userBlockContainer, userMenuTemplate, userLinksTemplate, profileTemplate,

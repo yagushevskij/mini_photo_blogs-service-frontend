@@ -1,13 +1,23 @@
 export class Loader {
-  constructor(element) {
-    this._element = element;
+  constructor(template) {
+    this._template = template;
   }
 
-    show = (container) => {
-      container.append(this._element);
+    show = ({ container }) => {
+      this._container = container;
+      this._create();
+      this._render();
     };
 
-    hide = () => {
-      this._element.classList.add('hidden');
+    _create = () => {
+      this._element = this._template.content.cloneNode(true).children[0];
+    }
+
+    _render = () => {
+      this._container.prepend(this._element);
+    }
+
+    remove = () => {
+      this._element.remove();
     };
 }

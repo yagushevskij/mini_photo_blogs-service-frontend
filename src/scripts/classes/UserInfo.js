@@ -3,6 +3,7 @@ import { BaseComponent } from './BaseComponent';
 export class UserInfo extends BaseComponent {
   constructor({
     container, template, openCardPopup, openAvatarPopup, openProfilePopup, renderAsyncImage, config,
+    loader,
   }) {
     super();
     this._container = container;
@@ -12,19 +13,25 @@ export class UserInfo extends BaseComponent {
     this._openProfilePopup = openProfilePopup;
     this._renderAsyncImage = renderAsyncImage;
     this._config = config;
+    this._loader = loader;
   }
 
   _setUserInfo = () => {
     const name = this._view.querySelector('.user-info__name');
     const about = this._view.querySelector('.user-info__about');
-    const avatar = this._view.querySelector('.user-info__avatar-content');
     name.textContent = this.data.name;
     about.textContent = this.data.about;
+  }
+
+  _renderAvatar = () => {
+    const avatar = this._view.querySelector('.user-info__avatar-content');
+    const avatarContainer = this._view.querySelector('.user-info__avatar');
+    this._loader.show({ container: avatarContainer });
     this._renderAsyncImage({
       url: this.data.avatar,
       element: avatar,
       config: this._config,
-      callbacks: [this._hideLoader],
+      callbacks: [this._loader.remove],
     });
   }
 
@@ -32,6 +39,7 @@ export class UserInfo extends BaseComponent {
     if (data) {
       this.data = data;
       this._setUserInfo();
+      this._renderAvatar();
     }
   }
 
@@ -41,6 +49,7 @@ export class UserInfo extends BaseComponent {
     this.data = data;
     this._create();
     this._setUserInfo();
+    this._renderAvatar();
     this._container.appendChild(this._view);
   }
 
@@ -72,10 +81,5 @@ export class UserInfo extends BaseComponent {
       ];
       this._setEventListeners();
     }
-  }
-
-  _hideLoader = () => {
-    const loader = this._view.querySelector('.load-wraper');
-    loader.classList.add('hidden');
   }
 }

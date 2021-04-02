@@ -17,18 +17,13 @@
       </div>
     </header>
     <div class="main-container"></div>
-    <div class="popup">
-      <div class="loader hidden"></div>
-    </div>
+    <div class="popup"></div>
     <div class="top-up-triangle hidden"></div>
   </div>
 
   <template id="user-card">
     <div class="card card_type_user-card">
       <div class="card__image card__image_type_user-card card__image_rounded card__image_blackout">
-        <div class="load-wraper">
-          <div class="load-wraper__activity"></div>
-        </div>
         <img src="" class="card__image-content">
         <button class="card__delete-icon card__delete-icon_type_user-card"></button>
       </div>
@@ -45,9 +40,6 @@
   <template id="image-card">
     <div class="card card_type_top-card">
       <div class="card__image card__image_type_top-card">
-        <div class="load-wraper">
-          <div class="load-wraper__activity"></div>
-        </div>
         <img src="" class="card__image-content">
       </div>
       <div class="card__like card__like_type_top-card">
@@ -171,9 +163,6 @@
   <template id="user-menu">
     <div class="dropdown">
       <div class="dropdown__mainmenu">
-        <div class="load-wraper">
-          <div class="load-wraper__activity"></div>
-        </div>
         <img class="dropdown__mainmenubtn" src="" alt="">
         <span class="dropdown__carret"></span>
       </div>
@@ -196,9 +185,6 @@
     <div class="profile root__section">
       <div class="user-info">
         <div class="user-info__avatar">
-          <div class="load-wraper">
-            <div class="load-wraper__activity"></div>
-          </div>
           <img src="" class="user-info__avatar-content">
         </div>
         <div class="user-info__data">
@@ -213,6 +199,12 @@
 
   <template id="circle-loader">
     <div class="loader">Loading...</div>
+  </template>
+
+  <template id="block-loader">
+    <div class="load-wraper">
+      <div class="load-wraper__activity"></div>
+    </div>
   </template>
 
   <script type="module" src="<%= htmlWebpackPlugin.files.js %>"></script>

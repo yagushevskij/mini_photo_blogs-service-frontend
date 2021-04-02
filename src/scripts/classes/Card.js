@@ -5,7 +5,7 @@ export class Card extends BaseComponent {
     super();
     const {
       openImagePopup, addLikeRequest, removeLikeRequest, removeCardRequest, updateCardsBlock,
-      getUserPageUrl, config, renderAsyncImage,
+      getUserPageUrl, config, renderAsyncImage, loader,
     } = callbacks;
     this._openImagePopup = openImagePopup;
     this._addLikeRequest = addLikeRequest;
@@ -15,6 +15,7 @@ export class Card extends BaseComponent {
     this._getUserPageUrl = getUserPageUrl;
     this._config = config;
     this._renderAsyncImage = renderAsyncImage;
+    this._loader = loader;
   }
 
   _like = (event) => {
@@ -76,7 +77,7 @@ export class Card extends BaseComponent {
     this._view = view;
     try {
       this._view.likedIconClassName = 'card__like-icon_liked';
-      this._view.img = this._view.querySelector('.card__image');
+      this._view.imgContainer = this._view.querySelector('.card__image');
       this._view.imgElem = this._view.querySelector('.card__image-content');
       this._view.likeIcon = this._view.querySelector('.card__like-icon');
       this._view.likeCount = this._view.querySelector('.card__like-counter');
@@ -96,11 +97,14 @@ export class Card extends BaseComponent {
       this._view.name.textContent = this._item.name;
     }
     if (this._view.imgElem) {
+      if (this._view.imgContainer && this._loader) {
+        this._loader.show({ container: this._view.imgContainer });
+      }
       this._renderAsyncImage({
         url: this._item.files.preview.link,
         element: this._view.imgElem,
         config: this._config,
-        callbacks: [this._hideLoader],
+        callbacks: (this._loader) ? [this._loader.remove] : [],
       });
     }
     if (this._view.userLink) {
@@ -119,18 +123,15 @@ export class Card extends BaseComponent {
 
   _open = (event) => {
     if (!event.defaultPrevented && (event.target === this._view.imgElem
-      || event.target === this._view.img)) this._openImagePopup(this._item.files.content.link);
+      || event.target === this._view.imgContainer)) {
+      this._openImagePopup(this._item.files.content.link);
+    }
   };
-
-  _hideLoader = () => {
-    const loader = this._view.querySelector('.load-wraper');
-    loader.classList.add('hidden');
-  }
 
   _setHandlers = () => {
     this._handlersArr = [
       {
-        element: this._view.img,
+        element: this._view.imgContainer,
         event: 'click',
         callbacks: [this._open],
       },
