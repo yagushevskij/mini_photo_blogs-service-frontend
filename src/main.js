@@ -169,8 +169,8 @@ const renderUserPage = (username) => {
   })
     .then((res) => {
       userInfo.render({
-        data: res,
-        isUserPageOwner: res._id === user.data._id,
+        userPageData: res,
+        authUserData: user.data,
       });
       return res;
     })
