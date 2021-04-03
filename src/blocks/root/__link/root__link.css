@@ -1,0 +1,9 @@
+.root__link {
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.3s
+}
+
+.root__link:hover {
+  opacity: 0.7;
+}

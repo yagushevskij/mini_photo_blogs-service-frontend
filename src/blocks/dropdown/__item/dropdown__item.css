@@ -1,4 +1,5 @@
 @import url('./_type/dropdown__item_type_greeting.css');
+@import url(./_selector/dropdown__item_selector.css);
 
 .dropdown__item {
   display: flex;
@@ -9,8 +10,4 @@
 
 .dropdown__item:first-of-type {
   margin-top: 0px;
-}
-
-.dropdown__item:hover {
-  background-color: #acacac;
 }

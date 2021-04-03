@@ -21,7 +21,7 @@ export class UserMenu extends BaseComponent {
     this._userData = userData;
     if (this._isUserDataExist()) {
       this._view = this.userMenuTemplate.content.cloneNode(true).children[0];
-      const usernameElem = this._view.querySelector('.dropdown__link_type_greeting');
+      const usernameElem = this._view.querySelector('.dropdown__item_type_username');
       const myPageElem = this._view.querySelector('.dropdown__link_type_my-page');
       const signoutElem = this._view.querySelector('.dropdown__link_type_signout');
       this._dropdownElem = this._view.querySelector('.dropdown__mainmenu');
