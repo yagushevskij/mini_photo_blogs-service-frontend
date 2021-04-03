@@ -76,8 +76,8 @@ const createImageCard = (...args) => new Card({
   addLikeRequest,
   removeLikeRequest,
   removeCardRequest,
-  getUserPageUrl,
   renderAsyncImage,
+  renderUserPage,
   config: config.topCards.card,
   loader: createLoader(blockLoaderTemplate),
 }).create({

@@ -22,7 +22,6 @@ export class CardsBlock {
   }
 
   _renderCards() {
-    // this._sort();
     this._cardsContainer = this._view.querySelector('.cards-list');
     if (this._splittedArray.length > 0) {
       this._renderCardList({
@@ -71,7 +70,6 @@ export class CardsBlock {
     const windowHeight = document.documentElement.clientHeight;
     if (containerRelativeBottom < windowHeight + 100) {
       this._currentPage++;
-      console.log(this._currentPage)
       if (this._totalPages >= this._currentPage) {
         this._renderCards();
       }

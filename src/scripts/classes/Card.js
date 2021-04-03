@@ -5,21 +5,21 @@ export class Card extends BaseComponent {
     super();
     const {
       openImagePopup, addLikeRequest, removeLikeRequest, removeCardRequest, updateCardsBlock,
-      getUserPageUrl, config, renderAsyncImage, loader,
+      config, renderAsyncImage, loader, renderUserPage,
     } = callbacks;
     this._openImagePopup = openImagePopup;
     this._addLikeRequest = addLikeRequest;
     this._removeLikeRequest = removeLikeRequest;
     this._removeCardRequest = removeCardRequest;
     this._updateCardsBlock = updateCardsBlock;
-    this._getUserPageUrl = getUserPageUrl;
     this._config = config;
     this._renderAsyncImage = renderAsyncImage;
     this._loader = loader;
+    this._renderUserPage = renderUserPage;
   }
 
   _like = (event) => {
-    event.preventDefault();
+    this._preventDefaultEvent(event);
     const changeLike = this._hasOwnLike() ? this._removeLikeRequest : this._addLikeRequest;
     changeLike(this._item._id)
       .then((res) => {
@@ -51,7 +51,7 @@ export class Card extends BaseComponent {
   _isOwner = () => (this._item.owner._id || this._item.owner) === this._userId;
 
   _remove = (event) => {
-    event.preventDefault();
+    this._preventDefaultEvent(event);
     this._removeCardRequest(this._item._id)
       .then(() => {
         this._removeEventListeners();
@@ -64,7 +64,7 @@ export class Card extends BaseComponent {
   };
 
   _handleRemove = (event) => {
-    event.preventDefault();
+    this._preventDefaultEvent(event);
     if (confirm('Вы действительно хотите удалить эту карточку?')) {
       this._remove(event);
     }
@@ -108,9 +108,9 @@ export class Card extends BaseComponent {
       });
     }
     if (this._view.userLink) {
-      const userPageUrl = this._getUserPageUrl(this._item.owner.username);
+      // const userPageUrl = this._getUserPageUrl(this._item.owner.username);
       this._view.userLink.textContent = this._item.owner.name;
-      this._view.userLink.setAttribute('href', userPageUrl);
+      // this._view.userLink.setAttribute('href', userPageUrl);
     }
     this._view.dataset.id = this._item._id;
     this._view.dataset.width = this._item.files.content.dimension.width;
@@ -128,6 +128,10 @@ export class Card extends BaseComponent {
     }
   };
 
+  _preventDefaultEvent = (event) => {
+    event.preventDefault();
+  }
+
   _setHandlers = () => {
     this._handlersArr = [
       {
@@ -144,6 +148,12 @@ export class Card extends BaseComponent {
         element: this._view.removeIcon,
         event: 'click',
         callbacks: [this._handleRemove],
+      },
+      {
+        element: this._view.userLink,
+        event: 'click',
+        callbacks: [this._preventDefaultEvent,
+          () => { this._renderUserPage(this._item.owner.username); }],
       },
     ];
   }
