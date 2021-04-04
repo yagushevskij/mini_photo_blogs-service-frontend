@@ -19,17 +19,22 @@ export class Card extends BaseComponent {
   }
 
   _like = (event) => {
-    this._preventDefaultEvent(event);
-    const changeLike = this._hasOwnLike() ? this._removeLikeRequest : this._addLikeRequest;
-    changeLike(this._item._id)
-      .then((res) => {
-        this._item = res;
-        this._changeLikesCount();
-        this._view.likeIcon.classList.toggle(this._view.likedIconClassName);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (this._userId) { // Если пользователь авторизован;
+      this._preventDefaultEvent(event);
+      const changeLike = this._hasOwnLike() ? this._removeLikeRequest : this._addLikeRequest;
+      changeLike(this._item._id)
+        .then((res) => {
+          this._item = res;
+          this._changeLikesCount();
+          this._view.likeIcon.classList.toggle(this._view.likedIconClassName);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      const likeInfoMsgElem = this._view.querySelector('.card__info-message_like');
+      likeInfoMsgElem.classList.remove('hidden');
+    }
   };
 
   _changeLikesCount = () => {
@@ -70,6 +75,12 @@ export class Card extends BaseComponent {
     }
   };
 
+  /**
+   * Создание карточки
+   * @params view - узел разметки карточки;
+   * @params userData - объект данных авторизованного пользователя;
+   * @item - объект данных карточки;
+   */
   create = (params, item) => {
     const { view, userData } = params;
     this._userId = (userData && Object.keys(userData).length !== 0) ? userData._id : null;
@@ -108,9 +119,7 @@ export class Card extends BaseComponent {
       });
     }
     if (this._view.userLink) {
-      // const userPageUrl = this._getUserPageUrl(this._item.owner.username);
       this._view.userLink.textContent = this._item.owner.name;
-      // this._view.userLink.setAttribute('href', userPageUrl);
     }
     this._view.dataset.id = this._item._id;
     this._view.dataset.width = this._item.files.content.dimension.width;
@@ -153,7 +162,7 @@ export class Card extends BaseComponent {
         element: this._view.userLink,
         event: 'click',
         callbacks: [this._preventDefaultEvent,
-          () => { this._renderUserPage(this._item.owner.username); }],
+        () => { this._renderUserPage(this._item.owner.username); }],
       },
     ];
   }

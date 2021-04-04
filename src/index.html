@@ -30,6 +30,7 @@
       <div class="card__description card__description_type_user-card">
         <h3 class="card__name card__name_type_user-card"></h3>
         <div class="card__like card__like_type_user-card">
+          <p class="card__info-message card__info-message_like hidden">Необходима авторизация</p>
           <button class="card__like-icon"></button>
           <p class="card__like-counter card__like-counter_type_user-card"></p>
         </div>
@@ -43,6 +44,7 @@
         <img src="" class="card__image-content">
       </div>
       <div class="card__like card__like_type_top-card">
+        <p class="card__info-message card__info-message_like hidden">Хочешь лайкать? Авторизуйся!</p>
         <button class="card__like-icon"></button>
         <p class="card__like-counter card__like-counter_type_top-card"></p>
       </div>
@@ -182,7 +184,7 @@
   </template>
 
   <template id="user-profile">
-    <div class="profile root__section">
+    <section class="profile root__section">
       <div class="user-info">
         <div class="user-info__avatar">
           <img src="" class="user-info__avatar-content">
@@ -194,7 +196,7 @@
         </div>
         <button class="button user-info__button hidden">+</button>
       </div>
-    </div>
+    </section>
   </template>
 
   <template id="circle-loader">

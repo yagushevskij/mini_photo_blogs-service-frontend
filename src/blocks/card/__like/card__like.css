@@ -3,4 +3,9 @@
 
 .card__like {
   display: flex;
+  position: relative;
+}
+
+.card__like:hover > .card__info-message {
+  visibility: visible;
 }
