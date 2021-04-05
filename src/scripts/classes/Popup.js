@@ -11,11 +11,11 @@ export class Popup extends BaseComponent {
     this._setHandlers();
     this._setEventListeners();
     this._blockScroll();
-    this._container.classList.add('popup_is-opened');
+    // this._container.classList.add('popup_is-opened');
   }
 
   _close() {
-    this._container.classList.remove('popup_is-opened');
+    // this._container.classList.remove('popup_is-opened');
     this._removeEventListeners();
     this._view.remove();
     this._unBlockScroll();

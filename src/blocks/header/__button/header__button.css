@@ -1,7 +1,19 @@
 .header__button {
   margin-right: 10px;
+  line-height: 2;
 }
 
 .header__button:last-of-type {
   margin-right: 0px;
+}
+
+@media screen and (max-width: 425px) {
+  .header__button {
+    margin-right: 0px;
+    margin-top: 20px;
+    line-height: 3;
+  }
+  .header__button:first-of-type {
+    margin-top: 0px;
+  }
 }

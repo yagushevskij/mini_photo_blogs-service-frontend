@@ -1,0 +1,29 @@
+.header__link {
+    padding-left: 10px;
+    font-size: 18px;
+    list-style-type: none;
+}
+
+@media screen and (min-width: 426px) {
+  .header__link:first-of-type {
+    padding-left: 0;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .header__link {
+    padding-left: 0;
+    line-height: 2.5;
+    width: 100%;
+    border: 1px dotted rgb(100, 100, 100);
+  }
+
+  .header__link::before {
+    content: '';
+    padding-left: 10px;
+  }
+
+  .header__link:active {
+    background-color: rgb(54, 54, 54);
+  }
+}

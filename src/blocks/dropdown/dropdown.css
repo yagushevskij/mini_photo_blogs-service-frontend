@@ -7,4 +7,5 @@
 
 .dropdown {
   position: relative;
+  height: fit-content;
 }

@@ -1,0 +1,18 @@
+@import url(./_is-visible/header__links_is-visible.css);
+
+.header__links {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  margin-top: 10px;
+  padding: 0;
+  flex-wrap: wrap;
+}
+
+@media screen and (max-width: 425px) {
+  .header__links {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

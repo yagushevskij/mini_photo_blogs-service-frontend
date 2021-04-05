@@ -1,0 +1,47 @@
+/*!
+ * Hamburgers
+ * @description Tasty CSS-animated hamburgers
+ * @author Jonathan Suh @jonsuh
+ * @site https://jonsuh.com/hamburgers
+ * @link https://github.com/jonsuh/hamburgers
+ */
+
+@import url(./__box/hamburger__box.css);
+@import url(./__inner/hamburger__inner.css);
+@import url(./_vortex/hamburger_vortex.css);
+
+.hamburger {
+  display: none;
+  cursor: pointer;
+  transition-property: opacity, filter;
+  transition-duration: 0.15s;
+  transition-timing-function: linear;
+  font: inherit;
+  color: inherit;
+  text-transform: none;
+  background-color: transparent;
+  border: 0;
+  margin: 0;
+  overflow: visible;
+}
+  .hamburger:hover {
+    opacity: 0.7;
+  }
+  .hamburger.is-active:hover {
+    opacity: 0.7;
+  }
+  .hamburger.is-active .hamburger__inner,
+  .hamburger.is-active .hamburger__inner::before,
+  .hamburger.is-active .hamburger__inner::after {
+    background-color: white;
+  }
+
+  .hamburger:hover > .header__links {
+    visibility: visible;
+  }
+
+  @media screen and (max-width: 425px) {
+    .hamburger {
+      display: inline-block;
+    }
+  }

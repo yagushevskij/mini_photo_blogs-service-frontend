@@ -9,7 +9,6 @@
     background-size: cover;
     padding: 5%;
     box-sizing: border-box;
-    /* overflow: hidden; */
 }
 
 .card_type_top-card:hover > .card__like {

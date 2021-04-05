@@ -1,0 +1,14 @@
+.header__wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    min-height: 100px;
+}
+
+@media screen and (max-width: 425px) {
+  .header__wrapper {
+    min-height: auto;
+    padding: 10px 0;
+  }
+}

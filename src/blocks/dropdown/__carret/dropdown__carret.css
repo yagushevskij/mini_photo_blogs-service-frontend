@@ -7,5 +7,12 @@
   border-top: 10px solid #a8a8a8;
   position: absolute;
   bottom: 0px;
-  left: 102%;
+  right: -25%;
+
+}
+
+@media screen and (max-width: 980px) {
+  .dropdown__carret {
+    left: -25%;
+  }
 }

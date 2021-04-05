@@ -1,0 +1,25 @@
+.hamburger__inner {
+  display: block;
+  top: 50%;
+  margin-top: -2px;
+}
+  .hamburger__inner, .hamburger__inner::before, .hamburger__inner::after {
+    width: 40px;
+    height: 4px;
+    background-color: white;
+    border-radius: 4px;
+    position: absolute;
+    transition-property: transform;
+    transition-duration: 0.15s;
+    transition-timing-function: ease;
+  }
+  .hamburger__inner::before, .hamburger__inner::after {
+    content: "";
+    display: block;
+  }
+  .hamburger__inner::before {
+    top: -10px;
+  }
+  .hamburger__inner::after {
+    bottom: -10px;
+  }

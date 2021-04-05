@@ -4,7 +4,7 @@ export class ImagePopup extends Popup {
   constructor(params) {
     super();
     const {
-      container, template, config, renderAsyncImage, loader
+      container, template, config, renderAsyncImage, loader,
     } = params;
     this._container = container;
     this._template = template;
