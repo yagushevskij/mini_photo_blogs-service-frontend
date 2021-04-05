@@ -1,0 +1,10 @@
+.user-info__about {
+    margin: 0;
+    padding: 15px 0;
+}
+
+@media screen and (max-width: 425px) {
+  .user-info__about {
+    padding: 10px 0;
+  }
+}

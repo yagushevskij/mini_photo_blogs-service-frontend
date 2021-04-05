@@ -13,3 +13,9 @@
     margin-top: 40px;
   }
 }
+
+@media screen and (max-width: 425px) {
+  .user-info__avatar {
+    margin-top: 10px;
+  }
+}
