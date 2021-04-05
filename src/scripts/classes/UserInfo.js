@@ -25,7 +25,7 @@ export class UserInfo extends BaseComponent {
 
   _renderAvatar = () => {
     const avatar = this._view.querySelector('.user-info__avatar-content');
-    const avatarContainer = this._view.querySelector('.user-info__avatar');
+    const avatarContainer = this._view.querySelector('.user-info__avatar-img-container');
     this._loader.show({ container: avatarContainer });
     this._renderAsyncImage({
       url: this.userPageData.avatar,
@@ -59,11 +59,11 @@ export class UserInfo extends BaseComponent {
     this._view = this._template.content.cloneNode(true).children[0];
     const addCardBtn = this._view.querySelector('.user-info__button');
     const editProfileBtn = this._view.querySelector('.user-info__edit-button');
-    this._avatarImgElem = this._view.querySelector('.user-info__avatar-content');
     this._avatarBtn = this._view.querySelector('.user-info__avatar');
     if (this._isUserPageOwner()) {
       addCardBtn.classList.remove('hidden');
       editProfileBtn.classList.remove('hidden');
+      this._avatarBtn.classList.add('user-info__avatar_is-active');
       this._handlersArr = [
         {
           element: addCardBtn,

@@ -1,0 +1,9 @@
+.user-info__avatar_is-active {
+  cursor: pointer;
+}
+
+.user-info__avatar_is-active:hover > .user-info__avatar-message {
+    visibility: visible;
+    transform: translateY(-50px);
+    transition: transform 0.5s;
+}

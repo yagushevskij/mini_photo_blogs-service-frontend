@@ -1,4 +1,10 @@
+@import url(./_is-active/user-info__avatar_is-active.css);
+
 .user-info__avatar {
+  position: relative;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
   width: 150px;
   height: 150px;
   min-width: 150px;

@@ -1,0 +1,11 @@
+.user-info__avatar-message {
+  color: black;
+  visibility: hidden;
+  background-color: rgba(255, 255, 255, 0.6);
+  z-index: 5;
+  text-align: center;
+  vertical-align: bottom;
+  margin: 0;
+  max-width: fit-content;
+  padding: 3px;
+}
