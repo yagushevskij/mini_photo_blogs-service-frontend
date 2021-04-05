@@ -4,16 +4,14 @@ export class AvatarPopup extends FormPopup {
   constructor(params) {
     super();
     const {
-      template, container, sendDataToApi, updateUserData, setValidateListeners,
-      removeValidateListeners, setServerError, updateUserInfo, updateUserMenu,
+      template, container, sendDataToApi, updateUserData, updateUserInfo, updateUserMenu,
+      createFormValidator,
     } = params;
     this._template = template;
     this._container = container;
     this._sendDataToApi = sendDataToApi;
     this._updateUserData = updateUserData;
-    this._setValidateListeners = setValidateListeners;
-    this._removeValidateListeners = removeValidateListeners;
-    this._setServerError = setServerError;
+    this._formValidator = createFormValidator();
     this._updateUserInfo = updateUserInfo;
     this._updateUserMenu = updateUserMenu;
   }

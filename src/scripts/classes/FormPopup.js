@@ -4,13 +4,13 @@ export class FormPopup extends Popup {
   _create = () => {
     super._create();
     const form = this._view.querySelector('.popup__form');
-    this._setValidateListeners(form);
+    this._formValidator.setEventListeners(form);
     this._container.append(this._view);
   }
 
   _close = () => {
     super._close();
-    this._removeValidateListeners();
+    this._formValidator.removeEventListeners();
   }
 
   _setFormData() {
@@ -39,7 +39,7 @@ export class FormPopup extends Popup {
       .then(() => this._close())
       .catch((err) => {
         console.log(err);
-        this._setServerError(err);
+        this._formValidator.setServerError(err);
       });
   }
 

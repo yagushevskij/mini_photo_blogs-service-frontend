@@ -2,14 +2,12 @@ import { BaseComponent } from './BaseComponent';
 
 export class UserMenu extends BaseComponent {
   constructor({
-    userMenuTemplate, userLinksTemplate, openSignupPopup, openSigninPopup, signout,
+    userMenuTemplate, userLinksTemplate, signout,
     renderAsyncImage, config, renderUserPage, loader,
   }) {
     super();
     this.userMenuTemplate = userMenuTemplate;
     this.userLinksTemplate = userLinksTemplate;
-    this._openSignupPopup = openSignupPopup;
-    this._openSigninPopup = openSigninPopup;
     this._signout = signout;
     this._renderAsyncImage = renderAsyncImage;
     this._config = config;
@@ -20,7 +18,7 @@ export class UserMenu extends BaseComponent {
   create = (userData) => {
     this._userData = userData;
     if (this._isUserDataExist()) {
-      this._view = this.userMenuTemplate.content.cloneNode(true).children[0];
+      this._view = this.userMenuTemplate.content.cloneNode(true).children[1];
       const usernameElem = this._view.querySelector('.dropdown__item_type_username');
       const myPageElem = this._view.querySelector('.dropdown__link_type_my-page');
       const signoutElem = this._view.querySelector('.dropdown__link_type_signout');
@@ -52,24 +50,9 @@ export class UserMenu extends BaseComponent {
       ];
       this._updateAvatar();
       this._setEventListeners();
-      return { userMenu: this._view };
+    } else {
+      this._view = this.userMenuTemplate.content.cloneNode(true).children[0];
     }
-    this._view = this.userLinksTemplate.content.cloneNode(true);
-    const signinButton = this._view.querySelector('.header__button_type_signin');
-    const signupButton = this._view.querySelector('.header__button_type_signup');
-    this._handlersArr = [
-      {
-        element: signinButton,
-        event: 'click',
-        callbacks: [this._openSigninPopup],
-      },
-      {
-        element: signupButton,
-        event: 'click',
-        callbacks: [this._openSignupPopup],
-      },
-    ];
-    this._setEventListeners();
     return { userMenu: this._view };
   }
 

@@ -3,7 +3,7 @@ import {
   popupContainer, userCardTemplate, circleLoaderTemplate, headerContainer, blockLoaderTemplate,
   signupPopupTemplate, signinPopupTemplate, imagePopupTemplate, mainContentContainer,
   profilePopupTemplate, cardPopupTemplate, avatarPopupTemplate, userBlockContainer,
-  userMenuTemplate, userLinksTemplate, profileTemplate, imageCardTemplate, serverErrorPopupTemplate,
+  userMenuTemplate, profileTemplate, imageCardTemplate, serverErrorPopupTemplate,
   topUpTriangle,
 }
   from './scripts/constants/selectors';
@@ -54,10 +54,7 @@ const getUserInfoFromApi = () => sendApiRequest(config.reqApiParams.checkUserExi
 const updateUserInfo = (...args) => userInfo.update(...args);
 const updateUserMenu = (...args) => userMenu.update(...args);
 const updateUserCardsBlock = (...args) => userCardsBlock.update(...args);
-
-const setValidateListeners = (...args) => formValidator.setEventListeners(...args);
-const removeValidateListeners = () => formValidator.removeEventListeners();
-const setServerError = (message) => formValidator.setServerError(message);
+const createFormValidator = () => new FormValidator(config.text, config.fileExtensions);
 const createUserCard = (...args) => new Card({
   openImagePopup,
   addLikeRequest,
@@ -101,9 +98,7 @@ const openCardPopup = () => new CardPopup({
   template: cardPopupTemplate,
   container: popupContainer,
   addCard: userCardList.addCard,
-  setValidateListeners,
-  removeValidateListeners,
-  setServerError,
+  createFormValidator,
   sendCardToApi,
   uploadCard,
 }).open();
@@ -111,9 +106,7 @@ const openAvatarPopup = () => new AvatarPopup({
   template: avatarPopupTemplate,
   container: popupContainer,
   sendDataToApi: sendAvatarDataToApi,
-  setValidateListeners,
-  removeValidateListeners,
-  setServerError,
+  createFormValidator,
   updateUserInfo,
   updateUserMenu,
 }).open();
@@ -121,9 +114,7 @@ const openProfilePopup = () => new ProfilePopup({
   template: profilePopupTemplate,
   container: popupContainer,
   sendDataToApi: sendUserDataToApi,
-  setValidateListeners,
-  removeValidateListeners,
-  setServerError,
+  createFormValidator,
   updateUserInfo,
   updateUserMenu,
 }).open(userInfo.data);
@@ -132,9 +123,7 @@ const openSignupPopup = () => new SignupPopup({
   container: popupContainer,
   sendDataToApi: sendRegDataToApi,
   updateUserData: user.updateData,
-  setValidateListeners,
-  removeValidateListeners,
-  setServerError,
+  createFormValidator,
   renderPage,
 }).open();
 const openSigninPopup = () => new SigninPopup({
@@ -142,10 +131,9 @@ const openSigninPopup = () => new SigninPopup({
   container: popupContainer,
   sendDataToApi: sendAuthDataToApi,
   updateUserData: user.updateData,
-  setValidateListeners,
-  removeValidateListeners,
-  setServerError,
+  createFormValidator,
   renderPage,
+  openSignupPopup,
 }).open();
 const signout = () => {
   sendApiRequest(config.reqApiParams.signout)
@@ -233,8 +221,8 @@ const header = new Header({
   container: headerContainer,
   userBlockContainer,
   renderMainPage,
+  openSigninPopup,
 });
-const formValidator = new FormValidator(config.text, config.fileExtensions);
 const userInfo = new UserInfo({
   container: mainContentContainer,
   template: profileTemplate,
@@ -267,9 +255,6 @@ const userMenu = new UserMenu({
   config: config.userMenu,
   loader: createLoader(blockLoaderTemplate),
   userMenuTemplate,
-  userLinksTemplate,
-  openSignupPopup,
-  openSigninPopup,
   signout,
   renderAsyncImage,
   renderUserPage,
