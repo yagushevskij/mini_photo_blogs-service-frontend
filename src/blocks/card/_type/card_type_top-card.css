@@ -1,6 +1,5 @@
 .card_type_top-card {
     position: relative;
-
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -19,4 +18,11 @@
   visibility: visible;
   transition: transform 1s;
   transform: translateY(-50px);
+}
+
+@media screen and (max-width: 767px) {
+  .card_type_top-card {
+    flex-grow: 1;
+    min-height: 15em;
+}
 }

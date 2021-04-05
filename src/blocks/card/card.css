@@ -11,7 +11,4 @@
 @import url(./__username-link/card__username-link.css);
 @import url(./__image-content/card__image-content.css);
 @import url(./__info-message/card__info-message.css);
-
-.card {
-    
-}
+@import url(./_rounded/card_rounded.css);

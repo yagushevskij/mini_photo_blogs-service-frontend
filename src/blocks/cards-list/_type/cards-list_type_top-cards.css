@@ -1,5 +1,14 @@
 .cards-list_type_top-cards {
+  display: grid;
+  gap: 0.5em;
+  grid-template-columns: repeat(auto-fit, minmax(10em, 1fr));
+  grid-auto-rows: 10em;
   grid-auto-flow: dense;
-  grid-gap: auto;
-  box-sizing: content-box;
+}
+
+@media screen and (max-width: 767px) {
+  .cards-list_type_top-cards {
+    display: flex;
+    flex-wrap: wrap;
+  }
 }

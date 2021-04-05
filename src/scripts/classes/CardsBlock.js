@@ -53,7 +53,6 @@ export class CardsBlock {
       this._splittedArray[i] = this._cardsArr.slice((i * arraySize), (i * arraySize) + arraySize);
     }
     this._totalPages = this._splittedArray.length;
-    console.log(this._splittedArray)
     this._currentPage = 1;
     if (this._totalPages > this._currentPage) {
       if (this._config.settings.loadBy === 'scroll') {

@@ -15,3 +15,10 @@
 .card__like-icon:hover {
   transform: scale(1.03);
 }
+
+@media screen and (max-width: 530px) {
+  .card__like-icon {
+    width: 25px;
+    height: 23px;
+}
+}

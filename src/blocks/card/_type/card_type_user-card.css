@@ -2,6 +2,21 @@
   position: relative;
   width: 282px;
   background-color: #fff;
-  border-radius: 10px;
   min-height: 360px;
+}
+
+@media screen and (max-width: 980px) {
+  .card_type_user-card {
+    width: 240px;
+    background-color: #fff;
+    min-height: 300px;
+}
+}
+
+@media screen and (max-width: 530px) {
+  .card_type_user-card {
+    width: 320px;
+    background-color: #fff;
+    min-height: 420px;
+}
 }

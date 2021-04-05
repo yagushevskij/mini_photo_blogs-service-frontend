@@ -4,3 +4,15 @@
   object-position: center;
   position: relative;
 }
+
+@media screen and (max-width: 980px) {
+  .card__image_type_user-card  {
+    height: 240px;
+  }
+}
+
+@media screen and (max-width: 530px) {
+  .card__image_type_user-card  {
+    height: 320px;
+  }
+}
