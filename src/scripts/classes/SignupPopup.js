@@ -5,6 +5,7 @@ export class SignupPopup extends FormPopup {
     super();
     const {
       template, container, sendDataToApi, updateUserData, renderPage, createFormValidator,
+      openSigninPopup,
     } = params;
     this._template = template;
     this._container = container;
@@ -12,6 +13,7 @@ export class SignupPopup extends FormPopup {
     this._updateUserData = updateUserData;
     this._formValidator = createFormValidator();
     this._renderPage = renderPage;
+    this._openSigninPopup = openSigninPopup;
   }
 
   _submitAction = () => {
@@ -24,5 +26,15 @@ export class SignupPopup extends FormPopup {
     this._changeButtonText();
     this._setFormData();
     super._submit();
+  }
+
+  _setHandlers() {
+    super._setHandlers();
+    const signupButton = this._view.querySelector('.popup__link_signin');
+    this._handlersArr.push({
+      element: signupButton,
+      event: 'click',
+      callbacks: [this._openSigninPopup, this._close],
+    });
   }
 }

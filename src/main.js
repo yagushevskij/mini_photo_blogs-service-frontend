@@ -125,6 +125,7 @@ const openSignupPopup = () => new SignupPopup({
   updateUserData: user.updateData,
   createFormValidator,
   renderPage,
+  openSigninPopup,
 }).open();
 const openSigninPopup = () => new SigninPopup({
   template: signinPopupTemplate,

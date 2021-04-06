@@ -2,7 +2,6 @@
   text-decoration: none;
   cursor: pointer;
   transition: opacity 0.3s;
-  color: white;
 }
 
 .root__link:hover {

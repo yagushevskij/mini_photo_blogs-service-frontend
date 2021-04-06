@@ -1,3 +1,5 @@
+@import url(./_more-action/popup__description_more-action.css);
+
 .popup__description {
   align-self: center;
   text-align: center;
