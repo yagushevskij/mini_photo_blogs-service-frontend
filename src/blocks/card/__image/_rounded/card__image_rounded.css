@@ -1,0 +1,4 @@
+.card__image_rounded {
+  border-radius: 10px;
+  overflow: hidden;
+}
