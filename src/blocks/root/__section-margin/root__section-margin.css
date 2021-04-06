@@ -1,0 +1,15 @@
+.root__section-margin {
+    margin-top: 50px;
+}
+
+@media screen and (max-width: 768px) {
+  .root__section-margin {
+    margin-top: 40px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .root__section-margin {
+    margin-top: 30px;
+  }
+}

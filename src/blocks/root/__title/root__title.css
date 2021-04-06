@@ -2,6 +2,7 @@
     color: white;
     font-size: 45px;
     font-weight: normal;
+    margin: 0;
 }
 
 @media screen and (max-width: 768px) {

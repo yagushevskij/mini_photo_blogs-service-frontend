@@ -9,7 +9,7 @@ export class UserCardsBlock extends CardsBlock {
     this._container = container;
     this._config = config;
     this._renderCardList = renderCardList;
-    this._markup = `<section class="cards-wrapper cards-wrapper_type_user-cards root__section">
+    this._markup = `<section class="cards-wrapper cards-wrapper_type_user-cards root__section root__section-margin">
     <h2 class="root__title"></h2>
     <div class="cards-list cards-list_type_user-cards"></div>
     <button class="button cards-wrapper__button hidden">${config.button.text}</button>

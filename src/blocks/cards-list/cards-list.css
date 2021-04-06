@@ -1,2 +1,6 @@
 @import url('./_type/cards-list_type_user-cards.css');
 @import url('./_type/cards-list_type_top-cards.css');
+
+.cards-list {
+  padding: 30px 0 0 0;
+}

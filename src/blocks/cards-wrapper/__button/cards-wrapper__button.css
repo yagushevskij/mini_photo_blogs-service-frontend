@@ -10,6 +10,7 @@
   .cards-wrapper__button {
     min-width: 200px;
     font-size: 20px;
+    align-self: center;
     padding: 15px;
     margin-top: 30px;
   }
