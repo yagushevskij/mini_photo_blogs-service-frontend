@@ -44,8 +44,8 @@ export class UserInfo extends BaseComponent {
   }
 
   render = (params) => {
-    const { userPageData, authUserData } = params;
-    this._authUserData = authUserData || {};
+    const { userPageData, authUserData = {} } = params;
+    this._authUserData = authUserData;
     this.userPageData = userPageData;
     this._create();
     this._setUserInfo();

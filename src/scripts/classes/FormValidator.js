@@ -27,7 +27,7 @@ export class FormValidator extends BaseComponent {
     }
   }
 
-  setServerError = (message) => {
+  setServerError = (message = '') => {
     const errorEl = this._form.querySelector('.error-message_type_server');
     errorEl.textContent = message;
   };

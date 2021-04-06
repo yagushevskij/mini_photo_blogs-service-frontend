@@ -14,7 +14,9 @@ export class Loader {
     }
 
     _render = () => {
-      this._container.prepend(this._element);
+      if (this._container) {
+        this._container.prepend(this._element);
+      }
     }
 
     remove = () => {
