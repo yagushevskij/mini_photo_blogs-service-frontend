@@ -19,6 +19,7 @@ export class TopCardsBlock extends CardsBlock {
   _render = () => {
     this._renderCards();
     this._container.append(this._view);
+    this._toggleVisibility();
   };
 
   _renderCards = () => {

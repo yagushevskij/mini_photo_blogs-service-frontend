@@ -17,6 +17,14 @@ export class CardsBlock {
     this._render();
   }
 
+  show = () => {
+    this._cardsContainer.classList.remove('hidden');
+  }
+
+  hide = () => {
+    this._cardsContainer.classList.add('hidden');
+  }
+
   _setTitle() {
     this._title = this._view.querySelector('.root__title');
   }
@@ -31,7 +39,7 @@ export class CardsBlock {
     }
   }
 
-  toggleVisibility = () => {
+  _toggleVisibility = () => {
     this._cardsCollection = this._container.childNodes;
     (this._cardsCollection && this._cardsCollection.length > 0) ? this.show() : this.hide();
   }
