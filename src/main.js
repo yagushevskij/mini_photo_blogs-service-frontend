@@ -110,6 +110,7 @@ const openAvatarPopup = () => new AvatarPopup({
   createFormValidator,
   updateUserInfo,
   updateUserMenu,
+  config: config.popups.avatarPopup,
 }).open();
 const openProfilePopup = (...args) => new ProfilePopup({
   template: profilePopupTemplate,

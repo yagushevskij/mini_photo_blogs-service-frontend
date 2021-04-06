@@ -4,7 +4,7 @@ export class CardPopup extends FormPopup {
   constructor(params) {
     super();
     const {
-      template, container, addCard, sendCardToApi, uploadCard, createFormValidator,
+      template, container, addCard, sendCardToApi, uploadCard, createFormValidator, config,
     } = params;
     this._template = template;
     this._container = container;
@@ -12,6 +12,7 @@ export class CardPopup extends FormPopup {
     this._addCard = addCard;
     this._sendCardToApi = sendCardToApi;
     this._uploadCard = uploadCard;
+    this._config = config;
   }
 
   _submit = (event) => {
