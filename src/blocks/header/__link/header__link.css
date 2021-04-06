@@ -4,7 +4,7 @@
     list-style-type: none;
 }
 
-.header__link > a {
+.header__link > .root__link {
   color: white;
 }
 

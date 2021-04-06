@@ -1,0 +1,16 @@
+.footer__social-icon {
+  text-decoration: none;
+  margin-right: 28px;
+  height: 20px;
+  width: 20px;
+}
+
+.footer__social-icon:last-of-type {
+  margin: 0;
+}
+
+@media screen and (max-width: 425px) {
+  .footer__social-icon {
+    margin-right: 20px;
+  }
+}

@@ -1,0 +1,15 @@
+.footer__icons {
+  display: flex;
+  /* align-items: center; */
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+@media screen and (max-width: 425px) {
+  .footer__icons {
+    width: 100%;
+    justify-content: space-between;
+    align-content: flex-start;
+  }
+}

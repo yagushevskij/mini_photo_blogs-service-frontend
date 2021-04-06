@@ -1,0 +1,9 @@
+.footer__resources {
+  display: flex;
+}
+
+@media screen and (max-width: 425px) {
+  .footer__resources {
+    width: 100%;
+  }
+}
