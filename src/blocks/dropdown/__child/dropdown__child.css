@@ -1,5 +1,3 @@
-@import url('./_is-visible/dropdown__child_is-visible.css');
-
 .dropdown__child {
   position: absolute;
   display: none;

@@ -110,14 +110,14 @@ const openAvatarPopup = () => new AvatarPopup({
   updateUserInfo,
   updateUserMenu,
 }).open();
-const openProfilePopup = () => new ProfilePopup({
+const openProfilePopup = (...args) => new ProfilePopup({
   template: profilePopupTemplate,
   container: popupContainer,
   sendDataToApi: sendUserDataToApi,
   createFormValidator,
   updateUserInfo,
   updateUserMenu,
-}).open(userInfo.data);
+}).open(...args);
 const openSignupPopup = () => new SignupPopup({
   template: signupPopupTemplate,
   container: popupContainer,

@@ -18,7 +18,6 @@ export class TopCardsBlock extends CardsBlock {
 
   _render = () => {
     this._renderCards();
-    // this._setContainerStyle();
     this._container.append(this._view);
   };
 
@@ -33,11 +32,6 @@ export class TopCardsBlock extends CardsBlock {
       ? this._title.textContent = this._config.title.regular(this._config.settings.total)
       : this._title.textContent = this._config.title.empty;
   }
-
-  // _setContainerStyle = () => {
-  //   // this._cardsContainer.setAttribute('style', `grid-template-columns:
-  //   // repeat(auto-fill, ${this._config.gallery.cellSize}px); grid-auto-rows: ${this._config.gallery.cellSize}px; grid-gap: ${this._config.gallery.gapSize}px;`);
-  // };
 
   _setElemsSize = () => {
     this._cardsCollection = this._cardsContainer.childNodes;

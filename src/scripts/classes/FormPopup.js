@@ -1,7 +1,7 @@
 import { Popup } from './Popup';
 
 export class FormPopup extends Popup {
-  _create = () => {
+  _create() {
     super._create();
     const form = this._view.querySelector('.popup__form');
     this._formValidator.setEventListeners(form);
@@ -23,6 +23,14 @@ export class FormPopup extends Popup {
       } else {
         this._formData.append(elem.name, elem.value);
       }
+    });
+  }
+
+  _fillInputs = () => {
+    const inputsArr = Array.from(this._view.querySelectorAll('.popup__input'));
+    inputsArr.forEach((elem) => {
+      const input = elem;
+      input.value = this._data[elem.name];
     });
   }
 

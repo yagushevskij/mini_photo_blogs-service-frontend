@@ -73,7 +73,7 @@ export class UserInfo extends BaseComponent {
         {
           element: editProfileBtn,
           event: 'click',
-          callbacks: [this._openProfilePopup],
+          callbacks: [() => { this._openProfilePopup(this.userPageData); }],
         },
         {
           element: this._avatarBtn,

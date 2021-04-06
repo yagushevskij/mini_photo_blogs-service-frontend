@@ -28,19 +28,9 @@ export class UserMenu extends BaseComponent {
       usernameElem.textContent = this._userData.username;
       this._handlersArr = [
         {
-          element: this._dropdownElem,
-          event: 'click',
-          callbacks: [this._open],
-        },
-        {
           element: signoutElem,
           event: 'click',
           callbacks: [this._signout],
-        },
-        {
-          element: document,
-          event: 'click',
-          callbacks: [this._close],
         },
         {
           element: myPageElem,
@@ -72,12 +62,4 @@ export class UserMenu extends BaseComponent {
   }
 
   _isUserDataExist = () => ((this._userData) ? Object.keys(this._userData).length !== 0 : false);
-
-  _open = () => {
-    this._menuElem.classList.add('dropdown__child_is-visible');
-  }
-
-  _close = () => {
-    this._menuElem.classList.remove('dropdown__child_is-visible');
-  }
 }
