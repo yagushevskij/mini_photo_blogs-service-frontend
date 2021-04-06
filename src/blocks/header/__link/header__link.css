@@ -4,6 +4,10 @@
     list-style-type: none;
 }
 
+.header__link > a {
+  color: white;
+}
+
 @media screen and (min-width: 426px) {
   .header__link:first-of-type {
     padding-left: 0;

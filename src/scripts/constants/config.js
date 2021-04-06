@@ -39,6 +39,9 @@ const config = {
       errThumbUrl: 'http://placehold.it/200x400',
       errLoadMsg(url) { return `Невозможно загрузить картинку по адресу: ${url}`; },
     },
+    button: {
+      text: 'Показать еще',
+    },
   },
   topCards: {
     title: {
@@ -61,6 +64,9 @@ const config = {
       maxFileSize: 400, // Размер минимальной стороны для фото с наибольшим рейтингом, px.
       cellSize: 150, // Размер сторон grid ячейки, px. Рекомендуется использовать
       // значение равное minFileSize
+    },
+    button: {
+      text: 'Показать еще',
     },
   },
   reqApiParams: {
@@ -173,6 +179,11 @@ const config = {
   userMenu: {
     errThumbUrl: 'http://placehold.it/60x60',
     errLoadMsg(url) { return `Невозможно загрузить картинку по адресу: ${url}`; },
+  },
+  popup: {
+    button: {
+      loaderText: 'Загрузка...',
+    },
   },
 };
 export { config, MAIN_URL };

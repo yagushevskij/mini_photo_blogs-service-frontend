@@ -15,7 +15,7 @@ export class CardsBlock {
     this._setTitle();
     this._setEventListeners();
     this._render();
-  };
+  }
 
   _setTitle() {
     this._title = this._view.querySelector('.root__title');
@@ -62,7 +62,7 @@ export class CardsBlock {
         this._loadMoreBtn.classList.remove('hidden');
       }
     }
-  };
+  }
 
   _loadMoreByScroll = () => {
     const containerRelativeBottom = this._container.getBoundingClientRect().bottom;

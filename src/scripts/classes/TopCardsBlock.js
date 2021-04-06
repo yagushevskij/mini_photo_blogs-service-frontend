@@ -12,7 +12,7 @@ export class TopCardsBlock extends CardsBlock {
     this._markup = `<section class="cards-wrapper cards-wrapper_type_top-cards root__section">
     <h1 class="root__title"></h1>
     <div class="cards-list cards-list_type_top-cards"></div>
-    <button class="button cards-wrapper__button hidden">Показать еще</button>
+    <button class="button cards-wrapper__button hidden">${config.button.text}</button>
   </section>`;
   }
 
@@ -39,9 +39,11 @@ export class TopCardsBlock extends CardsBlock {
       this._domElement = domElement;
       this._likesCount = this._domElement.dataset.likes;
       const increaseMultiplier = this._getIncreaseMultiplier();
-      let columnSpanSize; let
-        rowSpanSize;
-      rowSpanSize = columnSpanSize = this._config.gallery.minFileSize / this._config.gallery.cellSize * increaseMultiplier;
+      let columnSpanSize;
+      let rowSpanSize;
+      rowSpanSize = (this._config.gallery.minFileSize / this._config.gallery.cellSize)
+        * increaseMultiplier;
+      columnSpanSize = rowSpanSize;
       const aspectRatio = this._getAspectRatio();
       const roundHalf = (num) => Math.round(num * 2) / 2;
       if (aspectRatio < 1) {
@@ -61,8 +63,10 @@ export class TopCardsBlock extends CardsBlock {
 
   _setMinMaxLikesCount = () => {
     const likesCountArr = this._cardsArr.map((elem) => elem.likes.length);
-    this._maxLikesCount = Math.max.apply(Math, likesCountArr);
-    this._minLikesCount = Math.min.apply(Math, likesCountArr);
+    const mathMax = Math.max;
+    const mathMin = Math.min;
+    this._maxLikesCount = mathMax.apply(Math, likesCountArr);
+    this._minLikesCount = mathMin.apply(Math, likesCountArr);
   }
 
   _getIncreaseMultiplier = () => {
@@ -71,7 +75,8 @@ export class TopCardsBlock extends CardsBlock {
     const maxMultiplier = this._config.gallery.maxFileSize / this._config.gallery.minFileSize;
     const clamp = (curr, min = 0, max = 1) => Math.min(max, Math.max(min, curr));
     const invlerp = (min, max, curr) => clamp((curr - min) / (max - min));
-    return minMultiplier + (maxMultiplier - minMultiplier) * invlerp(this._minLikesCount, this._maxLikesCount, this._likesCount);
+    return minMultiplier + (maxMultiplier - minMultiplier)
+      * invlerp(this._minLikesCount, this._maxLikesCount, this._likesCount);
   }
 
   _sort = () => {

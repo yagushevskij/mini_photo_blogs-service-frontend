@@ -5,7 +5,7 @@ export class SigninPopup extends FormPopup {
     super();
     const {
       template, container, sendDataToApi, updateUserData, createFormValidator,
-      renderPage, openSignupPopup,
+      renderPage, openSignupPopup, config,
     } = params;
     this._template = template;
     this._container = container;
@@ -14,6 +14,7 @@ export class SigninPopup extends FormPopup {
     this._formValidator = createFormValidator();
     this._renderPage = renderPage;
     this._openSignupPopup = openSignupPopup;
+    this._config = config;
   }
 
   _submitAction = () => {

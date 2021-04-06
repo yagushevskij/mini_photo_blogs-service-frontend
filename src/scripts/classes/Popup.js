@@ -4,10 +4,6 @@ export class Popup extends BaseComponent {
   open = (data) => {
     this._data = data;
     this._create();
-    // if (Object.prototype.hasOwnProperty.call(this, '_updateInformation') && (data)) {
-    //   // Если у попапа есть свойство для обновления данных в полях и эти данные пришли;
-    //   this._updateInformation();
-    // }
     this._setHandlers();
     this._setEventListeners();
     this._blockScroll();
@@ -66,11 +62,11 @@ export class Popup extends BaseComponent {
     if (event.keyCode === 27) {
       this._close();
     }
-  };
+  }
 
   _closeByOverlay = (event) => {
     if (event.target === this._container) {
       this._close();
     }
-  };
+  }
 }

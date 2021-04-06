@@ -7,7 +7,7 @@ export class Loader {
       this._container = container;
       this._create();
       this._render();
-    };
+    }
 
     _create = () => {
       this._element = this._template.content.cloneNode(true).children[0];
@@ -19,5 +19,5 @@ export class Loader {
 
     remove = () => {
       this._element.remove();
-    };
+    }
 }

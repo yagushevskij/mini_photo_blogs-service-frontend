@@ -101,6 +101,7 @@ const openCardPopup = () => new CardPopup({
   createFormValidator,
   sendCardToApi,
   uploadCard,
+  config: config.popup,
 }).open();
 const openAvatarPopup = () => new AvatarPopup({
   template: avatarPopupTemplate,
@@ -117,6 +118,7 @@ const openProfilePopup = (...args) => new ProfilePopup({
   createFormValidator,
   updateUserInfo,
   updateUserMenu,
+  config: config.popup,
 }).open(...args);
 const openSignupPopup = () => new SignupPopup({
   template: signupPopupTemplate,
@@ -126,6 +128,7 @@ const openSignupPopup = () => new SignupPopup({
   createFormValidator,
   renderPage,
   openSigninPopup,
+  config: config.popup,
 }).open();
 const openSigninPopup = () => new SigninPopup({
   template: signinPopupTemplate,
@@ -135,6 +138,7 @@ const openSigninPopup = () => new SigninPopup({
   createFormValidator,
   renderPage,
   openSignupPopup,
+  config: config.popup,
 }).open();
 const signout = () => {
   sendApiRequest(config.reqApiParams.signout)

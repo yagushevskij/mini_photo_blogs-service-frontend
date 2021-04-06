@@ -35,7 +35,7 @@ export class Card extends BaseComponent {
       const likeInfoMsgElem = this._view.querySelector('.card__info-message_like');
       likeInfoMsgElem.classList.remove('hidden');
     }
-  };
+  }
 
   _changeLikesCount = () => {
     if (this._view.likeCount) {
@@ -43,14 +43,14 @@ export class Card extends BaseComponent {
       this._view.likeCount.textContent = likesCount;
       this._view.dataset.likes = likesCount;
     }
-  };
+  }
 
   _hasOwnLike = () => {
     if (this._userId) {
       return this._item.likes.some((item) => item === this._userId);
     }
     return false;
-  };
+  }
 
   // В зависимости от типа запроса с сервера приходят данные владельца в разных свойствах;
   _isOwner = () => (this._item.owner._id || this._item.owner) === this._userId;
@@ -66,14 +66,14 @@ export class Card extends BaseComponent {
       .catch((err) => {
         console.log(err);
       });
-  };
+  }
 
   _handleRemove = (event) => {
     this._preventDefaultEvent(event);
     if (confirm('Вы действительно хотите удалить эту карточку?')) {
       this._remove(event);
     }
-  };
+  }
 
   /**
    * Создание карточки
@@ -128,7 +128,7 @@ export class Card extends BaseComponent {
     this._setHandlers();
     this._setEventListeners();
     return this._view;
-  };
+  }
 
   _open = (event) => {
     if (!event.defaultPrevented && (event.target === this._view.imgElem
@@ -162,7 +162,7 @@ export class Card extends BaseComponent {
         element: this._view.userLink,
         event: 'click',
         callbacks: [this._preventDefaultEvent,
-        () => { this._renderUserPage(this._item.owner.username); }],
+          () => { this._renderUserPage(this._item.owner.username); }],
       },
     ];
   }

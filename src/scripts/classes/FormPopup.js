@@ -35,7 +35,8 @@ export class FormPopup extends Popup {
   }
 
   _changeButtonText = () => {
-    this._view.querySelector('button').textContent = 'Загрузка...';
+    const button = this._view.querySelector('button');
+    button.textContent = this._config.button.loaderText;
   }
 
   _submit() {

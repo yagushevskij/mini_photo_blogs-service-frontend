@@ -102,17 +102,6 @@ export class FormValidator extends BaseComponent {
     submitButton.disabled = !this._isFormValid;
   }
 
-  // _setHandlers = () => {
-  //   this._handlersArr = [];
-  //   Array.from(this._form.querySelectorAll(this.inputClassName)).forEach((elem) => {
-  //     this._handlersArr.push({
-  //       element: elem,
-  //       event: 'input',
-  //       callbacks: [this._checkInputValidity],
-  //     });
-  //   });
-  // }
-
   setEventListeners = (form) => {
     this._form = form;
     this._form.addEventListener('input', this._checkInputValidity);

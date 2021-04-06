@@ -20,7 +20,7 @@ export class AsyncImage extends Image {
     this.src = this._url;
     this.onload = () => resolve();
     this.onerror = () => reject(new Error(this._config.errLoadMsg(this._url)));
-  });
+  })
 
   _isLoaded = () => {
     if (!this.complete) {

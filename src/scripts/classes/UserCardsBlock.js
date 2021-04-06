@@ -12,7 +12,7 @@ export class UserCardsBlock extends CardsBlock {
     this._markup = `<section class="cards-wrapper cards-wrapper_type_user-cards root__section">
     <h2 class="root__title"></h2>
     <div class="cards-list cards-list_type_user-cards"></div>
-    <button class="button cards-wrapper__button hidden">Показать еще</button>
+    <button class="button cards-wrapper__button hidden">${config.button.text}</button>
   </section>`;
   }
 
@@ -20,12 +20,14 @@ export class UserCardsBlock extends CardsBlock {
     super._setTitle();
     if (this._cardsArr && this._cardsArr.length > 0) {
       this._title.textContent = (this._isCardsOwner)
-        ? this._config.title.authorized.regular(this._cardsArr.length) : this._config.title.unAuthorized.regular(this._cardsArr.length, this._cardsOwner.name);
+        ? this._config.title.authorized.regular(this._cardsArr.length)
+        : this._config.title.unAuthorized.regular(this._cardsArr.length, this._cardsOwner.name);
     } else {
       this._title.textContent = (this._isCardsOwner)
-        ? this._config.title.authorized.empty : this._config.title.unAuthorized.empty(this._cardsOwner.name);
+        ? this._config.title.authorized.empty
+        : this._config.title.unAuthorized.empty(this._cardsOwner.name);
     }
-  };
+  }
 
   _render = () => {
     this._renderCards();

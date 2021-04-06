@@ -5,7 +5,7 @@ export class AvatarPopup extends FormPopup {
     super();
     const {
       template, container, sendDataToApi, updateUserData, updateUserInfo, updateUserMenu,
-      createFormValidator,
+      createFormValidator, config,
     } = params;
     this._template = template;
     this._container = container;
@@ -14,12 +14,13 @@ export class AvatarPopup extends FormPopup {
     this._formValidator = createFormValidator();
     this._updateUserInfo = updateUserInfo;
     this._updateUserMenu = updateUserMenu;
+    this._config = config;
   }
 
   _submitAction = () => {
     this._updateUserInfo(this._result);
     this._updateUserMenu(this._result);
-  };
+  }
 
   _submit = (event) => {
     event.preventDefault();

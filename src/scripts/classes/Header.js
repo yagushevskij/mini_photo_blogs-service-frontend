@@ -18,7 +18,7 @@ export class Header extends BaseComponent {
     }
     this._setHandlers();
     this._setEventListeners();
-  };
+  }
 
   _setUserMenu = () => {
     this._clearContainer();
