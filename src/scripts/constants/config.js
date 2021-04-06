@@ -168,10 +168,6 @@ const config = {
   fileExtensions: {
     picture: ['.jpg', 'jpeg', '.png', '.gif'],
   },
-  imagePopup: {
-    errThumbUrl: 'http://placehold.it/640x480',
-    errLoadMsg(url) { return `Невозможно загрузить картинку по адресу: ${url}`; },
-  },
   avatar: {
     errThumbUrl: 'http://placehold.it/100x100',
     errLoadMsg(url) { return `Невозможно загрузить картинку по адресу: ${url}`; },
@@ -180,9 +176,40 @@ const config = {
     errThumbUrl: 'http://placehold.it/60x60',
     errLoadMsg(url) { return `Невозможно загрузить картинку по адресу: ${url}`; },
   },
-  popup: {
-    button: {
-      loaderText: 'Загрузка...',
+  popups: {
+    imagePopup: {
+      errThumbUrl: 'http://placehold.it/640x480',
+      errLoadMsg(url) { return `Невозможно загрузить картинку по адресу: ${url}`; },
+    },
+    signinPopup: {
+      button: {
+        text: 'Войти',
+        loaderText: 'Загрузка...',
+      },
+    },
+    signupPopup: {
+      button: {
+        text: 'Зарегистрироваться',
+        loaderText: 'Загрузка...',
+      },
+    },
+    profilePopup: {
+      button: {
+        text: 'Изменить',
+        loaderText: 'Загрузка...',
+      },
+    },
+    cardPopup: {
+      button: {
+        text: '+',
+        loaderText: 'Загрузка...',
+      },
+    },
+    avatarPopup: {
+      button: {
+        text: 'Изменить',
+        loaderText: 'Загрузка...',
+      },
     },
   },
 };

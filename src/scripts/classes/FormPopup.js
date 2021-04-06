@@ -4,6 +4,7 @@ export class FormPopup extends Popup {
   _create() {
     super._create();
     const form = this._view.querySelector('.popup__form');
+    this._setButtonText(this._config.button.text);
     this._formValidator.setEventListeners(form);
     this._container.append(this._view);
   }
@@ -34,12 +35,13 @@ export class FormPopup extends Popup {
     });
   }
 
-  _changeButtonText = () => {
+  _setButtonText = (text) => {
     const button = this._view.querySelector('button');
-    button.textContent = this._config.button.loaderText;
+    button.textContent = text;
   }
 
   _submit() {
+    this._setButtonText(this._config.button.loaderText);
     this._sendDataToApi(this._formData)
       .then((obj) => {
         this._result = obj;
@@ -49,6 +51,7 @@ export class FormPopup extends Popup {
       .catch((err) => {
         console.log(err);
         this._formValidator.setServerError(err);
+        this._setButtonText(this._config.button.text);
       });
   }
 

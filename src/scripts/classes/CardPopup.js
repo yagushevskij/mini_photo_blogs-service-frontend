@@ -16,7 +16,6 @@ export class CardPopup extends FormPopup {
 
   _submit = (event) => {
     event.preventDefault();
-    this._changeButtonText();
     this._setFormData();
     this._sendDataToApi = this._isFileUploadExist() ? this._uploadCard : this._sendCardToApi;
     super._submit();

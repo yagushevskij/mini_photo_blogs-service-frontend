@@ -24,7 +24,6 @@ export class SignupPopup extends FormPopup {
 
   _submit = (event) => {
     event.preventDefault();
-    this._changeButtonText();
     this._setFormData();
     super._submit();
   }
