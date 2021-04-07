@@ -47,10 +47,12 @@ export class UserInfo extends BaseComponent {
     const { userPageData, authUserData = {} } = params;
     this._authUserData = authUserData;
     this.userPageData = userPageData;
-    this._create();
-    this._setUserInfo();
-    this._renderAvatar();
-    this._container.appendChild(this._view);
+    if (this.userPageData && Object.keys(this.userPageData).length !== 0) {
+      this._create();
+      this._setUserInfo();
+      this._renderAvatar();
+      this._container.appendChild(this._view);
+    }
   }
 
   _isUserPageOwner = () => this._authUserData._id === this.userPageData._id;

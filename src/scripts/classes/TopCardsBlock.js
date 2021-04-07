@@ -45,24 +45,26 @@ export class TopCardsBlock extends CardsBlock {
   */
   _setElemsSize = () => {
     this._cardsCollection = this._cardsContainer.childNodes;
-    this._cardsCollection.forEach((domElement) => {
-      this._domElement = domElement;
-      this._likesCount = this._domElement.dataset.likes;
-      const increaseMultiplier = this._getIncreaseMultiplier();
-      let columnSpanSize;
-      let rowSpanSize;
-      rowSpanSize = (this._config.gallery.minFileSize / this._config.gallery.cellSize)
-        * increaseMultiplier;
-      columnSpanSize = rowSpanSize;
-      const aspectRatio = this._getAspectRatio();
-      const roundHalf = (num) => Math.round(num * 2) / 2;
-      if (aspectRatio < 1) {
-        rowSpanSize = roundHalf(rowSpanSize * (aspectRatio + 1));
-      } else if (aspectRatio > 1) {
-        columnSpanSize = roundHalf(columnSpanSize * aspectRatio);
-      }
-      this._domElement.setAttribute('style', `grid-column: span ${Math.ceil(columnSpanSize)}; grid-row: span ${Math.ceil(rowSpanSize)};`);
-    });
+    if (this._cardsCollection.length > 0) {
+      this._cardsCollection.forEach((domElement) => {
+        this._domElement = domElement;
+        this._likesCount = this._domElement.dataset.likes;
+        const increaseMultiplier = this._getIncreaseMultiplier();
+        let columnSpanSize;
+        let rowSpanSize;
+        rowSpanSize = (this._config.gallery.minFileSize / this._config.gallery.cellSize)
+          * increaseMultiplier;
+        columnSpanSize = rowSpanSize;
+        const aspectRatio = this._getAspectRatio();
+        const roundHalf = (num) => Math.round(num * 2) / 2;
+        if (aspectRatio < 1) {
+          rowSpanSize = roundHalf(rowSpanSize * (aspectRatio + 1));
+        } else if (aspectRatio > 1) {
+          columnSpanSize = roundHalf(columnSpanSize * aspectRatio);
+        }
+        this._domElement.setAttribute('style', `grid-column: span ${Math.ceil(columnSpanSize)}; grid-row: span ${Math.ceil(rowSpanSize)};`);
+      });
+    }
   };
 
   _getAspectRatio = () => {

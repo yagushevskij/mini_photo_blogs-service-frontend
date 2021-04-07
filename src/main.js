@@ -155,38 +155,43 @@ const createLoader = (loaderElem) => new Loader(loaderElem);
 const renderUserPage = (username) => {
   clearContainer(mainContentContainer);
   const apiResponseLoader = createLoader(circleLoaderTemplate);
-  apiResponseLoader.show({ container: mainContentContainer });
-  api.sendRequest({
-    url: config.reqApiParams.getUserInfo.url + username,
-    method: config.reqApiParams.getUserInfo.method,
-    headers: config.reqApiParams.getUserInfo.headers,
-  })
-    .then((res) => {
-      userInfo.render({
-        userPageData: res,
-        authUserData: user.data,
-      });
-      return res;
+  // apiResponseLoader.show({ container: mainContentContainer });
+  const renderUserInfoBlock = async () => {
+    apiResponseLoader.show({ container: mainContentContainer });
+    await api.sendRequest({
+      url: config.reqApiParams.getUserInfo.url + username,
+      method: config.reqApiParams.getUserInfo.method,
+      headers: config.reqApiParams.getUserInfo.headers,
     })
-    .then((res) => {
-      api.sendRequest({
-        url: config.reqApiParams.getUserCards.url + res._id,
-        method: config.reqApiParams.getUserCards.method,
-        headers: config.reqApiParams.getUserCards.headers,
+      .then((res) => {
+        userInfo.render({
+          userPageData: res,
+          authUserData: user.data,
+        });
       })
-        .then((cards) => {
-          userCardsBlock.create({
-            authUser: user.data,
-            cardsOwner: res,
-            cardsArr: cards,
-          });
-        })
-        .catch((err) => console.log(err))
-        .finally(() => apiResponseLoader.remove());
+      .catch((err) => console.log(err))
+      .finally(() => apiResponseLoader.remove());
+  };
+  const renderCardsBlock = async (userId) => {
+    apiResponseLoader.show({ container: mainContentContainer });
+    await api.sendRequest({
+      url: config.reqApiParams.getUserCards.url + userId,
+      method: config.reqApiParams.getUserCards.method,
+      headers: config.reqApiParams.getUserCards.headers,
     })
-    .catch((err) => {
-      openErrorPopup(config.text.errors.apiErr);
-      console.log(err);
+      .then((cards) => {
+        userCardsBlock.create({
+          authUser: user.data,
+          cardsOwner: userId,
+          cardsArr: cards,
+        });
+      })
+      .catch((err) => console.log(err))
+      .finally(() => apiResponseLoader.remove());
+  };
+  renderUserInfoBlock()
+    .then((res) => {
+      renderCardsBlock(res._id);
     });
 };
 
