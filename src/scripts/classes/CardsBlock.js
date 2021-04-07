@@ -31,16 +31,18 @@ export class CardsBlock {
 
   _renderCards() {
     this._cardsContainer = this._view.querySelector('.cards-list');
+    let cards;
+    const container = this._cardsContainer;
     if (this._splittedArray.length > 0) {
-      this._renderCardList({
-        cards: this._splittedArray[this._currentPage - 1],
-        container: this._cardsContainer,
-      });
+      cards = this._splittedArray[this._currentPage - 1];
+    } else {
+      cards = [];
     }
+    this._renderCardList({ cards, container });
   }
 
   _toggleVisibility = () => {
-    this._cardsCollection = this._container.childNodes;
+    this._cardsCollection = this._cardsContainer.childNodes;
     (this._cardsCollection && this._cardsCollection.length > 0) ? this.show() : this.hide();
   }
 

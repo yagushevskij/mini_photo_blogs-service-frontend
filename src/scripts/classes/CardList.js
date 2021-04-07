@@ -5,22 +5,28 @@ export class CardList {
     this._updateCardsBlock = updateCardsBlock;
   }
 
-  addCard = (cardObj) => {
-    this._cardObj = cardObj;
+  addCard = (card = {}) => {
+    this._card = card;
     this._insertCard();
-    this._updateCardsBlock({ addedCard: this._cardObj });
+    this._updateCardsBlock({ addedCard: this._card });
   }
 
   _insertCard = () => {
-    this._container.appendChild(this._createCard(this._cardObj));
+    this._container.appendChild(this._createCard(this._card));
   }
 
-  render = ({ cards: cardsArr, container }) => {
+  /**
+ * Отрисовка карточек
+ * @cards - массив объектов карточек;
+ * @container - контейнер для карточек;
+ */
+  render = ({ cards = [], container }) => {
     this._container = container;
-    this._cardsArr = cardsArr;
-    cardsArr.forEach((cardObj) => {
-      this._cardObj = cardObj;
-      this._insertCard();
-    });
+    if (cards.length !== 0) {
+      cards.forEach((card) => {
+        this._card = card;
+        this._insertCard();
+      });
+    }
   }
 }
