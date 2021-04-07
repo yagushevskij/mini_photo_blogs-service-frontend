@@ -170,16 +170,16 @@ const config = {
   },
   avatar: {
     errThumbUrl: 'http://placehold.it/100x100',
-    errLoadMsg(url) { return `Невозможно загрузить картинку по адресу: ${url}`; },
+    showErrLoadMsg(url) { return `Невозможно загрузить картинку по адресу: ${url}`; },
   },
   userMenu: {
     errThumbUrl: 'http://placehold.it/60x60',
-    errLoadMsg(url) { return `Невозможно загрузить картинку по адресу: ${url}`; },
+    showErrLoadMsg(url) { return `Невозможно загрузить картинку по адресу: ${url}`; },
   },
   popups: {
     imagePopup: {
       errThumbUrl: 'http://placehold.it/640x480',
-      errLoadMsg(url) { return `Невозможно загрузить картинку по адресу: ${url}`; },
+      showErrLoadMsg(url) { return `Невозможно загрузить картинку по адресу: ${url}`; },
     },
     signinPopup: {
       button: {

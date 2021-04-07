@@ -1,5 +1,10 @@
 import { CardsBlock } from './CardsBlock';
-
+/**
+* Класс для создания блока карточек в стиле masonry с использованием grid layout;
+* @container - контейнер для вставки блока;
+* @config - параметры блока:
+* @renderCardList - коллбэк отрисовки листа карточек;
+*/
 export class TopCardsBlock extends CardsBlock {
   constructor(params) {
     super();
@@ -34,6 +39,10 @@ export class TopCardsBlock extends CardsBlock {
       : this._title.textContent = this._config.title.empty;
   }
 
+  /*
+  Задание размеров карточкам через добавление атрибутов "grid-column: span" и "grid-row: span"
+  в зависимости от рейтинга элемента и его соотношения сторон;
+  */
   _setElemsSize = () => {
     this._cardsCollection = this._cardsContainer.childNodes;
     this._cardsCollection.forEach((domElement) => {
@@ -70,6 +79,10 @@ export class TopCardsBlock extends CardsBlock {
     this._minLikesCount = mathMin.apply(Math, likesCountArr);
   }
 
+  /*
+  Получение множителя для элемента в зависимости от минимального и максимального рейтинга
+  всех элементов. Интерполяция значения в пределах @minMultiplier и @maxMultiplier;
+  */
   _getIncreaseMultiplier = () => {
     this._setMinMaxLikesCount();
     const minMultiplier = 1;
@@ -80,12 +93,15 @@ export class TopCardsBlock extends CardsBlock {
       * invlerp(this._minLikesCount, this._maxLikesCount, this._likesCount);
   }
 
+  /*
+   Перемешивание массива карточек для создания красивой галереи;
+  */
   _sort = () => {
     super._sort();
     this._sliceArr();
-    const shuffle = (array) => { // Перемешаем массив для построения красивой галереи;
+    const shuffle = (array) => {
       for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1)); // случайный индекс от 0 до i
+        const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
       }
     };

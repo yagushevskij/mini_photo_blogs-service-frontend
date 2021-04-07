@@ -296,13 +296,6 @@ user.setData()
   });
 topUpBtn.setEventListener();
 
-// Наполнение массива карточек для теста новых фич.
-// const formData = new FormData();
-// formData.append('name', 'ololo');
-// formData.append('link', 'https://www.imgonline.com.ua/examples/bee-on-daisy.jpg');
-// const timerId = () => setInterval(() => sendCardToApi(formData), 7000);
-// timerId();
-
 document.addEventListener('keydown', (event) => { // Убираем срабатывание кнопок на странице по нажатию enter;
   if (event.keyCode === 13 && event.target.nodeName === 'BUTTON') {
     event.preventDefault();

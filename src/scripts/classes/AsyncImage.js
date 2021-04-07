@@ -1,4 +1,16 @@
+/*
+Класс создания асинхронной загрузки изображений: вывод прелоадера во время загрузки картинки
+браузером вывода заглушки при ошибке загрузки.
+*/
 export class AsyncImage extends Image {
+  /**
+* Рендер прелоадера
+* @element - DOM элемент изображения;
+* @config.errThumbUrl - url резервого изображения;
+* @config.showErrLoadMsg(url) - функция вывода сообщения;
+* @url - url изображения, которое необходимо загрузить на страницу;
+* @callbacks - массив колбэков, которые нужно выполнить после разрешения всех промисов;
+*/
   render = ({
     element, config, url, callbacks = [],
   }) => {
@@ -19,7 +31,7 @@ export class AsyncImage extends Image {
   _create = () => new Promise((resolve, reject) => {
     this.src = this._url;
     this.onload = () => resolve();
-    this.onerror = () => reject(new Error(this._config.errLoadMsg(this._url)));
+    this.onerror = () => reject(new Error(this._config.showErrLoadMsg(this._url)));
   })
 
   _isLoaded = () => {

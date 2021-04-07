@@ -3,8 +3,13 @@ export class Api {
     this._errMessages = config.text.errors;
   }
 
-  sendRequest = async (objParams, formData) => {
-    const { url, method, headers } = objParams;
+  /**
+ * Отправка запроса к API
+ * @params - объект с параметрами запроса;
+ * @formData - объект с данными FormData;
+ */
+  sendRequest = async (params, formData) => {
+    const { url, method, headers } = params;
     try {
       const res = await fetch(url, {
         method,
