@@ -155,7 +155,6 @@ const createLoader = (loaderElem) => new Loader(loaderElem);
 const renderUserPage = (username) => {
   clearContainer(mainContentContainer);
   const apiResponseLoader = createLoader(circleLoaderTemplate);
-  // apiResponseLoader.show({ container: mainContentContainer });
   const renderUserInfoBlock = async () => {
     apiResponseLoader.show({ container: mainContentContainer });
     await api.sendRequest({
@@ -191,7 +190,9 @@ const renderUserPage = (username) => {
   };
   renderUserInfoBlock()
     .then((res) => {
-      renderCardsBlock(res._id);
+      if (res) {
+        renderCardsBlock(res._id);
+      }
     });
 };
 
@@ -237,12 +238,13 @@ const header = new Header({
 const userInfo = new UserInfo({
   container: mainContentContainer,
   template: profileTemplate,
-  config: config.avatar,
+  config: config.userInfo,
   loader: createLoader(blockLoaderTemplate),
   openCardPopup,
   openAvatarPopup,
   openProfilePopup,
   renderAsyncImage,
+  openErrorPopup,
 });
 const userCardList = new CardList({
   createCard: createUserCard,

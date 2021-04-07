@@ -176,9 +176,12 @@ const config = {
   fileExtensions: {
     picture: ['.jpg', 'jpeg', '.png', '.gif'],
   },
-  avatar: {
-    errThumbUrl: 'http://placehold.it/100x100',
-    showErrLoadMsg(url) { return `Невозможно загрузить картинку по адресу: ${url}`; },
+  userInfo: {
+    avatar: {
+      errThumbUrl: 'http://placehold.it/100x100',
+      showErrLoadMsg(url) { return `Невозможно загрузить картинку по адресу: ${url}`; },
+    },
+    userNotFoundMsg: 'Пользователь не найден',
   },
   userMenu: {
     errThumbUrl: 'http://placehold.it/60x60',

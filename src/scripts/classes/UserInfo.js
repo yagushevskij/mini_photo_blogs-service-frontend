@@ -3,7 +3,7 @@ import { BaseComponent } from './BaseComponent';
 export class UserInfo extends BaseComponent {
   constructor({
     container, template, openCardPopup, openAvatarPopup, openProfilePopup, renderAsyncImage, config,
-    loader,
+    loader, openErrorPopup,
   }) {
     super();
     this._container = container;
@@ -14,6 +14,7 @@ export class UserInfo extends BaseComponent {
     this._renderAsyncImage = renderAsyncImage;
     this._config = config;
     this._loader = loader;
+    this._openErrorPopup = openErrorPopup;
   }
 
   _setUserInfo = () => {
@@ -30,7 +31,7 @@ export class UserInfo extends BaseComponent {
     this._renderAsyncImage({
       url: this.userPageData.avatar,
       element: avatar,
-      config: this._config,
+      config: this._config.avatar,
       callbacks: [this._loader.remove],
     });
   }
@@ -52,6 +53,8 @@ export class UserInfo extends BaseComponent {
       this._setUserInfo();
       this._renderAvatar();
       this._container.appendChild(this._view);
+    } else {
+      this._openErrorPopup(this._config.userNotFoundMsg);
     }
   }
 
