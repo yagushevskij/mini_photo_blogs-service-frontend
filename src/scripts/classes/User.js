@@ -1,15 +1,11 @@
 export class User {
-  constructor(getDataFromApi, getUserPageUrl) {
+  constructor(getUserPageUrl) {
     this._getUserPageUrl = getUserPageUrl;
-    this._getDataFromApi = getDataFromApi;
   }
 
-  setData = () => this._getDataFromApi()
-    .then((res) => {
-      this.data = res;
-      this._setPageUrl();
-      return this.data;
-    })
+  setData = (data) => {
+    this.data = data;
+  };
 
   updateData = (data = {}) => {
     this.data = data;

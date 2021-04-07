@@ -3,7 +3,7 @@ import { BaseComponent } from './BaseComponent';
 export class UserMenu extends BaseComponent {
   constructor({
     userMenuTemplate, userLinksTemplate, signout,
-    renderAsyncImage, config, renderUserPage, loader,
+    renderAsyncImage, config, renderPage, loader,
   }) {
     super();
     this.userMenuTemplate = userMenuTemplate;
@@ -11,7 +11,7 @@ export class UserMenu extends BaseComponent {
     this._signout = signout;
     this._renderAsyncImage = renderAsyncImage;
     this._config = config;
-    this._renderUserPage = renderUserPage;
+    this._renderPage = renderPage;
     this._loader = loader;
   }
 
@@ -35,7 +35,7 @@ export class UserMenu extends BaseComponent {
         {
           element: myPageElem,
           event: 'click',
-          callbacks: [() => this._renderUserPage(this._userData.username)],
+          callbacks: [() => this._renderPage(this._userData.username)],
         },
       ];
       this._updateAvatar();

@@ -74,7 +74,7 @@ const createImageCard = (...args) => new Card({
   removeLikeRequest,
   removeCardRequest,
   renderAsyncImage,
-  renderUserPage,
+  renderPage,
   config: config.topCards.card,
   loader: createLoader(blockLoaderTemplate),
 }).create({
@@ -152,70 +152,68 @@ const signout = () => {
 const renderAsyncImage = (...args) => new AsyncImage().render(...args);
 const createLoader = (loaderElem) => new Loader(loaderElem);
 
-const renderUserPage = (username) => {
-  clearContainer(mainContentContainer);
-  const apiResponseLoader = createLoader(circleLoaderTemplate);
-  const renderUserInfoBlock = async () => {
-    apiResponseLoader.show({ container: mainContentContainer });
-    await api.sendRequest({
-      url: config.reqApiParams.getUserInfo.url + username,
-      method: config.reqApiParams.getUserInfo.method,
-      headers: config.reqApiParams.getUserInfo.headers,
-    })
-      .then((res) => {
-        userInfo.render({
-          userPageData: res,
-          authUserData: user.data,
-        });
-      })
-      .catch((err) => console.log(err))
-      .finally(() => apiResponseLoader.remove());
-  };
-  const renderCardsBlock = async (userId) => {
-    apiResponseLoader.show({ container: mainContentContainer });
-    await api.sendRequest({
-      url: config.reqApiParams.getUserCards.url + userId,
-      method: config.reqApiParams.getUserCards.method,
-      headers: config.reqApiParams.getUserCards.headers,
-    })
-      .then((cards) => {
-        userCardsBlock.create({
-          authUser: user.data,
-          cardsOwner: userId,
-          cardsArr: cards,
-        });
-      })
-      .catch((err) => console.log(err))
-      .finally(() => apiResponseLoader.remove());
-  };
-  renderUserInfoBlock()
-    .then((res) => {
-      if (res) {
-        renderCardsBlock(res._id);
-      }
+const renderUserInfoBlock = async (username) => api.sendRequest({
+  url: config.reqApiParams.getUserInfo.url + username,
+  method: config.reqApiParams.getUserInfo.method,
+  headers: config.reqApiParams.getUserInfo.headers,
+})
+  .then((res) => {
+    userInfo.render({
+      userPageData: res,
+      authUserData: user.data,
     });
-};
-
-const renderMainPage = () => {
-  clearContainer(mainContentContainer);
-  const apiResponseLoader = createLoader(circleLoaderTemplate);
-  apiResponseLoader.show({ container: mainContentContainer });
-  api.sendRequest({
-    url: config.reqApiParams.getAllUsersCards.url,
-    method: config.reqApiParams.getAllUsersCards.method,
-    headers: config.reqApiParams.getUserCards.headers,
+    return res;
   })
-    .then((cards) => {
-      topCardsBlock.create({
-        authUser: user.data,
-        cardsArr: cards,
-      });
-    })
-    .catch((err) => {
-      openErrorPopup(config.text.errors.apiErr);
-      console.log(err);
-    })
-    .finally(() => apiResponseLoader.remove());
+  .catch((err) => console.log(err));
+
+const renderUserCardsBlock = (owner) => api.sendRequest({
+  url: config.reqApiParams.getUserCards.url + owner._id,
+  method: config.reqApiParams.getUserCards.method,
+  headers: config.reqApiParams.getUserCards.headers,
+})
+  .then((cards) => {
+    userCardsBlock.create({
+      authUser: user.data,
+      cardsOwner: owner,
+      cardsArr: cards,
+    });
+  })
+  .catch((err) => console.log(err));
+
+const renderTopCardsBlock = () => api.sendRequest({
+  url: config.reqApiParams.getAllUsersCards.url,
+  method: config.reqApiParams.getAllUsersCards.method,
+  headers: config.reqApiParams.getUserCards.headers,
+})
+  .then((cards) => {
+    topCardsBlock.create({
+      authUser: user.data,
+      cardsArr: cards,
+    });
+  })
+  .catch((err) => {
+    openErrorPopup(config.text.errors.apiErr);
+    console.log(err);
+  });
+
+const renderPage = (username) => {
+  const createdUserMenu = (user.data) ? userMenu.create(user.data) : userMenu.create();
+  const apiResponseLoader = createLoader(circleLoaderTemplate);
+  header.render(createdUserMenu);
+  clearContainer(mainContentContainer);
+  if (username && typeof (username) === 'string') {
+    apiResponseLoader.show({ container: mainContentContainer });
+    renderUserInfoBlock(username)
+      .then((res) => {
+        if (res) {
+          renderUserCardsBlock(res);
+        }
+      })
+      .catch((err) => console.log(err))
+      .finally(() => apiResponseLoader.remove());
+  } else {
+    renderTopCardsBlock();
+  }
 };
 
 const sendCardToApi = (...args) => api.sendRequest(config.reqApiParams.addCard, ...args);
@@ -228,11 +226,11 @@ const sendUserDataToApi = (...args) => api.sendRequest(config.reqApiParams.chang
   ...args);
 
 const api = new Api(config);
-const user = new User(getUserInfoFromApi, getUserPageUrl);
+const user = new User(getUserPageUrl);
 const header = new Header({
   container: headerContainer,
   userBlockContainer,
-  renderMainPage,
+  renderPage,
   openSigninPopup,
 });
 const userInfo = new UserInfo({
@@ -270,39 +268,35 @@ const userMenu = new UserMenu({
   userMenuTemplate,
   signout,
   renderAsyncImage,
-  renderUserPage,
+  renderPage,
 });
+const topUpBtn = new TopUpBtn(topUpTriangle);
 
 const isPageUserpage = () => {
   const userPageUrlregExp = new RegExp(config.userPageFeature.getUserPageUrlRegExp());
   return (userPageUrlregExp.test(config.userPageFeature.getUrlParams()));
 };
-const topUpBtn = new TopUpBtn(topUpTriangle);
-
-const renderPage = () => {
-  const createdUserMenu = (user.data) ? userMenu.create(user.data) : userMenu.create();
-  header.render(createdUserMenu);
-  if (isPageUserpage()) {
-    const username = new RegExp(config.userPageFeature.getExtractNameRegExp())
-      .exec(config.userPageFeature.getUrlParams())[1];
-    renderUserPage(username);
-  } else {
-    renderMainPage();
-  }
-};
 
 const apiResponseLoader = createLoader(circleLoaderTemplate);
 apiResponseLoader.show({ container: mainContentContainer });
-user.setData()
-  .catch((err) => {
+getUserInfoFromApi()
+  .then((res) => {
+    user.setData(res);
+  }).catch((err) => {
     console.log(err);
   })
   .finally(() => {
     apiResponseLoader.remove();
-    renderPage();
+    if (isPageUserpage()) {
+      const username = new RegExp(config.userPageFeature.getExtractNameRegExp())
+        .exec(config.userPageFeature.getUrlParams())[1];
+      renderPage(username);
+    } else {
+      renderPage();
+    }
   });
-topUpBtn.setEventListener();
 
+topUpBtn.setEventListener();
 document.addEventListener('keydown', (event) => { // Убираем срабатывание кнопок на странице по нажатию enter;
   if (event.keyCode === 13 && event.target.nodeName === 'BUTTON') {
     event.preventDefault();

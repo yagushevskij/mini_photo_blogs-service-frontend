@@ -2,12 +2,12 @@ import { BaseComponent } from './BaseComponent';
 
 export class Header extends BaseComponent {
   constructor({
-    userBlockContainer, container, renderMainPage, openSigninPopup,
+    userBlockContainer, container, renderPage, openSigninPopup,
   }) {
     super();
     this._container = container;
     this.userBlockContainer = userBlockContainer;
-    this._renderMainPage = renderMainPage;
+    this._renderPage = renderPage;
     this._openSigninPopup = openSigninPopup;
   }
 
@@ -43,7 +43,7 @@ export class Header extends BaseComponent {
       {
         element: logo,
         event: 'click',
-        callbacks: [this._renderMainPage],
+        callbacks: [this._renderPage],
       },
       {
         element: signinButton,

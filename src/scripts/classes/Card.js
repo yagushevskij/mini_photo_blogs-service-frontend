@@ -5,7 +5,7 @@ export class Card extends BaseComponent {
     super();
     const {
       openImagePopup, addLikeRequest, removeLikeRequest, removeCardRequest, updateCardsBlock,
-      config, renderAsyncImage, loader, renderUserPage,
+      config, renderAsyncImage, loader, renderPage,
     } = callbacks;
     this._openImagePopup = openImagePopup;
     this._addLikeRequest = addLikeRequest;
@@ -15,7 +15,7 @@ export class Card extends BaseComponent {
     this._config = config;
     this._renderAsyncImage = renderAsyncImage;
     this._loader = loader;
-    this._renderUserPage = renderUserPage;
+    this._renderPage = renderPage;
   }
 
   _like = (event) => {
@@ -162,7 +162,7 @@ export class Card extends BaseComponent {
         element: this._view.userLink,
         event: 'click',
         callbacks: [this._preventDefaultEvent,
-          () => { this._renderUserPage(this._item.owner.username); }],
+          () => { this._renderPage(this._item.owner.username); }],
       },
     ];
   }
