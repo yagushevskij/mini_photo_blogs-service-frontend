@@ -35,7 +35,7 @@ export class TopCardsBlock extends CardsBlock {
   _setTitle = () => {
     super._setTitle();
     (this._cardsArr && this._cardsArr.length > 0)
-      ? this._title.textContent = this._config.title.regular(this._config.settings.total)
+      ? this._title.textContent = this._config.title.regular.create(this._config.settings.total)
       : this._title.textContent = this._config.title.empty;
   }
 

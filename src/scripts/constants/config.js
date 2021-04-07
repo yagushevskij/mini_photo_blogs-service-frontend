@@ -21,12 +21,18 @@ const config = {
   userCards: {
     title: {
       authorized: {
-        regular(count) { return `У вас ${count} фото`; },
+        regular: {
+          create(count) { return `У вас ${count} фото`; },
+        },
         empty: 'У вас нет загруженных фото',
       },
       unAuthorized: {
-        regular(count, name) { return `У пользователя ${name} загружно ${count} фото`; },
-        empty(name) { return `Пользователь ${name} еще ничего не загрузил`; },
+        regular: {
+          create(count, name) { return `У пользователя ${name} загружно ${count} фото`; },
+        },
+        empty: {
+          create(name) { return `Пользователь ${name} еще ничего не загрузил`; },
+        },
       },
       srvErr: 'Ошибка сервера при загрузке',
     },
@@ -37,7 +43,7 @@ const config = {
     },
     card: {
       errThumbUrl: 'http://placehold.it/200x400',
-      errLoadMsg(url) { return `Невозможно загрузить картинку по адресу: ${url}`; },
+      showErrLoadMsg(url) { return `Невозможно загрузить картинку по адресу: ${url}`; },
     },
     button: {
       text: 'Показать еще',
@@ -45,7 +51,9 @@ const config = {
   },
   topCards: {
     title: {
-      regular(count) { return `Топ ${count} фото`; },
+      regular: {
+        create(count) { return `Топ ${count} фото`; },
+      },
       empty: 'Загруженных фото нет',
       srvErr: 'Ошибка сервера при загрузке',
     },
@@ -57,7 +65,7 @@ const config = {
     },
     card: {
       errThumbUrl: 'http://placehold.it/200x400',
-      errLoadMsg(url) { return `Невозможно загрузить картинку по адресу: ${url}`; },
+      showErrLoadMsg(url) { return `Невозможно загрузить картинку по адресу: ${url}`; },
     },
     gallery: {
       minFileSize: 150, // Размер минимальной стороны для фото с наименьшим рейтингом, px.
