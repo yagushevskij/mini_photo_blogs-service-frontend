@@ -3,6 +3,7 @@
   font-style:  normal;
   font-weight: 400;
   src: url("./fonts/Inter-Regular.woff2") format("woff2");
+  font-display: swap;
 }
 
 
@@ -11,6 +12,7 @@
   font-style:  normal;
   font-weight: 900;
   src: url("./fonts/Inter-Black.woff2") format("woff2");
+  font-display: swap;
 }
 
 @font-face {
@@ -18,4 +20,5 @@
   font-style:  bold;
   font-weight: 900;
   src: url("../vendor/fonts/BwSurco-BoldItalic.woff2") format("woff2");
+  font-display: swap;
 }
