@@ -1,7 +1,7 @@
 {
   "name": "mini_photo_blog-frontend",
   "homepage": "https://github.com/yagushevskij/mini_photo_blog-frontend/",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Self study project",
   "main": "./src/main.js",
   "scripts": {
